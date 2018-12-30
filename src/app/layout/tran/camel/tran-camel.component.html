@@ -1,0 +1,8 @@
+<div>
+  <button type="button" class="btn btn-outline-primary mr-2 btn-sm" (click)="tranCamelToBar()">CamelToBar</button>
+  <button type="button" class="btn btn-outline-primary mr-2 btn-sm" (click)="tranBarToCamel()">BarToCamel</button>
+</div>
+<div style="height:800px;">
+  <textarea name="srcTxt" style="width:45%;height:99%;" (change)="onChangeSrcTxt($event)" >{{srcTxt}}</textarea>
+  <textarea name="tarTxt" style="width:45%;height:99%;" (change)="onChangeTarTxt($event)" >{{tarTxt}}</textarea>
+</div>

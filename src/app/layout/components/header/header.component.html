@@ -1,7 +1,61 @@
 <nav class="navbar navbar-expand-lg sticky-top">
-    <a class="navbar-brand" href="#">Pony</a>
-    <button class="navbar-toggler" type="button" (click)="toggleSidebar()">
-        <!-- <span class="navbar-toggler-icon"></span> -->
-        <i class="fa fa-bars text-muted" aria-hidden="true"></i>
-    </button>
+  <a class="navbar-brand" href="#">Pony</a>
+  <div class="collapse navbar-collapse">
+    <ul class="navbar-nav ml-3 mr-3">
+      <li class="nav-item dropdown" ngbDropdown>
+        <a href="javascript:void(0)" class="nav-link ml-2" ngbDropdownToggle>
+          <i class="fa fa-fw fa-database"></i>&nbsp;Table<b class="caret"></b>
+        </a>
+        <div class="dropdown-menu-right" ngbDropdownMenu>
+          <a class="dropdown-item" href="javascript:void(0)"> 
+            <i class="fa fa-fw fa-database"></i>&nbsp;{{ 'TableColumn' | translate }}
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="javascript:void(0)"> 
+            <i class="fa fa-fw fa-database"></i>&nbsp;{{ 'Table' | translate }}
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" routerLink="/code-list" [routerLinkActive]="['router-link-active']" > 
+            <i class="fa fa-fw fa-database"></i>&nbsp;{{ 'Code' | translate }}
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" routerLink="/code-list" [routerLinkActive]="['router-link-active']" > 
+            <i class="fa fa-fw fa-database"></i>&nbsp;{{ 'Column' | translate }}
+          </a>
+        </div>
+      </li>
+    </ul>
+    <ul class="navbar-nav mr-3">
+      <li class="nav-item dropdown" ngbDropdown>
+        <a href="javascript:void(0)" class="nav-link ml-2" ngbDropdownToggle>
+          <i class="fa fa-fw fa-exchange"></i>&nbsp;Trans<b class="caret"></b>
+        </a>
+        <div class="dropdown-menu-right" ngbDropdownMenu>
+          <a class="dropdown-item" routerLink="/tran-camel" [routerLinkActive]="['router-link-active']" > 
+            <i class="fa fa-fw fa-exchange"></i>&nbsp;{{ 'Camel' | translate }}
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="javascript:void(0)"> 
+            <i class="fa fa-fw fa-exchange"></i>&nbsp;{{ 'CharacterSet' | translate }}
+          </a>
+        </div>
+      </li>
+    </ul>
+    <ul class="navbar-nav mr-3">
+      <li class="nav-item dropdown" ngbDropdown>
+        <a href="javascript:void(0)" class="nav-link ml-2" ngbDropdownToggle>
+          <i class="fa fa-fw fa-copy"></i>&nbsp;Gens<b class="caret"></b>
+        </a>
+        <div class="dropdown-menu-right" ngbDropdownMenu>
+          <a class="dropdown-item" routerLink="/tran-camel" [routerLinkActive]="['router-link-active']" > 
+            <i class="fa fa-fw fa-exchange"></i>&nbsp;{{ 'Camel' | translate }}
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="javascript:void(0)"> 
+            <i class="fa fa-fw fa-exchange"></i>&nbsp;{{ 'CharacterSet' | translate }}
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
 </nav>

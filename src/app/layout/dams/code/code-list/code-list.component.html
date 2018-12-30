@@ -4,10 +4,10 @@
         <select class="btn btn-outline-primary btn-sm mr-2" (change)="onChange($event.target.value)" > 
           <option *ngFor="let cd of comboCode" [value]="cd.value" >{{cd.key}}</option>
         </select>
-        <input class="btn btn-outline-primary btn-sm mr-2" name="foreignFile" (change)="onForeignFileSelected($event)">
+        <input class="btn btn-outline-primary btn-sm mr-2" name="foreignFile" >
     </div>
     <div class="float-right">
-      <button type="button" class="btn btn-outline-primary mr-2 btn-sm" (click)="onSelectUsrSttlAll()">
+      <button type="button" class="btn btn-outline-primary mr-2 btn-sm" >
           <i class="fa fa-file-excel-o"></i>&nbsp;엑셀
       </button>
       <button type="button" class="btn btn-outline-primary btn-sm" (click)="onSelectCodeList()">

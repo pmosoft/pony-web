@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { CodeService } from '../code.service';
 import { Code } from '../code';
 import { Router } from '@angular/router';
@@ -11,53 +11,59 @@ import { Router } from '@angular/router';
 export class CodeListComponent implements OnInit {
 
   comboCode = [
-     {key : '코드ID명'     , value : 'CD_ID_NM'    }
-    ,{key : '코드ID한글명' , value : 'CD_ID_HNM'   }
-    ,{key : '코드ID그룹명' , value : 'CD_ID_GRP_NM'}
-    ,{key : '코드'         , value : 'CD'          }
-    ,{key : '코드명'       , value : 'CD_NM'       }
-    ,{key : '코드한글명'   , value : 'CD_HNM'      }
-    ,{key : '코드설명'     , value : 'CD_DESC'     }
+     {id : 'ALL'          , name : '전체'       }
+    ,{id : 'CD_ID_NM'     , name : '코드ID명'    }
+    ,{id : 'CD_ID_HNM'    , name : '코드ID한글명' }
+    ,{id : 'CD_ID_GRP_NM' , name : '코드ID그룹명' }
+    ,{id : 'CD'           , name : '코드'       }
+    ,{id : 'CD_NM'        , name : '코드명'      }
+    ,{id : 'CD_HNM'       , name : '코드한글명'   }
+    ,{id : 'CD_DESC'      , name : '코드설명'    }
   ];  
-
-  selectedValue : string = "1";
-
+  
+  codeInVo: Code = new Code();
+  codeOutVoList: Code[]
+ 
   constructor(private codeService: CodeService
              ,private router: Router) { }
 
   ngOnInit() {
-    //this.onSelectUsrSttlMstrList();
   }
 
-  codeInVo: Code = new Code();
-  codeOutVoList: Code[]
 
-  onChange(deviceValue) {
-    console.log(deviceValue);
-    this.selectedValue = deviceValue;
-    console.log(this.selectedValue);
+  onComboCodeChange(id) {
+    console.log(id);
+    this.codeInVo.comboCodeId = id;
   }
   
   onSelectCodeList() {
-    //this.codeInVo.usrId = this.usrId;
+    
     this.codeService.selectCodeList(this.codeInVo)
+    
     .subscribe(result => {
        if(!result.isSuccess) alert(result.errUsrMsg)
       else {
         this.codeOutVoList = result.codeOutVoList;  
-        console.log(result.codeOutVoList);  
+        //console.log(result.codeOutVoList);  
       } 
     });
   }
 
-  onClick(code: Code) {
+  onDownloadExcel() {
+
+    let data = JSON.stringify(this.codeOutVoList);
+    //console.log(data);
     
-    //console.log("code.sttlNm=="+code.sttlNm);
-    if(this.selectedValue=="1") {
-      //this.router.navigate(['/code-view/'+code.sttlNm]);
-    } else {
-      //this.router.navigate(['/code-view-mother/'+code.sttlNm]);
-    }
+    const fd = new FormData();
+    fd.append('fileNm', "code-list.xls");
+    fd.append('data', data);
+    
+    this.codeService.downloadExcel(fd)
+    .subscribe(result => {
+       if(!result.isSuccess) alert(result.errUsrMsg)
+      else {
+      } 
+    });
   }
 
 }

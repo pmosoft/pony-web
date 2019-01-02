@@ -1,13 +1,13 @@
 <div class="mb-4">
   <div class="clearfix">
     <div class="float-left">
-        <select class="btn btn-outline-primary btn-sm mr-2" (change)="onChange($event.target.value)" > 
-          <option *ngFor="let cd of comboCode" [value]="cd.value" >{{cd.key}}</option>
+        <select class="btn btn-outline-primary btn-sm mr-2" (change)="onComboCodeChange($event.target.value)" > 
+          <option *ngFor="let cd of comboCode" [value]="cd.id" >{{cd.name}}</option>
         </select>
-        <input class="btn btn-outline-primary btn-sm mr-2" name="foreignFile" >
+        <input [(ngModel)]="codeInVo.searchValue" class="btn btn-outline-primary btn-sm mr-2" (keyup.enter)="onSelectCodeList()" >
     </div>
     <div class="float-right">
-      <button type="button" class="btn btn-outline-primary mr-2 btn-sm" >
+      <button type="button" class="btn btn-outline-primary mr-2 btn-sm" (click)="onDownloadExcel()">
           <i class="fa fa-file-excel-o"></i>&nbsp;엑셀
       </button>
       <button type="button" class="btn btn-outline-primary btn-sm" (click)="onSelectCodeList()">
@@ -21,6 +21,7 @@
   <table class="table table-sm table-bordered table-hover">
     <thead>
       <tr>
+        <th style="width: 60px;" scope="col">번호</th>
         <th style="width:100px;" scope="col">코드그룹</th>
         <th style="width:120px;" scope="col">코드ID명</th>
         <th style="width:140px;" scope="col">코드ID한글명</th>
@@ -33,7 +34,8 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let codeOutVo of codeOutVoList">
+      <tr *ngFor="let codeOutVo of codeOutVoList; let i=index">
+        <td>{{i+1}}</td>
         <td>{{codeOutVo.cdIdGrpNm}}</td>
         <td>{{codeOutVo.cdIdNm}}</td>
         <td>{{codeOutVo.cdIdHnm}}</td>

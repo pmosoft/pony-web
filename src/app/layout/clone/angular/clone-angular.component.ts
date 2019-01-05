@@ -10,10 +10,9 @@ import { Router } from '@angular/router';
 })
 export class CloneAngularComponent implements OnInit {
 
-  srcPathFile = null;
+  srcPath = "";
   srcPathFileDefaultNm = "Choose Source Folder and HTML file";
   srcPathFileNm = this.srcPathFileDefaultNm;
-
 
   cloneAngularInVo: CloneAngular = new CloneAngular();
   cloneAngularOutVoList: CloneAngular[]
@@ -22,26 +21,14 @@ export class CloneAngularComponent implements OnInit {
              ,private router: Router) { }
 
   ngOnInit() {
+    this.cloneAngularInVo.srcPathNm = localStorage.getItem('srcPathNm')
+    console.log("this.cloneAngularInVo.srcPathNm="+this.cloneAngularInVo.srcPathNm);
   }
 
 
-  onChangeSrcFile(event : any) {
-    var fReader = new FileReader();
-    fReader.readAsDataURL(event.target.files[0]);
-    fReader.onloadend = function(event){
-        console.log(event.target);
-    }
-    
-
-    this.srcPathFile = <File> event.target.files[0];
-    this.srcPathFileNm = this.srcPathFile.name;
-    //this.srcPathFileNm = this.srcPathFile.path;
-    if(this.srcPathFileNm.indexOf(".html") == -1){
-      alert("Please, choose html file only" );
-      this.srcPathFile = null;
-      this.srcPathFileNm = this.srcPathFileDefaultNm;
-    }    
-  
+  onSaveSrcPath() {
+    console.log("onSaveSrcPath");
+    localStorage.setItem('srcPathNm', this.cloneAngularInVo.srcPathNm);
   }
 
   onCloneAngular() {

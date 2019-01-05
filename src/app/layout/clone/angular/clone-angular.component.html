@@ -15,12 +15,26 @@
 		</div>
 
     <div class="form-row mb-3" >
-      <div class="col-md-6">
-        <label for="inputAddress">Source Folder(기준파일포함)</label>
+      <div class="form-group col-md-12">
+        <label for="inputCity">Source Folder</label>
+				<div class="input-group">
+				  <input [(ngModel)]="cloneAngularInVo.srcPathNm" [ngModelOptions]="{standalone: true}" type="text" class="form-control"  placeholder="Save src folder...">
+				  <span class="input-group-append">
+				    <button class="btn btn-secondary" type="button" (click)="onSaveSrcPath()" >Save</button>
+				  </span>
+				</div>
       </div>
-      <div class="custom-file">
-        <input type="file" class="custom-file-input" name="srcFile" (change)="onChangeSrcFile($event)">
-        <label class="custom-file-label" for="srcFile">{{srcPathFileNm}}</label>
+    </div>
+
+    <div class="form-row mb-3" >
+      <div class="form-group col-md-12">
+        <label for="inputCity">Source File</label>
+        <div class="input-group">
+          <input [(ngModel)]="cloneAngularInVo.srcPathNm" [ngModelOptions]="{standalone: true}" type="text" class="form-control"  placeholder="Save src folder...">
+          <span class="input-group-append">
+            <button class="btn btn-secondary" type="button" (click)="onSaveSrcPath()" >Save</button>
+          </span>
+        </div>
       </div>
     </div>
 

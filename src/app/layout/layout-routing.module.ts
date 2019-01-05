@@ -8,9 +8,10 @@ const routes: Routes = [
         component: LayoutComponent,
         children: [
             { path: '', redirectTo: 'code-list' },
-            { path: 'code-list' , loadChildren: './dams/code/code-list/code-list.module#CodeListModule' },
-            { path: 'tran-camel', loadChildren: './tran/camel/tran-camel.module#TranCamelModule' },
-            { path: 'blank-page', loadChildren: './blank-page/blank-page.module#BlankPageModule' }
+            { path: 'code-list'    , loadChildren: './dams/code/code-list/code-list.module#CodeListModule' },
+            { path: 'tran-camel'   , loadChildren: './tran/camel/tran-camel.module#TranCamelModule' },
+            { path: 'clone-angular', loadChildren: './clone/angular/clone-angular.module#CloneAngularModule' },
+            { path: 'blank-page'   , loadChildren: './blank-page/blank-page.module#BlankPageModule' }
         ]
     }
 ];

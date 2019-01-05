@@ -11,14 +11,14 @@ import { Router } from '@angular/router';
 export class CodeListComponent implements OnInit {
 
   comboCode = [
-     {id : 'ALL'          , name : '전체'       }
-    ,{id : 'CD_ID_NM'     , name : '코드ID명'    }
-    ,{id : 'CD_ID_HNM'    , name : '코드ID한글명' }
-    ,{id : 'CD_ID_GRP_NM' , name : '코드ID그룹명' }
-    ,{id : 'CD'           , name : '코드'       }
-    ,{id : 'CD_NM'        , name : '코드명'      }
-    ,{id : 'CD_HNM'       , name : '코드한글명'   }
-    ,{id : 'CD_DESC'      , name : '코드설명'    }
+     {id : 'ALL'       , name : '전체'     }
+    ,{id : 'CD_GRP'    , name : '코드그룹'  }
+    ,{id : 'CD_GRP_NM' , name : '코드그룹명' }
+    ,{id : 'CD_ID'     , name : '코드ID'   }
+    ,{id : 'CD_ID_NM'  , name : '코드ID명'  }
+    ,{id : 'CD'        , name : '코드'      }
+    ,{id : 'CD_NM'     , name : '코드명'    }
+    ,{id : 'CD_DESC'   , name : '코드설명'   }
   ];  
   
   codeInVo: Code = new Code();

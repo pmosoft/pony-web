@@ -23,28 +23,24 @@
       <tr>
         <th style="width: 60px;" scope="col">번호</th>
         <th style="width:100px;" scope="col">코드그룹</th>
-        <th style="width:120px;" scope="col">코드ID명</th>
-        <th style="width:140px;" scope="col">코드ID한글명</th>
+        <th style="width:140px;" scope="col">코드ID</th>
+        <th style="width:140px;" scope="col">코드ID명</th>
         <th style="width: 60px;" scope="col">코드</th>
-        <th style="width:140px;" scope="col">코드한글명</th>
+        <th style="width:140px;" scope="col">코드명</th>
         <th style="width:200px;" scope="col">코드설명</th>
-        <th style="width:100px;" scope="col">코드명</th>
-        <th style="width:100px;" scope="col">코드상태</th>
         <th style="width:100px;" scope="col">코드유형</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let codeOutVo of codeOutVoList; let i=index">
         <td>{{i+1}}</td>
-        <td>{{codeOutVo.cdIdGrpNm}}</td>
+        <td>{{codeOutVo.cdGrpNm}}</td>
+        <td>{{codeOutVo.cdId}}</td>
         <td>{{codeOutVo.cdIdNm}}</td>
-        <td>{{codeOutVo.cdIdHnm}}</td>
         <td>{{codeOutVo.cd}}</td>
-        <td>{{codeOutVo.cdHnm}}</td>
-        <td>{{codeOutVo.cdDesc}}</td>
         <td>{{codeOutVo.cdNm}}</td>
-        <td>{{codeOutVo.cdStsCdNm}}</td>
-        <td>{{codeOutVo.cdTyCdNm}}</td>
+        <td>{{codeOutVo.cdDesc}}</td>
+        <td>{{codeOutVo.cdTyCd}}</td>
       </tr>
     </tbody>
   </table>

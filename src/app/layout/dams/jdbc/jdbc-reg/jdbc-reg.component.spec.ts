@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CharsetComponent } from './charset.component';
+import { JdbcRegComponent } from './jdbc-reg.component';
 
-describe('CharsetComponent', () => {
-  let component: CharsetComponent;
-  let fixture: ComponentFixture<CharsetComponent>;
+describe('JdbcRegComponent', () => {
+  let component: JdbcRegComponent;
+  let fixture: ComponentFixture<JdbcRegComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CharsetComponent ]
+      declarations: [ JdbcRegComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CharsetComponent);
+    fixture = TestBed.createComponent(JdbcRegComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

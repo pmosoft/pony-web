@@ -39,7 +39,6 @@ export class CodeListComponent implements OnInit {
   onSelectCodeList() {
     
     this.codeService.selectCodeList(this.codeInVo)
-    
     .subscribe(result => {
        if(!result.isSuccess) alert(result.errUsrMsg)
       else {

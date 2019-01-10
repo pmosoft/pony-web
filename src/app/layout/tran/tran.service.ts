@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
-import { Gens } from './gens';
+import { Tran } from './tran';
 import { DOCUMENT } from '@angular/platform-browser';
 
 const httpOptions = {
@@ -12,17 +12,18 @@ const httpOptions = {
 };
 
 @Injectable({ providedIn: 'root' })
-export class GensService {
+export class TranService {
+
+  tran : Tran;
+  private heroesUrl = '/tran/test3';  // URL to web api
 
   constructor(private http: HttpClient
              ,@Inject(DOCUMENT) private document: any) { }
 
-  cloneAngular(gens: Gens): Observable<any> {
-    return this.http.post<any>('http://'+this.document.location.hostname+':9201/gens/pgm/cloneAngular', gens, httpOptions);
-  }
 
-  cloneSpring(gens: Gens): Observable<any> {
-    return this.http.post<any>('http://'+this.document.location.hostname+':9201/gens/pgm/cloneSpring', gens, httpOptions);
+  delimeterToArray(tran: Tran): Observable<any> {
+    return this.http.post<any>('http://'+this.document.location.hostname+':9201/tran/delimeterToArray', tran, httpOptions);
   }
-  
+ 
+
 }

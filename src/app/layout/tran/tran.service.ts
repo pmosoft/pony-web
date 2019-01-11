@@ -21,9 +21,9 @@ export class TranService {
              ,@Inject(DOCUMENT) private document: any) { }
 
 
-  delimeterToArray(tran: Tran): Observable<any> {
-    return this.http.post<any>('http://'+this.document.location.hostname+':9201/tran/delimeterToArray', tran, httpOptions);
+  delimeterToRows(tran: Tran): Observable<any> {
+    return this.http.post<any>('http://'+this.document.location.hostname+':9201/tran/delimeterToRows', tran, httpOptions);
   }
- 
+
 
 }

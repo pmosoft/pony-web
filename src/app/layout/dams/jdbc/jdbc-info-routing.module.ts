@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { JdbcRegComponent } from './jdbc-reg.component';
+import { JdbcInfoComponent } from './jdbc-info.component';
 
 const routes: Routes = [
   {
       path: '',
-      component: JdbcRegComponent
+      component: JdbcInfoComponent
   }
 ];
 
@@ -14,5 +14,5 @@ const routes: Routes = [
   exports: [RouterModule]
 })
  
-export class JdbcRegRoutingModule { }
+export class JdbcInfoRoutingModule { }
   

@@ -13,7 +13,7 @@ const routes: Routes = [
             { path: 'delimeter'    , loadChildren: './tran/delimeter/delimeter.module#DelimeterModule' },
             { path: 'clone-angular', loadChildren: './clone/angular/clone-angular.module#CloneAngularModule' },
             { path: 'clone-spring' , loadChildren: './clone/spring/clone-spring.module#CloneSpringModule' },
-            //{ path: 'jdbc-reg'     , loadChildren: './dams/code/jdbc/jdbc-reg/jdbc-reg.module#JdbcRegModule' },
+            { path: 'jdbc-info'     , loadChildren: './dams/jdbc/jdbc-info.module#JdbcInfoModule' },
             { path: 'blank-page'   , loadChildren: './blank-page/blank-page.module#BlankPageModule' }
         ]
     }  

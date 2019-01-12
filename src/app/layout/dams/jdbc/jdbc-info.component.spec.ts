@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { JdbcRegComponent } from './jdbc-reg.component';
+import { JdbcInfoComponent } from './jdbc-info.component';
 
-describe('JdbcRegComponent', () => {
-  let component: JdbcRegComponent;
-  let fixture: ComponentFixture<JdbcRegComponent>;
+describe('JdbcInfoComponent', () => {
+  let component: JdbcInfoComponent;
+  let fixture: ComponentFixture<JdbcInfoComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ JdbcRegComponent ]
+      declarations: [ JdbcInfoComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(JdbcRegComponent);
+    fixture = TestBed.createComponent(JdbcInfoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

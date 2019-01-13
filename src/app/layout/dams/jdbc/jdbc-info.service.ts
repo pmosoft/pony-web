@@ -28,6 +28,10 @@ export class JdbcInfoService {
     return this.http.post<any>('http://'+this.document.location.hostname+':9201/dams/jdbc/selectJdbcInfoList', jdbcInfo, httpOptions);
   }
 
+  selectComboJdbcList(jdbcInfo: JdbcInfo): Observable<any> {
+    return this.http.post<any>('http://'+this.document.location.hostname+':9201/dams/jdbc/selectComboJdbcList', jdbcInfo, httpOptions);
+  }
+
   deleteJdbcInfo(jdbcInfo: JdbcInfo): Observable<any> {
     return this.http.post<any>('http://'+this.document.location.hostname+':9201/dams/jdbc/deleteJdbcInfo', jdbcInfo, httpOptions);
   }

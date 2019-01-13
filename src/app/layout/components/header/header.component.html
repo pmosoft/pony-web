@@ -102,30 +102,22 @@
       </li>
     </ul>
   </div>
-  <ul class="navbar-nav mr-sm-4">
+  <ul class="navbar-nav mr-sm-4 mr-5">
     <li class="nav-item dropdown" ngbDropdown>
       <a href="javascript:void(0)" class="nav-link ml-2" ngbDropdownToggle>
         <i class="fa fa-fw fa-gear"></i>&nbsp;Settings<b class="caret"></b>
       </a>
-      <div class="dropdown-menu-right" ngbDropdownMenu>
+      <div class="dropdown-menu-right mr-5" ngbDropdownMenu>
         <a class="dropdown-item" routerLink="/jdbc-info" [routerLinkActive]="['router-link-active']" > 
           <i class="fa fa-fw fa-save"></i>&nbsp;{{ 'JDBC' | translate }}
         </a>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="javascript:void(0)"> 
+        <a class="dropdown-item" routerLink="/tab-info-ext" [routerLinkActive]="['router-link-active']" >
           <i class="fa fa-fw fa-save"></i>&nbsp;{{ 'Table' | translate }}
         </a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="javascript:void(0)"> 
           <i class="fa fa-fw fa-save"></i>&nbsp;{{ 'Code' | translate }}
-        </a>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item" routerLink="/tran-camel" [routerLinkActive]="['router-link-active']" > 
-          <i class="fa fa-fw fa-database"></i>&nbsp;{{ '표준용어' | translate }}
-        </a>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="javascript:void(0)"> 
-          <i class="fa fa-fw fa-database"></i>&nbsp;{{ '약어' | translate }}
         </a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="javascript:void(0)"> 

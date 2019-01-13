@@ -82,6 +82,7 @@ export class JdbcInfoComponent implements OnInit {
       else {
         this.jdbcInfoOutVoList = result.jdbcInfoOutVoList;
         console.log(result.jdbcInfoOutVoList);
+        console.log(result.jdbcInfoOutVoJson);
       }
     });
   }

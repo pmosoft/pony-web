@@ -10,4 +10,7 @@ export class JdbcInfo {
   updDtm     : string;
   updUsrId   : string;
 
+  id     : string = "";
+  name   : string = "";
+
 }

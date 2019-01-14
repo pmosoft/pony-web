@@ -1,8 +1,5 @@
-<div class="mb-1">
-  <div class="clearfix">
-    <div class="float-left">
-
-    </div>
+<div class="clearfix mb-3">
+  <div class="float-left"> Table > 테이블정보추출  </div>
 </div>
 <div class="mb-4">
   <div class="clearfix">
@@ -10,16 +7,17 @@
         <select class="btn btn-outline-primary btn-sm mr-2" (change)="onChangeComboJdbc($event.target.value)" >
           <option *ngFor="let combo of comboJdbc" [value]="combo.id" >{{combo.name}}</option>
         </select>
-        <input [(ngModel)]="tabInfoInVo.condOwner" class="btn btn-outline-primary btn-sm mr-2" (keyup.enter)="onSelectMetaTabInfoList()" placeholder="search : owner">
         <input [(ngModel)]="tabInfoInVo.condTabNm" class="btn btn-outline-primary btn-sm mr-2" (keyup.enter)="onSelectMetaTabInfoList()" placeholder="search : table name">
     </div>
     <div class="float-right">
       <button type="button" class="btn btn-outline-primary mr-2 btn-sm" (click)="onSelectMetaTabInfoList()">
           <i class="fa fa-file-excel-o"></i>&nbsp;DB메타조회
       </button>
+<!--
       <button type="button" class="btn btn-outline-primary mr-2 btn-sm" (click)="onUploadMetaTabInfo()">
           <i class="fa fa-file-excel-o"></i>&nbsp;메타업로드
       </button>
+ -->
       <button type="button" class="btn btn-outline-primary mr-2 btn-sm " (click)="onCompare()">
           <i class="fa fa-file-excel-o"></i>&nbsp;비교
       </button>
@@ -53,9 +51,11 @@
         <th style="width:100px;" scope="col">컬럼명</th>
         <th style="width:100px;" scope="col">컬럼한글명</th>
         <th style="width:100px;" scope="col">타입</th>
-        <th style="width: 50px;" scope="col">NULL</th>
+        <th style="width: 80px;" scope="col">NULL</th>
         <th style="width: 20px;" scope="col">PK</th>
-        <th style="width:100px;" scope="col">등록일시</th>
+        <th style="width: 80px;" scope="col">Rows</th>
+        <th style="width:100px;" scope="col">최근변경일</th>
+        <th style="width:100px;" scope="col">테이블생성일</th>
       </tr>
     </thead>
     <tbody>
@@ -70,7 +70,9 @@
         <td class="text-left">{{tabInfoOutVo.dataTypeDesc}}</td>
         <td                  >{{tabInfoOutVo.nullable    }}</td>
         <td                  >{{tabInfoOutVo.pk          }}</td>
-        <td                  >{{tabInfoOutVo.regDtm      }}</td>
+        <td                  >{{tabInfoOutVo.tabRows     }}</td>
+        <td                  >{{tabInfoOutVo.tabUpdDt2   }}</td>
+        <td                  >{{tabInfoOutVo.tabRegDt2   }}</td>
       </tr>
     </tbody>
   </table>

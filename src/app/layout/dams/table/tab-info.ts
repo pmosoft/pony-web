@@ -14,8 +14,15 @@ export class TabInfo {
   dataTypeNm   : string;
   len          : string;
   decimalCnt   : string;
-  colDesc      : string;
+  tabRows      : string;
+  tabRegDt     : string;
+  tabRegDt2    : string;
+  tabUpdDt     : string;
+  tabUpdDt2    : string;
   regDtm       : string;
+  regUsrId     : string;
+  updDtm       : string;
+  updUsrId     : string;
 
   condJdbcNm   : string = ""; // [조회조건] jdbc
   condOwner    : string = ""; // [조회조건] 소유자

@@ -52,11 +52,7 @@ export class JdbcInfoComponent implements OnInit {
 
 
   onNew() {
-    this.jdbcInfoInVo.jdbcNm = "";
-    this.jdbcInfoInVo.driver = "";
-    this.jdbcInfoInVo.url    = "";
-    this.jdbcInfoInVo.usrId  = "";
-    this.jdbcInfoInVo.usrPw  = "";
+    this.jdbcInfoInVo = new JdbcInfo();
     this.selectedValue = "oracle";
 
   }

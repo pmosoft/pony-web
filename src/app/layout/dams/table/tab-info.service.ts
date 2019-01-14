@@ -24,6 +24,15 @@ export class TabInfoService {
     return this.http.post<any>('http://'+this.document.location.hostname+':9201/dams/table/selectMetaTabInfoList', tabInfo, httpOptions);
   }
 
+  selectCmpTabInfoList(tabInfo: TabInfo): Observable<any> {
+    return this.http.post<any>('http://'+this.document.location.hostname+':9201/dams/table/selectCmpTabInfoList', tabInfo, httpOptions);
+  }
+
+  saveCmpTabInfoList(tabInfo: TabInfo): Observable<any> {
+    return this.http.post<any>('http://'+this.document.location.hostname+':9201/dams/table/saveCmpTabInfoList', tabInfo, httpOptions);
+  }
+
+
   selectTabInfoList(tabInfo: TabInfo): Observable<any> {
     return this.http.post<any>('http://'+this.document.location.hostname+':9201/dams/table/selectTabInfoList', tabInfo, httpOptions);
   }

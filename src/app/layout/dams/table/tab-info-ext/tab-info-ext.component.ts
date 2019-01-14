@@ -41,12 +41,17 @@ export class TabInfoExtComponent implements OnInit {
 
   onChangeComboJdbc(id) {
     console.log(id);
+    console.log("aa".toUpperCase());
     this.tabInfoInVo.condJdbcNm = id;
     this.tabInfoInVo.condOwner = "";
     this.tabInfoInVo.condTabNm = "";
   }
 
   onSelectMetaTabInfoList(){
+    if(this.tabInfoInVo.condJdbcNm=="") {
+      alert("JDBC를 선택해 주십시요.");
+      return;
+    }
     this.tabInfoService.selectMetaTabInfoList(this.tabInfoInVo)
     .subscribe(result => {
        if(!result.isSuccess) alert(result.errUsrMsg)
@@ -59,9 +64,46 @@ export class TabInfoExtComponent implements OnInit {
   }
 
   onUploadMetaTabInfo(){}
-  onCompare(){}
-  onSave(){}
+
+  onCompare(){
+    this.tabInfoService.selectCmpTabInfoList(this.tabInfoInVo)
+    .subscribe(result => {
+       if(!result.isSuccess) alert(result.errUsrMsg)
+      else {
+        this.tabInfoOutVoList = result.tabInfoOutVoList;
+        console.log(result.tabInfoOutVoList);
+        //alert("onSelectMetaTabInfoList");
+      }
+    });
+  }
+  onSave(){
+    this.tabInfoService.saveCmpTabInfoList(this.tabInfoInVo)
+    .subscribe(result => {
+       if(!result.isSuccess) alert(result.errUsrMsg)
+      else {
+        this.tabInfoOutVoList = result.tabInfoOutVoList;
+        console.log(result.tabInfoOutVoList);
+        this.onCompare();
+        //alert("onSelectMetaTabInfoList");
+      }
+    });
+  }
+
+  onSelectTabInfoList(){
+    this.tabInfoService.selectTabInfoList(this.tabInfoInVo)
+    .subscribe(result => {
+       if(!result.isSuccess) alert(result.errUsrMsg)
+      else {
+        this.tabInfoOutVoList = result.tabInfoOutVoList;
+        console.log(result.tabInfoOutVoList);
+        //alert("onSelectMetaTabInfoList");
+      }
+    });
+  }
+
   onDelete(){}
+
+
 
   onDownloadExcel() {
 
@@ -80,6 +122,5 @@ export class TabInfoExtComponent implements OnInit {
     // });
   }
 
-  onSelectTabInfoList(){}
 
 }

@@ -33,22 +33,30 @@ export class TabInfoExtComponent implements OnInit {
     .subscribe(result => {
       if(!result.isSuccess) alert(result.errUsrMsg)
       else {
-        //console.log(result.jdbcInfoOutVoJson);
+        //console.log(result.jdbcInfoOutVoList);
         this.comboJdbc = result.jdbcInfoOutVoList;
       }
     });
   }
 
-  onChangeComboJdbc(id) {
-    console.log(id);
-    console.log("aa".toUpperCase());
-    this.tabInfoInVo.condJdbcNm = id;
-    this.tabInfoInVo.condOwner = "";
-    this.tabInfoInVo.condTabNm = "";
+  onChangeComboJdbc(i) {
+    //console.log("event.value=="+event.value);
+    //console.log("event.value=="+event.selectedIndex);
+    //console.log("event.value=="+event.options[event.selectedIndex]);
+    //console.log("event.value=="+event.options[event.selectedIndex].owner);
+    //var aa = event.options[event.selectedIndex];
+    //console.log("event.value=="+aa.owner);
+    //console.log("event.value=="+this.comboJdbc[0].usrId);
+
+
+    //console.log(usrId);
+    //console.log("aa".toUpperCase());
+    this.tabInfoInVo.jdbcNm = this.comboJdbc[i].jdbcNm;
+    this.tabInfoInVo.owner = this.comboJdbc[i].usrId;
   }
 
   onSelectMetaTabInfoList(){
-    if(this.tabInfoInVo.condJdbcNm=="") {
+    if(this.tabInfoInVo.jdbcNm=="") {
       alert("JDBC를 선택해 주십시요.");
       return;
     }
@@ -71,7 +79,7 @@ export class TabInfoExtComponent implements OnInit {
        if(!result.isSuccess) alert(result.errUsrMsg)
       else {
         this.tabInfoOutVoList = result.tabInfoOutVoList;
-        console.log(result.tabInfoOutVoList);
+        //console.log(result.tabInfoOutVoList);
         //alert("onSelectMetaTabInfoList");
       }
     });
@@ -82,7 +90,7 @@ export class TabInfoExtComponent implements OnInit {
        if(!result.isSuccess) alert(result.errUsrMsg)
       else {
         this.tabInfoOutVoList = result.tabInfoOutVoList;
-        console.log(result.tabInfoOutVoList);
+        //console.log(result.tabInfoOutVoList);
         this.onCompare();
         //alert("onSelectMetaTabInfoList");
       }
@@ -95,7 +103,7 @@ export class TabInfoExtComponent implements OnInit {
        if(!result.isSuccess) alert(result.errUsrMsg)
       else {
         this.tabInfoOutVoList = result.tabInfoOutVoList;
-        console.log(result.tabInfoOutVoList);
+        //console.log(result.tabInfoOutVoList);
         //alert("onSelectMetaTabInfoList");
       }
     });

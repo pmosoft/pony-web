@@ -7,8 +7,8 @@
         <select class="btn btn-outline-primary btn-sm mr-2" (change)="onChangeComboJdbc($event.target.value)" >
           <option *ngFor="let combo of comboJdbc" [value]="combo.id" >{{combo.name}}</option>
         </select>
-        <input [(ngModel)]="tabInfoInVo.condOwner" class="btn btn-outline-primary btn-sm mr-2" (keyup.enter)="onSelectTabInfoList()" placeholder="owner를 입력하세요">
-        <input [(ngModel)]="tabInfoInVo.condTabNm" class="btn btn-outline-primary btn-sm mr-2" (keyup.enter)="onSelectTabInfoList()" placeholder="검색어를 입력하세요">
+        <input [(ngModel)]="tabInfoInVo.owner" class="btn btn-outline-primary btn-sm mr-2" (keyup.enter)="onSelectTabInfoList()" placeholder="owner를 입력하세요">
+        <input [(ngModel)]="tabInfoInVo.tabNm" class="btn btn-outline-primary btn-sm mr-2" (keyup.enter)="onSelectTabInfoList()" placeholder="검색어를 입력하세요">
     </div>
     <div class="float-right">
       <button type="button" class="btn btn-outline-primary mr-2 btn-sm" (click)="onDownloadExcel()">

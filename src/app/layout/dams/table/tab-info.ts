@@ -24,8 +24,4 @@ export class TabInfo {
   updDtm       : string;
   updUsrId     : string;
 
-  condJdbcNm   : string = ""; // [조회조건] jdbc
-  condOwner    : string = ""; // [조회조건] 소유자
-  condTabNm    : string = ""; // [조회조건] 테이블명
-
 }

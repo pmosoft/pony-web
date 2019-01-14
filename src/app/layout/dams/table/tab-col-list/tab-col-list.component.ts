@@ -42,9 +42,9 @@ export class TabColListComponent implements OnInit {
   onChangeComboJdbc(id) {
     console.log(id);
     console.log("aa".toUpperCase());
-    this.tabInfoInVo.condJdbcNm = id;
-    this.tabInfoInVo.condOwner = "";
-    this.tabInfoInVo.condTabNm = "";
+    this.tabInfoInVo.jdbcNm = id;
+    this.tabInfoInVo.owner = "";
+    this.tabInfoInVo.tabNm = "";
   }
 
   onSelectTabInfoList(){

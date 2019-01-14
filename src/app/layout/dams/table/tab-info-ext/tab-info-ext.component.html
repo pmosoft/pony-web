@@ -4,10 +4,10 @@
 <div class="mb-4">
   <div class="clearfix">
     <div class="float-left">
-        <select class="btn btn-outline-primary btn-sm mr-2" (change)="onChangeComboJdbc($event.target.value)" >
-          <option *ngFor="let combo of comboJdbc" [value]="combo.id" >{{combo.name}}</option>
+        <select class="btn btn-outline-primary btn-sm mr-2" (change)="onChangeComboJdbc($event.target.selectedIndex)" >
+          <option *ngFor="let combo of comboJdbc" [value]="combo.jdbcNm" >{{combo.jdbcNm}}</option>
         </select>
-        <input [(ngModel)]="tabInfoInVo.condTabNm" class="btn btn-outline-primary btn-sm mr-2" (keyup.enter)="onSelectMetaTabInfoList()" placeholder="search : table name">
+        <input [(ngModel)]="tabInfoInVo.tabNm" class="btn btn-outline-primary btn-sm mr-2" (keyup.enter)="onSelectMetaTabInfoList()" placeholder="search : table name">
     </div>
     <div class="float-right">
       <button type="button" class="btn btn-outline-primary mr-2 btn-sm" (click)="onSelectMetaTabInfoList()">

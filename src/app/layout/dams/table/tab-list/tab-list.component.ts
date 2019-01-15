@@ -6,11 +6,11 @@ import { JdbcInfo } from '../../jdbc/jdbc-info';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-tab-info-ext',
-  templateUrl: './tab-info-ext.component.html',
-  styleUrls: ['./tab-info-ext.component.scss']
+  selector: 'app-tab-list',
+  templateUrl: './tab-list.component.html',
+  styleUrls: ['./tab-list.component.scss']
 })
-export class TabInfoExtComponent implements OnInit {
+export class TabListComponent implements OnInit {
 
   tabInfoInVo: TabInfo = new TabInfo();
   tabInfoOutVoList: TabInfo[]
@@ -58,26 +58,9 @@ export class TabInfoExtComponent implements OnInit {
     }
   }
 
-  onSelectMetaTabInfoList(){
-    if(this.tabInfoInVo.jdbcNm=="") {
-      alert("JDBC를 선택해 주십시요.");
-      return;
-    }
-    this.tabInfoService.selectMetaTabInfoList(this.tabInfoInVo)
-    .subscribe(result => {
-       if(!result.isSuccess) alert(result.errUsrMsg)
-      else {
-        this.tabInfoOutVoList = result.tabInfoOutVoList;
-        console.log(result.tabInfoOutVoList);
-        //alert("onSelectMetaTabInfoList");
-      }
-    });
-  }
-
-  onUploadMetaTabInfo(){}
-
-  onCompare(){
-    this.tabInfoService.selectCmpTabInfoList(this.tabInfoInVo)
+  onSelectTabList(){
+    //alert("onSelectTabList");
+    this.tabInfoService.selectTabList(this.tabInfoInVo)
     .subscribe(result => {
        if(!result.isSuccess) alert(result.errUsrMsg)
       else {
@@ -87,34 +70,6 @@ export class TabInfoExtComponent implements OnInit {
       }
     });
   }
-  onSave(){
-    this.tabInfoService.saveCmpTabInfoList(this.tabInfoInVo)
-    .subscribe(result => {
-       if(!result.isSuccess) alert(result.errUsrMsg)
-      else {
-        this.tabInfoOutVoList = result.tabInfoOutVoList;
-        //console.log(result.tabInfoOutVoList);
-        this.onCompare();
-        //alert("onSelectMetaTabInfoList");
-      }
-    });
-  }
-
-  onSelectTabInfoList(){
-    this.tabInfoService.selectTabInfoList(this.tabInfoInVo)
-    .subscribe(result => {
-       if(!result.isSuccess) alert(result.errUsrMsg)
-      else {
-        this.tabInfoOutVoList = result.tabInfoOutVoList;
-        //console.log(result.tabInfoOutVoList);
-        //alert("onSelectMetaTabInfoList");
-      }
-    });
-  }
-
-  onDelete(){}
-
-
 
   onDownloadExcel() {
 
@@ -122,7 +77,7 @@ export class TabInfoExtComponent implements OnInit {
     // //console.log(data);
 
     // const fd = new FormData();
-    // fd.append('fileNm', "tab-info-ext.xls");
+    // fd.append('fileNm', "tab-list.xls");
     // fd.append('data', data);
 
     // this.codeService.downloadExcel(fd)

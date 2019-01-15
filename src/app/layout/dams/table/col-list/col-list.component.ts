@@ -6,11 +6,11 @@ import { JdbcInfo } from '../../jdbc/jdbc-info';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-tab-info-ext',
-  templateUrl: './tab-info-ext.component.html',
-  styleUrls: ['./tab-info-ext.component.scss']
+  selector: 'app-col-list',
+  templateUrl: './col-list.component.html',
+  styleUrls: ['./col-list.component.scss']
 })
-export class TabInfoExtComponent implements OnInit {
+export class ColListComponent implements OnInit {
 
   tabInfoInVo: TabInfo = new TabInfo();
   tabInfoOutVoList: TabInfo[]
@@ -58,26 +58,8 @@ export class TabInfoExtComponent implements OnInit {
     }
   }
 
-  onSelectMetaTabInfoList(){
-    if(this.tabInfoInVo.jdbcNm=="") {
-      alert("JDBC를 선택해 주십시요.");
-      return;
-    }
-    this.tabInfoService.selectMetaTabInfoList(this.tabInfoInVo)
-    .subscribe(result => {
-       if(!result.isSuccess) alert(result.errUsrMsg)
-      else {
-        this.tabInfoOutVoList = result.tabInfoOutVoList;
-        console.log(result.tabInfoOutVoList);
-        //alert("onSelectMetaTabInfoList");
-      }
-    });
-  }
-
-  onUploadMetaTabInfo(){}
-
-  onCompare(){
-    this.tabInfoService.selectCmpTabInfoList(this.tabInfoInVo)
+  onSelectColList(){
+    this.tabInfoService.selectColList(this.tabInfoInVo)
     .subscribe(result => {
        if(!result.isSuccess) alert(result.errUsrMsg)
       else {
@@ -87,32 +69,6 @@ export class TabInfoExtComponent implements OnInit {
       }
     });
   }
-  onSave(){
-    this.tabInfoService.saveCmpTabInfoList(this.tabInfoInVo)
-    .subscribe(result => {
-       if(!result.isSuccess) alert(result.errUsrMsg)
-      else {
-        this.tabInfoOutVoList = result.tabInfoOutVoList;
-        //console.log(result.tabInfoOutVoList);
-        this.onCompare();
-        //alert("onSelectMetaTabInfoList");
-      }
-    });
-  }
-
-  onSelectTabInfoList(){
-    this.tabInfoService.selectTabInfoList(this.tabInfoInVo)
-    .subscribe(result => {
-       if(!result.isSuccess) alert(result.errUsrMsg)
-      else {
-        this.tabInfoOutVoList = result.tabInfoOutVoList;
-        //console.log(result.tabInfoOutVoList);
-        //alert("onSelectMetaTabInfoList");
-      }
-    });
-  }
-
-  onDelete(){}
 
 
 
@@ -122,7 +78,7 @@ export class TabInfoExtComponent implements OnInit {
     // //console.log(data);
 
     // const fd = new FormData();
-    // fd.append('fileNm', "tab-info-ext.xls");
+    // fd.append('fileNm', "col-list.xls");
     // fd.append('data', data);
 
     // this.codeService.downloadExcel(fd)

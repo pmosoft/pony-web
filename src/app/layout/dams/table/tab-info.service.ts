@@ -37,4 +37,12 @@ export class TabInfoService {
     return this.http.post<any>('http://'+this.document.location.hostname+':9201/dams/table/selectTabInfoList', tabInfo, httpOptions);
   }
 
+  selectTabList(tabInfo: TabInfo): Observable<any> {
+    return this.http.post<any>('http://'+this.document.location.hostname+':9201/dams/table/selectTabList', tabInfo, httpOptions);
+  }
+
+  selectColList(tabInfo: TabInfo): Observable<any> {
+    return this.http.post<any>('http://'+this.document.location.hostname+':9201/dams/table/selectColList', tabInfo, httpOptions);
+  }
+
 }

@@ -33,22 +33,37 @@ export class TabColListComponent implements OnInit {
     .subscribe(result => {
       if(!result.isSuccess) alert(result.errUsrMsg)
       else {
-        //console.log(result.jdbcInfoOutVoJson);
+        //console.log(result.jdbcInfoOutVoList);
         this.comboJdbc = result.jdbcInfoOutVoList;
       }
     });
   }
 
-  onChangeComboJdbc(id) {
-    console.log(id);
-    console.log("aa".toUpperCase());
-    this.tabInfoInVo.jdbcNm = id;
-    this.tabInfoInVo.owner = "";
-    this.tabInfoInVo.tabNm = "";
+  onChangeComboJdbc(i) {
+    //console.log("event.value=="+event.value);
+    //console.log("event.value=="+event.selectedIndex);
+    //console.log("event.value=="+event.options[event.selectedIndex]);
+    //console.log("event.value=="+event.options[event.selectedIndex].owner);
+    //var aa = event.options[event.selectedIndex];
+    //console.log("event.value=="+aa.owner);
+    //console.log("event.value=="+this.comboJdbc[0].usrId);
+
+
+    //console.log(usrId);
+    //console.log("aa".toUpperCase());
+    if(i==0) this.tabInfoInVo = new TabInfo();
+    else {
+      this.tabInfoInVo.jdbcNm = this.comboJdbc[i].jdbcNm;
+      this.tabInfoInVo.owner = this.comboJdbc[i].usrId;
+    }
   }
 
-  onSelectTabInfoList(){
-    this.tabInfoService.selectTabInfoList(this.tabInfoInVo)
+  onSelectMetaTabInfoList(){
+    if(this.tabInfoInVo.jdbcNm=="") {
+      alert("JDBC를 선택해 주십시요.");
+      return;
+    }
+    this.tabInfoService.selectMetaTabInfoList(this.tabInfoInVo)
     .subscribe(result => {
        if(!result.isSuccess) alert(result.errUsrMsg)
       else {
@@ -58,6 +73,48 @@ export class TabColListComponent implements OnInit {
       }
     });
   }
+
+  onUploadMetaTabInfo(){}
+
+  onCompare(){
+    this.tabInfoService.selectCmpTabInfoList(this.tabInfoInVo)
+    .subscribe(result => {
+       if(!result.isSuccess) alert(result.errUsrMsg)
+      else {
+        this.tabInfoOutVoList = result.tabInfoOutVoList;
+        //console.log(result.tabInfoOutVoList);
+        //alert("onSelectMetaTabInfoList");
+      }
+    });
+  }
+  onSave(){
+    this.tabInfoService.saveCmpTabInfoList(this.tabInfoInVo)
+    .subscribe(result => {
+       if(!result.isSuccess) alert(result.errUsrMsg)
+      else {
+        this.tabInfoOutVoList = result.tabInfoOutVoList;
+        //console.log(result.tabInfoOutVoList);
+        this.onCompare();
+        //alert("onSelectMetaTabInfoList");
+      }
+    });
+  }
+
+  onSelectTabInfoList(){
+    this.tabInfoService.selectTabInfoList(this.tabInfoInVo)
+    .subscribe(result => {
+       if(!result.isSuccess) alert(result.errUsrMsg)
+      else {
+        this.tabInfoOutVoList = result.tabInfoOutVoList;
+        //console.log(result.tabInfoOutVoList);
+        //alert("onSelectMetaTabInfoList");
+      }
+    });
+  }
+
+  onDelete(){}
+
+
 
   onDownloadExcel() {
 

@@ -5,6 +5,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { JdbcInfo } from './jdbc-info';
+import { TabInfo } from '../table/tab-info';
 import { DOCUMENT } from '@angular/platform-browser';
 
 const httpOptions = {
@@ -36,8 +37,8 @@ export class JdbcInfoService {
     return this.http.post<any>('http://'+this.document.location.hostname+':9201/dams/jdbc/deleteJdbcInfo', jdbcInfo, httpOptions);
   }
 
-  testJdbcInfo(jdbcInfo: JdbcInfo): Observable<any> {
-    return this.http.post<any>('http://'+this.document.location.hostname+':9201/dams/jdbc/testJdbcInfo', jdbcInfo, httpOptions);
+  testJdbcInfo(tabInfo: TabInfo): Observable<any> {
+    return this.http.post<any>('http://'+this.document.location.hostname+':9201/dams/table/testJdbcInfo', tabInfo, httpOptions);
   }
 
 }

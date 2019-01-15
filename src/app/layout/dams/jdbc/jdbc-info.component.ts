@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { JdbcInfoService } from './jdbc-info.service';
 import { JdbcInfo } from './jdbc-info';
 import { Router } from '@angular/router';
+import { TabInfo } from '../table/tab-info';
 
 @Component({
   selector: 'app-jdbc-info',
@@ -12,6 +13,7 @@ export class JdbcInfoComponent implements OnInit {
 
   jdbcInfoInVo: JdbcInfo = new JdbcInfo();
   jdbcInfoOutVoList: JdbcInfo[];
+  tabInfoInVo : TabInfo = new TabInfo();
 
   selectedValue : string = "mariadb";
 
@@ -96,7 +98,9 @@ export class JdbcInfoComponent implements OnInit {
 
   onTest() {
     console.log("onTest");
-    this.jdbcInfoService.testJdbcInfo(this.jdbcInfoInVo)
+    this.tabInfoInVo.jdbcNm = this.jdbcInfoInVo.jdbcNm;
+    this.tabInfoInVo.owner = this.jdbcInfoInVo.usrId;
+    this.jdbcInfoService.testJdbcInfo(this.tabInfoInVo)
     .subscribe(result => {
       if(!result.isSuccess)
         //alert(result.errUsrMsg)

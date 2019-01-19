@@ -33,7 +33,7 @@ export class TabInfoExtComponent implements OnInit {
     .subscribe(result => {
       if(!result.isSuccess) alert(result.errUsrMsg)
       else {
-        //console.log(result.jdbcInfoOutVoList);
+        //console.log(result.jdbcInfoOutVoList); //
         this.comboJdbc = result.jdbcInfoOutVoList;
       }
     });

@@ -100,6 +100,19 @@ export class TabInfoExtComponent implements OnInit {
     });
   }
 
+  onDelete(){
+    this.tabInfoService.deleteTabInfo(this.tabInfoInVo)
+    .subscribe(result => {
+       if(!result.isSuccess) alert(result.errUsrMsg)
+      else {
+        //console.log(result.tabInfoOutVoList);
+        this.onSelectTabInfoList();
+        //alert("onSelectMetaTabInfoList");
+      }
+    });
+  }
+
+
   onSelectTabInfoList(){
     this.tabInfoService.selectTabInfoList(this.tabInfoInVo)
     .subscribe(result => {
@@ -112,7 +125,6 @@ export class TabInfoExtComponent implements OnInit {
     });
   }
 
-  onDelete(){}
 
 
 

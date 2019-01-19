@@ -13,7 +13,7 @@ export class TabInfo {
   pk           : string = "";
   dataTypeNm   : string = "";
   len          : number     ;
-  decimalCnt   : string = "";
+  decimalCnt   : number     ;
   tabRows      : number     ;
   tabRegDt     : string = "";
   tabRegDt2    : string = "";

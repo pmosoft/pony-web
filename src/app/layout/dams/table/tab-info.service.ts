@@ -32,6 +32,9 @@ export class TabInfoService {
     return this.http.post<any>('http://'+this.document.location.hostname+':9201/dams/table/saveCmpTabInfoList', tabInfo, httpOptions);
   }
 
+  deleteTabInfo(tabInfo: TabInfo): Observable<any> {
+    return this.http.post<any>('http://'+this.document.location.hostname+':9201/dams/table/deleteTabInfo', tabInfo, httpOptions);
+  }
 
   selectTabInfoList(tabInfo: TabInfo): Observable<any> {
     return this.http.post<any>('http://'+this.document.location.hostname+':9201/dams/table/selectTabInfoList', tabInfo, httpOptions);

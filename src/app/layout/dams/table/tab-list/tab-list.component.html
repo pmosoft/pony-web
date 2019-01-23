@@ -20,6 +20,12 @@
         <input [(ngModel)]="tabInfoInVo.tabRows"  class="btn btn-outline-primary btn-sm mr-2" (keyup.enter)="onSelectTabList()" placeholder="건수">
         <input [(ngModel)]="tabInfoInVo.tabRegDt" class="btn btn-outline-primary btn-sm mr-2" (keyup.enter)="onSelectTabList()" placeholder="테이블등록일">
         <input [(ngModel)]="tabInfoInVo.tabUpdDt" class="btn btn-outline-primary btn-sm mr-2" (keyup.enter)="onSelectTabList()" placeholder="최근갱신일">
+        <select class="btn btn-outline-primary btn-sm mr-2" (change)="onChangeComboOrderBy($event.target.selectedIndex)"  >
+          <option *ngFor="let combo of comboOrderBy" [value]="combo.value" >{{combo.name}}</option>
+        </select>
+        <select class="btn btn-outline-primary btn-sm mr-2" (change)="onChangeComboAscDesc($event.target.selectedIndex)"  >
+          <option *ngFor="let combo of comboAscDesc" [value]="combo.value" >{{combo.name}}</option>
+        </select>
     </div>
   </div>
 </div>

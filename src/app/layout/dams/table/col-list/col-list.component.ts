@@ -18,6 +18,18 @@ export class ColListComponent implements OnInit {
 
   //comboJdbc : JdbcCombo[];
   comboJdbc : JdbcInfo[];
+  comboOrderBy = [
+      {name : '선택(정렬)' , value : 'JDBC_NM' }
+     ,{name : '컬럼명'   , value : 'COL_NM'  }
+     ,{name : '컬럼한글명', value : 'COL_HNM'  }
+     ,{name : '타입'     , value : 'DATA_TYPE_DESC'}
+     ,{name : 'Rows'     , value : 'TAB_ROWS'}
+     ,{name : '테이블명'   , value : 'TAB_NM'  }
+  ];
+  comboAscDesc = [
+     {name : 'ASC' , value : 'ASC' }
+    ,{name : 'DESC', value : 'DESC'}
+  ];
 
   constructor(private tabInfoService: TabInfoService
              ,private jdbcInfoService: JdbcInfoService
@@ -47,8 +59,6 @@ export class ColListComponent implements OnInit {
     //var aa = event.options[event.selectedIndex];
     //console.log("event.value=="+aa.owner);
     //console.log("event.value=="+this.comboJdbc[0].usrId);
-
-
     //console.log(usrId);
     //console.log("aa".toUpperCase());
     if(i==0) this.tabInfoInVo = new TabInfo();
@@ -56,6 +66,15 @@ export class ColListComponent implements OnInit {
       this.tabInfoInVo.jdbcNm = this.comboJdbc[i].jdbcNm;
       this.tabInfoInVo.owner = this.comboJdbc[i].usrId;
     }
+    this.onSelectColList();
+  }
+  onChangeComboOrderBy(i) {
+    this.tabInfoInVo.orderBy = this.comboOrderBy[i].value;
+    this.onSelectColList();
+  }
+  onChangeComboAscDesc(i) {
+    this.tabInfoInVo.ascDesc = this.comboAscDesc[i].value;
+    this.onSelectColList();
   }
 
   onSelectColList(){

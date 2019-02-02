@@ -61,8 +61,10 @@ export class ColListComponent implements OnInit {
     //console.log("event.value=="+this.comboJdbc[0].usrId);
     //console.log(usrId);
     //console.log("aa".toUpperCase());
-    if(i==0) this.tabInfoInVo = new TabInfo();
-    else {
+    if(i==0) {
+      this.tabInfoInVo.jdbcNm = ""
+      this.tabInfoInVo.owner = ""
+    } else {
       this.tabInfoInVo.jdbcNm = this.comboJdbc[i].jdbcNm;
       this.tabInfoInVo.owner = this.comboJdbc[i].usrId;
     }

@@ -22,17 +22,17 @@ export class JdbcInfoComponent implements OnInit {
   // select
   //----------------
   comboDriver = [
-     {id: "oracle" , name: "oracle" }
-    ,{id: "mariadb", name: "mariadb"}
-    ,{id: "sqlite" , name: "sqlite" }
-//    ,{id: "db2"    , name: "db2"    }
-//    ,{id: "sybase" , name: "sybase" }
-//    ,{id: "IQ"     , name: "iq"     }
-//    ,{id: "mssql"  , name: "mssql"  }
-//    ,{id: "Exadata", name: "exadata"}
-//    ,{id: "mysql"  , name: "mysql"  }
-//    ,{id: "hsqldb" , name: "hsqldb" }
-//    ,{id: "postgre", name: "postgre"}
+     {value: "oracle" , name: "oracle" }
+    ,{value: "mariadb", name: "mariadb"}
+    ,{value: "sqlite" , name: "sqlite" }
+//    ,{value: "db2"    , name: "db2"    }
+//    ,{value: "sybase" , name: "sybase" }
+//    ,{value: "IQ"     , name: "iq"     }
+//    ,{value: "mssql"  , name: "mssql"  }
+//    ,{value: "Exadata", name: "exadata"}
+//    ,{value: "mysql"  , name: "mysql"  }
+//    ,{value: "hsqldb" , name: "hsqldb" }
+//    ,{value: "postgre", name: "postgre"}
   ];
 
 
@@ -50,6 +50,7 @@ export class JdbcInfoComponent implements OnInit {
 
   onClick(jdbcInfoInVo) {
     this.jdbcInfoInVo = jdbcInfoInVo;
+    this.selectedValue = jdbcInfoInVo.driver
   }
 
 

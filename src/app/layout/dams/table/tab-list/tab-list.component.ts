@@ -16,6 +16,7 @@ export class TabListComponent implements OnInit {
   tabInfoOutVoList: TabInfo[]
   jdbcInfoInVo: JdbcInfo = new JdbcInfo();
 
+  createScript = "";
   //comboJdbc : JdbcCombo[];
   comboJdbc : JdbcInfo[];
   comboOrderBy = [
@@ -26,19 +27,23 @@ export class TabListComponent implements OnInit {
      ,{name : '최근변경일' , value : 'TAB_UPD_DT'}
      ,{name : '테이블생성일', value : 'TAB_REG_DT'}
   ];
-  comboAscDesc = [
-     {name : 'ASC' , value : 'ASC' }
-    ,{name : 'DESC', value : 'DESC'}
-  ];
+  comboAscDesc = this.tabInfoService.comboAscDesc;
+
+  isCheckAll : boolean = false;
 
   constructor(private tabInfoService: TabInfoService
              ,private jdbcInfoService: JdbcInfoService
              ,private router: Router) { }
 
   ngOnInit() {
+    //this.tabInfoInVo = this.tabInfoService.onGetLocalStorageTabInfo();
     this.onSetComboJdbc();
+    this.onSelectTabList();
   }
 
+  /********************************************
+   * Combo
+   ********************************************/
   onSetComboJdbc() {
     this.jdbcInfoService.selectComboJdbcList(this.jdbcInfoInVo)
     //this.jdbcInfoService.selectJdbcInfoList(this.jdbcInfoInVo)
@@ -61,8 +66,10 @@ export class TabListComponent implements OnInit {
     //console.log("event.value=="+this.comboJdbc[0].usrId);
     //console.log(usrId);
     //console.log("aa".toUpperCase());
-    if(i==0) this.tabInfoInVo = new TabInfo();
-    else {
+    if(i==0) {
+      this.tabInfoInVo.jdbcNm = ""
+      this.tabInfoInVo.owner = ""
+    } else {
       this.tabInfoInVo.jdbcNm = this.comboJdbc[i].jdbcNm;
       this.tabInfoInVo.owner = this.comboJdbc[i].usrId;
     }
@@ -77,7 +84,28 @@ export class TabListComponent implements OnInit {
     this.onSelectTabList();
   }
 
+  /********************************************
+   * Checkbox:grid
+   ********************************************/
+  onCheckGridAll() {
+    for (var i = 0; i < this.tabInfoOutVoList.length; i++) {
+      this.tabInfoOutVoList[i].chk = this.isCheckAll;
+      console.log("chk["+i+"]="+this.tabInfoOutVoList[i].chk);
+    }
+  }
+
+  onCheckGrid(i) {
+    console.log("chk1="+this.tabInfoOutVoList[i].chk);
+  }
+
+
+
+  /********************************************
+   * Event
+   ********************************************/
   onSelectTabList(){
+    //this.tabInfoService.tabInfoInVo = this.tabInfoInVo;
+    //this.tabInfoService.onSetLocalStorageTabInfo(this.tabInfoInVo);
     //alert("onSelectTabList");
     this.tabInfoService.selectTabList(this.tabInfoInVo)
     .subscribe(result => {
@@ -88,6 +116,26 @@ export class TabListComponent implements OnInit {
         //alert("onSelectMetaTabInfoList");
       }
     });
+  }
+
+  onDDL() {
+    console.log("onDDL");
+    this.tabInfoService.selectCreateScript(this.tabInfoOutVoList)
+    .subscribe(result => {
+       if(!result.isSuccess) alert(result.errUsrMsg)
+      else {
+        //this.tabInfoOutVoList = result.tabInfoOutVoList;
+        console.log(result.createScript);
+        this.createScript = result.createScript;
+        //alert(this.createScript);
+        //this.router.navigate(["/ext-stat-view/"+this.createScript]);
+        this.router.navigate(['/ext-stat-view',{result: this.createScript}]);
+        //this.router.navigate(['/ext-stat-view/',{debug: true}]);
+      }
+    });
+
+
+
   }
 
   onDownloadExcel() {

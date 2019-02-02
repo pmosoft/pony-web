@@ -52,7 +52,7 @@
 		      <input type="text" class="form-control mb-3" id="jdbcNm" [(ngModel)]="jdbcInfoInVo.jdbcNm" [ngModelOptions]="{standalone: true}" >
 		      <label for="driver">Driver</label>
 		      <select  class="form-control mb-3" (change)="onComboChange($event.target.value)" [(ngModel)]="selectedValue" [ngModelOptions]="{standalone: true}">
-            <option *ngFor="let combo of comboDriver" [value]="combo.id" >{{combo.name}}</option>
+            <option *ngFor="let combo of comboDriver" [value]="combo.value" >{{combo.name}}</option>
           </select>
 		      <label for="url">URL</label>
 		      <input type="text" class="form-control mb-3" id="url" [(ngModel)]="jdbcInfoInVo.url" [ngModelOptions]="{standalone: true}" >

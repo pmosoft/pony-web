@@ -4,7 +4,7 @@
         <select class="btn btn-outline-primary btn-sm mr-2" (change)="onComboCodeChange($event.target.value)" > 
           <option *ngFor="let cd of comboCode" [value]="cd.id" >{{cd.name}}</option>
         </select>
-        <input [(ngModel)]="codeInVo.searchValue" class="btn btn-outline-primary btn-sm mr-2" (keyup.enter)="onSelectCodeList()" >
+        <input [(ngModel)]="codeInVo.searchValue" class="btn btn-outline-primary btn-sm mr-2" (keyup)="onSelectCodeList()" >
     </div>
     <div class="float-right">
       <button type="button" class="btn btn-outline-primary mr-2 btn-sm" (click)="onDownloadExcel()">

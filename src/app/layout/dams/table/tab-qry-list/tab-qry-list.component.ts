@@ -3,21 +3,21 @@ import { TabInfoService } from '../tab-info.service';
 import { TabInfo } from '../tab-info';
 import { JdbcInfoService } from '../../jdbc/jdbc-info.service';
 import { JdbcInfo } from '../../jdbc/jdbc-info';
-import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-tab-col-list',
-  templateUrl: './tab-col-list.component.html',
-  styleUrls: ['./tab-col-list.component.scss']
+  selector: 'app-tab-qry-list',
+  templateUrl: './tab-qry-list.component.html',
+  styleUrls: ['./tab-qry-list.component.scss']
 })
-export class TabColListComponent implements OnInit {
+export class TabQryListComponent implements OnInit {
 
   tabInfoInVo: TabInfo = new TabInfo();
   tabInfoOutVoList: TabInfo[]
   jdbcInfoInVo: JdbcInfo = new JdbcInfo();
-
-  //comboJdbc  : JdbcCombo[];
-  comboJdbc    : JdbcInfo[];
+ 
+  //comboJdbc : JdbcCombo[];
+  comboJdbc : JdbcInfo[];
   comboOrderBy = [
       {name : '선택(정렬)' , value : 'JDBC_NM' }
      ,{name : '테이블명'   , value : 'TAB_NM'  }
@@ -26,28 +26,21 @@ export class TabColListComponent implements OnInit {
      ,{name : '최근변경일' , value : 'TAB_UPD_DT'}
      ,{name : '테이블생성일', value : 'TAB_REG_DT'}
   ];
-
   comboAscDesc = this.tabInfoService.comboAscDesc;
+
+  isCheckAll : boolean = false;
 
   constructor(private tabInfoService: TabInfoService
              ,private jdbcInfoService: JdbcInfoService
-             ,private route: ActivatedRoute) { }
+             ,private router: Router) { }
 
   ngOnInit() {
     //this.tabInfoInVo = this.tabInfoService.onGetLocalStorageTabInfo();
-    this.route.queryParams.subscribe(params => {
-      //console.log("tabNm="+params['tabNm']);
-      const tabNm = params['tabNm'];
-      if(tabNm==null ||tabNm==':tabNm') this.tabInfoInVo.tabNm = "";
-      else this.tabInfoInVo.tabNm = tabNm;
-    })
-
-
-
-
     this.onSetComboJdbc();
-    this.onSelectTabInfoList();
+    this.onSelectTabQryList();
   }
+
+
 
   /********************************************
    * Combo
@@ -72,7 +65,7 @@ export class TabColListComponent implements OnInit {
     //var aa = event.options[event.selectedIndex];
     //console.log("event.value=="+aa.owner);
     //console.log("event.value=="+this.comboJdbc[0].usrId);
-    //console.log(i);
+    //console.log(usrId);
     //console.log("aa".toUpperCase());
     if(i==0) {
       this.tabInfoInVo.jdbcNm = ""
@@ -81,30 +74,29 @@ export class TabColListComponent implements OnInit {
       this.tabInfoInVo.jdbcNm = this.comboJdbc[i].jdbcNm;
       this.tabInfoInVo.owner = this.comboJdbc[i].usrId;
     }
-    this.onSelectTabInfoList();
+    this.onSelectTabQryList();
   }
   onChangeComboOrderBy(i) {
     this.tabInfoInVo.orderBy = this.comboOrderBy[i].value;
-    this.onSelectTabInfoList();
+    this.onSelectTabQryList();
   }
   onChangeComboAscDesc(i) {
     this.tabInfoInVo.ascDesc = this.comboAscDesc[i].value;
-    this.onSelectTabInfoList();
+    this.onSelectTabQryList();
   }
 
   /********************************************
-   * Grid Checkbox
+   * Checkbox:grid
    ********************************************/
-  onCheckAll() {
-    this.jdbcInfoService.selectComboJdbcList(this.jdbcInfoInVo)
-    //this.jdbcInfoService.selectJdbcInfoList(this.jdbcInfoInVo)
-    .subscribe(result => {
-      if(!result.isSuccess) alert(result.errUsrMsg)
-      else {
-        //console.log(result.jdbcInfoOutVoList);
-        this.comboJdbc = result.jdbcInfoOutVoList;
-      }
-    });
+  onCheckGridAll() {
+    for (var i = 0; i < this.tabInfoOutVoList.length; i++) {
+      this.tabInfoOutVoList[i].chk = this.isCheckAll;
+      console.log("chk["+i+"]="+this.tabInfoOutVoList[i].chk);
+    }
+  }
+
+  onCheckGrid(i) {
+    console.log("chk="+this.tabInfoOutVoList[i].chk);
   }
 
 
@@ -112,67 +104,8 @@ export class TabColListComponent implements OnInit {
   /********************************************
    * Event
    ********************************************/
-  onSelectMetaTabInfoList(){
-    //this.tabInfoService.tabInfoInVo = this.tabInfoInVo;
-    //this.tabInfoService.onSetLocalStorageTabInfo(this.tabInfoInVo);
-
-    if(this.tabInfoInVo.jdbcNm=="") {
-      alert("JDBC를 선택해 주십시요.");
-      return;
-    }
-    this.tabInfoService.selectMetaTabInfoList(this.tabInfoInVo)
-    .subscribe(result => {
-       if(!result.isSuccess) alert(result.errUsrMsg)
-      else {
-        this.tabInfoOutVoList = result.tabInfoOutVoList;
-        console.log(result.tabInfoOutVoList);
-        //alert("onSelectMetaTabInfoList");
-      }
-    });
+  onSelectTabQryList(){
   }
-
-  onUploadMetaTabInfo(){}
-
-  onCompare(){
-    this.tabInfoService.selectCmpTabInfoList(this.tabInfoInVo)
-    .subscribe(result => {
-       if(!result.isSuccess) alert(result.errUsrMsg)
-      else {
-        this.tabInfoOutVoList = result.tabInfoOutVoList;
-        //console.log(result.tabInfoOutVoList);
-        //alert("onSelectMetaTabInfoList");
-      }
-    });
-  }
-
-  onSave(){
-    this.tabInfoService.saveCmpTabInfoList(this.tabInfoInVo)
-    .subscribe(result => {
-       if(!result.isSuccess) alert(result.errUsrMsg)
-      else {
-        this.tabInfoOutVoList = result.tabInfoOutVoList;
-        //console.log(result.tabInfoOutVoList);
-        this.onCompare();
-        //alert("onSelectMetaTabInfoList");
-      }
-    });
-  }
-
-  onSelectTabInfoList(){
-    this.tabInfoService.selectTabInfoList(this.tabInfoInVo)
-    .subscribe(result => {
-       if(!result.isSuccess) alert(result.errUsrMsg)
-      else {
-        this.tabInfoOutVoList = result.tabInfoOutVoList;
-        //console.log(result.tabInfoOutVoList);
-        //alert("onSelectMetaTabInfoList");
-      }
-    });
-  }
-
-  onDelete(){}
-
-
 
   onDownloadExcel() {
 
@@ -180,7 +113,7 @@ export class TabColListComponent implements OnInit {
     // //console.log(data);
 
     // const fd = new FormData();
-    // fd.append('fileNm', "tab-col-list.xls");
+    // fd.append('fileNm', "tab-qry-list.xls");
     // fd.append('data', data);
 
     // this.codeService.downloadExcel(fd)

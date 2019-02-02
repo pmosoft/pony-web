@@ -11,4 +11,20 @@ export class AppComponent implements OnInit {
 
     ngOnInit() {
     }
+
+    public test() {
+        return "aaa";
+    }
+
+    public nullToSpace(str : string) {
+        if(str == null || str == 'null' || str == undefined || str == 'undefined') str = "";
+        return str;
+    }
+
+    public nullToZero(str : string) {
+        if(str == null || str == 'null' || str == undefined || str == 'undefined') str = "0";
+        return str;
+    }
+
 }
+

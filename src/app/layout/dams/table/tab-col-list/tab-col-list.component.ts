@@ -42,9 +42,6 @@ export class TabColListComponent implements OnInit {
       else this.tabInfoInVo.tabNm = tabNm;
     })
 
-
-
-
     this.onSetComboJdbc();
     this.onSelectTabInfoList();
   }

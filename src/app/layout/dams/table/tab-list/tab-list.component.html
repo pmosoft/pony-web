@@ -52,7 +52,7 @@
         <td                   >{{tabInfoOutVo.owner         }}</td>
         <td class="text-left" ><a target="tab-col" [routerLink]="['/tab-col-list/']" [queryParams]="{tabNm: tabInfoOutVo.tabNm}" [routerLinkActive]="['router-link-active']">{{tabInfoOutVo.tabNm}}</a></td>
         <td class="text-left" >{{tabInfoOutVo.tabHnm        }}</td>
-        <td class="text-right">{{tabInfoOutVo.tabRows|number}}</td>
+        <td class="text-right"><a target="tab-qry" [routerLink]="['/tab-qry-list/']" [queryParams]="{jdbcNm: tabInfoOutVo.jdbcNm,owner: tabInfoOutVo.owner,tabNm: tabInfoOutVo.tabNm}" [routerLinkActive]="['router-link-active']">{{tabInfoOutVo.tabRows|number}}</a></td>
         <td                   >{{tabInfoOutVo.tabUpdDt2     }}</td>
         <td                   >{{tabInfoOutVo.tabRegDt2     }}</td>
       </tr>

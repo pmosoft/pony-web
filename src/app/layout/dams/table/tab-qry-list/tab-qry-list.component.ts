@@ -70,23 +70,55 @@ export class TabQryListComponent implements OnInit {
     });
   }
 
+  onDownloadInsStat() {
+    this.tabInfoService.downloadInsStat(this.tabInfoInVo)
+    .subscribe(result => {
+       if(!result.isSuccess) alert(result.errUsrMsg)
+      else {
+        //this.tabInfoOutVoList = result.tabInfoOutVoList;
+        //console.log(result.tabInfoOutVoList);
+        //alert("onSelectMetaTabInfoList");
+      }
+    });
+  }
 
   onDownloadExcel() {
 
-    // let data = JSON.stringify(this.codeOutVoList);
-    // //console.log(data);
-
-    // const fd = new FormData();
-    // fd.append('fileNm', "tab-qry-list.xls");
-    // fd.append('data', data);
-
-    // this.codeService.downloadExcel(fd)
-    // .subscribe(result => {
-    //    if(!result.isSuccess) alert(result.errUsrMsg)
-    //   else {
-    //   }
-    // });
+    this.tabInfoService.downloadExcel(this.tabInfoInVo)
+    .subscribe(result => {
+       if(!result.isSuccess) alert(result.errUsrMsg)
+      else {
+        //this.tabInfoOutVoList = result.tabInfoOutVoList;
+        //console.log(result.tabInfoOutVoList);
+        //alert("onSelectMetaTabInfoList");
+      }
+    });
   }
 
+  onDownloadCommaFile() {
+
+    this.tabInfoService.downloadCommaFile(this.tabInfoInVo)
+    .subscribe(result => {
+       if(!result.isSuccess) alert(result.errUsrMsg)
+      else {
+        //this.tabInfoOutVoList = result.tabInfoOutVoList;
+        //console.log(result.tabInfoOutVoList);
+        //alert("onSelectMetaTabInfoList");
+      }
+    });
+  }
+
+  onDownloadBarFile() {
+
+    this.tabInfoService.downloadBarFile(this.tabInfoInVo)
+    .subscribe(result => {
+       if(!result.isSuccess) alert(result.errUsrMsg)
+      else {
+        //this.tabInfoOutVoList = result.tabInfoOutVoList;
+        //console.log(result.tabInfoOutVoList);
+        //alert("onSelectMetaTabInfoList");
+      }
+    });
+  }
 
 }

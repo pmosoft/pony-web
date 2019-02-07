@@ -9,6 +9,7 @@ const routes: Routes = [
         children: [
             { path: '', redirectTo: 'tab-list' },
             { path: 'tab-info-ext' , loadChildren: './dams/table/tab-info-ext/tab-info-ext.module#TabInfoExtModule' },
+            { path: 'tab-info-ext2', loadChildren: './dams/table/tab-info-ext2/tab-info-ext2.module#TabInfoExt2Module' },
             { path: 'tab-col-list' , loadChildren: './dams/table/tab-col-list/tab-col-list.module#TabColListModule' },
             { path: 'tab-list'     , loadChildren: './dams/table/tab-list/tab-list.module#TabListModule' },
             { path: 'col-list'     , loadChildren: './dams/table/col-list/col-list.module#ColListModule' },

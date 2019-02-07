@@ -1,14 +1,17 @@
 <div class="clearfix mb-2">
   <div class="float-left"> Table > 테이블쿼리  </div>
   <div class="float-right">
-    <button type="button" class="btn btn-outline-primary mr-2 btn-sm" >
-        <i class="fa fa-tasks fa-fw"></i>&nbsp;DDL
+    <button type="button" class="btn btn-outline-primary mr-2 btn-sm" (click)="onDownloadInsStat()" >
+        <i class="fa fa-tasks fa-fw"></i>&nbsp;Insert문
     </button>
     <button type="button" class="btn btn-outline-primary mr-2 btn-sm" (click)="onDownloadExcel()">
         <i class="fa fa-file-excel-o"></i>&nbsp;엑셀
     </button>
-    <button type="button" class="btn btn-outline-primary mr-2 btn-sm" (click)="onSelectTabQryList()">
-      <i class="fa fa-tasks fa-fw"></i>&nbsp;조회
+    <button type="button" class="btn btn-outline-primary mr-2 btn-sm" (click)="onDownloadCommaFile()" >
+        <i class="fa fa-file-excel-o"></i>&nbsp;CSV
+    </button>
+    <button type="button" class="btn btn-outline-primary mr-2 btn-sm" (click)="onDownloadBarFile()" >
+        <i class="fa fa-file-excel-o"></i>&nbsp;샘파일
     </button>
   </div>
 </div>
@@ -25,7 +28,14 @@
     </thead>
     <tbody>
       <tr *ngFor="let rows of tabQryOutVoList; let i=index;">
-        <td *ngFor="let cols of tabInfoOutVoList; let j=index;">{{rows[cols.colNm]}}</td>
+        <td *ngFor="let cols of tabInfoOutVoList; let j=index;">
+          <div *ngIf="cols.dataTypeNm=='TIMESTAMP'||cols.dataTypeNm=='DATE'">
+            {{rows[cols.colNm]|date:'yyyy-MM-dd HH:mm:ss'}}
+          </div>
+          <div *ngIf="cols.dataTypeNm!='TIMESTAMP'&&cols.dataTypeNm!='DATE'">
+            {{rows[cols.colNm]}}
+          </div>
+        </td>
       </tr>
     </tbody>
   </table>

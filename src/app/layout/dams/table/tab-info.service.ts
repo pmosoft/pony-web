@@ -67,6 +67,23 @@ export class TabInfoService {
     return this.http.post<any>('http://'+this.document.location.hostname+':9201/dams/table/selectTabQryList', tabInfo, httpOptions);
   }
 
+  downloadInsStat(tabInfo: TabInfo): Observable<any> {
+    return this.http.post<any>('http://'+this.document.location.hostname+':9201/dams/table/downloadInsStat', tabInfo, httpOptions);
+  }
+
+  downloadExcel(tabInfo: TabInfo): Observable<any> {
+    return this.http.post<any>('http://'+this.document.location.hostname+':9201/dams/table/downloadExcel', tabInfo, httpOptions);
+  }
+
+  downloadCommaFile(tabInfo: TabInfo): Observable<any> {
+    return this.http.post<any>('http://'+this.document.location.hostname+':9201/dams/table/downloadCommaFile', tabInfo, httpOptions);
+  }
+
+  downloadBarFile(tabInfo: TabInfo): Observable<any> {
+    return this.http.post<any>('http://'+this.document.location.hostname+':9201/dams/table/downloadBarFile', tabInfo, httpOptions);
+  }
+
+
   /********************************************
    * Param
    ********************************************/

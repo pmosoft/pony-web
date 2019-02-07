@@ -19,12 +19,20 @@
             <i class="fa fa-fw fa-database"></i>&nbsp;{{ '컬럼' | translate }}
           </a>
           <div class="dropdown-divider"></div>
+          <a class="dropdown-item" routerLink="/code-list" [routerLinkActive]="['router-link-active']" >
+            <i class="fa fa-fw fa-database"></i>&nbsp;{{ '코드' | translate }}
+          </a>
+          <div class="dropdown-divider"></div>
           <a class="dropdown-item" routerLink="/tab-info-ext" [routerLinkActive]="['router-link-active']" >
             <i class="fa fa-fw fa-save"></i>&nbsp;{{ '테이블정보추출' | translate }}
           </a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" routerLink="/code-list" [routerLinkActive]="['router-link-active']" >
-            <i class="fa fa-fw fa-database"></i>&nbsp;{{ '코드' | translate }}
+          <a class="dropdown-item" routerLink="/tab-info-ext" [routerLinkActive]="['router-link-active']" >
+            <i class="fa fa-fw fa-save"></i>&nbsp;{{ '테이블정보추출(수동)' | translate }}
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" routerLink="/tab-info-ext2" [routerLinkActive]="['router-link-active']" >
+            <i class="fa fa-fw fa-save"></i>&nbsp;{{ '코드정보추출(수동)' | translate }}
           </a>
         </div>
       </li>

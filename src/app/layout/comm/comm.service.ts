@@ -13,6 +13,11 @@ const httpOptions = {
 @Injectable({ providedIn: 'root' })
 export class CommService {
 
+  comboAscDesc = [
+    {name : 'ASC' , value : 'ASC' }
+   ,{name : 'DESC', value : 'DESC'}
+  ];
+
   constructor(private http: HttpClient
              ,@Inject(DOCUMENT) private document: any) { }
 

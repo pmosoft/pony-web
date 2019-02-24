@@ -25,7 +25,7 @@ export class TabInfo {
   updUsrId     : string = "";
 
   chk          : boolean = false;
-  orderBy      : string = "JDBC_NM";
+  orderBy      : string = "1";
   ascDesc      : string = "ASC";
 
 }

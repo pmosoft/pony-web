@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { CommService } from '../../../comm/comm.service';
 import { TabInfoService } from '../tab-info.service';
 import { TabInfo } from '../tab-info';
 import { Router } from '@angular/router';
@@ -18,7 +19,8 @@ export class TabQryListComponent implements OnInit {
 
   jj : any;
 
-  constructor(private tabInfoService: TabInfoService
+  constructor(private commService: CommService
+             ,private tabInfoService: TabInfoService
              ,private router: Router
              ,private route: ActivatedRoute) { }
 
@@ -36,10 +38,20 @@ export class TabQryListComponent implements OnInit {
     this.onSelectTabQryList();
   }
 
+  comboOrderBy = [
+      {name : '선택(정렬)' , value : 'JDBC_NM' }
+     ,{name : '테이블명'   , value : 'TAB_NM'  }
+     ,{name : '테이블한글명', value : 'TAB_HNM'  }
+     ,{name : 'Rows'     , value : 'TAB_ROWS'}
+     ,{name : '최근변경일' , value : 'TAB_UPD_DT'}
+     ,{name : '테이블생성일', value : 'TAB_REG_DT'}
+  ];
+
+  comboAscDesc = this.tabInfoService.comboAscDesc;
 
   /******************************************
    * Event
-   ********************************************/
+   ******************************************/
   onSelectTabInfoList(){
     this.tabInfoService.selectTabInfoList(this.tabInfoInVo)
     .subscribe(result => {
@@ -69,6 +81,17 @@ export class TabQryListComponent implements OnInit {
       }
     });
   }
+
+  onChangeComboOrderBy(event) {
+    console.log(event.value);
+    this.tabInfoInVo.orderBy = event.value;
+    this.onSelectTabQryList();
+  }
+  onChangeComboAscDesc(event) {
+    this.tabInfoInVo.ascDesc = event.value;
+    this.onSelectTabQryList();
+  }
+
 
   onDownloadInsStat() {
     this.tabInfoService.downloadInsStat(this.tabInfoInVo)

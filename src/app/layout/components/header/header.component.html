@@ -23,6 +23,10 @@
             <i class="fa fa-fw fa-database"></i>&nbsp;{{ '코드' | translate }}
           </a>
           <div class="dropdown-divider"></div>
+          <a class="dropdown-item" routerLink="/tab-qry-list" [routerLinkActive]="['router-link-active']" >
+            <i class="fa fa-fw fa-database"></i>&nbsp;{{ '테이블쿼리' | translate }}
+          </a>
+          <div class="dropdown-divider"></div>
           <a class="dropdown-item" routerLink="/tab-info-ext" [routerLinkActive]="['router-link-active']" >
             <i class="fa fa-fw fa-save"></i>&nbsp;{{ '테이블정보추출' | translate }}
           </a>
@@ -33,6 +37,26 @@
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" routerLink="/tab-info-ext2" [routerLinkActive]="['router-link-active']" >
             <i class="fa fa-fw fa-save"></i>&nbsp;{{ '코드정보추출(수동)' | translate }}
+          </a>
+        </div>
+      </li>
+    </ul>
+    <ul class="navbar-nav mr-3">
+      <li class="nav-item dropdown" ngbDropdown>
+        <a href="javascript:void(0)" class="nav-link ml-2" ngbDropdownToggle>
+          <i class="fa fa-fw fa-exchange"></i>&nbsp;ETT<b class="caret"></b>
+        </a>
+        <div class="dropdown-menu-right" ngbDropdownMenu>
+          <a class="dropdown-item" routerLink="/tran-camel" [routerLinkActive]="['router-link-active']" >
+            <i class="fa fa-fw fa-exchange"></i>&nbsp;{{ 'Csv' | translate }}
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="javascript:void(0)">
+            <i class="fa fa-fw fa-exchange"></i>&nbsp;{{ 'SingleTable' | translate }}
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="javascript:void(0)">
+            <i class="fa fa-fw fa-exchange"></i>&nbsp;{{ 'QueryTable' | translate }}
           </a>
         </div>
       </li>
@@ -89,26 +113,6 @@
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" routerLink="/clone-spring" [routerLinkActive]="['router-link-active']" >
             <i class="fa fa-fw fa-copy"></i>&nbsp;{{ 'Spring' | translate }}
-          </a>
-        </div>
-      </li>
-    </ul>
-    <ul class="navbar-nav mr-3">
-      <li class="nav-item dropdown" ngbDropdown>
-        <a href="javascript:void(0)" class="nav-link ml-2" ngbDropdownToggle>
-          <i class="fa fa-fw fa-exchange"></i>&nbsp;ETT<b class="caret"></b>
-        </a>
-        <div class="dropdown-menu-right" ngbDropdownMenu>
-          <a class="dropdown-item" routerLink="/tran-camel" [routerLinkActive]="['router-link-active']" >
-            <i class="fa fa-fw fa-exchange"></i>&nbsp;{{ 'Csv' | translate }}
-          </a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="javascript:void(0)">
-            <i class="fa fa-fw fa-exchange"></i>&nbsp;{{ 'SingleTable' | translate }}
-          </a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="javascript:void(0)">
-            <i class="fa fa-fw fa-exchange"></i>&nbsp;{{ 'QueryTable' | translate }}
           </a>
         </div>
       </li>

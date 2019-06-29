@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { CommService } from '../../../comm/comm.service';
 import { TabInfoService } from '../tab-info.service';
 import { TabInfo } from '../tab-info';
+import { JdbcInfoService } from '../../jdbc/jdbc-info.service';
+import { JdbcInfo } from '../../jdbc/jdbc-info';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 
@@ -12,15 +14,22 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class TabQryListComponent implements OnInit {
 
+  isParam : boolean = false;
+ 
   tabInfoInVo: TabInfo = new TabInfo();
   tabInfoOutVoList: TabInfo[];
   tabQryOutVoList: any;
+  jdbcInfoInVo: JdbcInfo = new JdbcInfo();
+  comboJdbc : JdbcInfo[];
   cnt = 0;
-
   jj : any;
+
+  chkWhere : boolean = false;
+  txtWhere : string = ""; 
 
   constructor(private commService: CommService
              ,private tabInfoService: TabInfoService
+             ,private jdbcInfoService: JdbcInfoService
              ,private router: Router
              ,private route: ActivatedRoute) { }
 
@@ -34,8 +43,26 @@ export class TabQryListComponent implements OnInit {
       this.tabInfoInVo.owner  = params['owner'];
       this.tabInfoInVo.tabNm  = params['tabNm'];
     })
+
     this.onSelectTabInfoList();
-    this.onSelectTabQryList();
+    this.onSetComboJdbc();
+
+    if(this.tabInfoInVo.jdbcNm.length > 3){
+      this.isParam = true;
+      this.onSelectTabQryList();
+    }
+  }
+
+  onSetComboJdbc() {
+    this.jdbcInfoService.selectComboJdbcList(this.jdbcInfoInVo)
+    //this.jdbcInfoService.selectJdbcInfoList(this.jdbcInfoInVo)
+    .subscribe(result => {
+      if(!result.isSuccess) alert(result.errUsrMsg)
+      else {
+        //console.log(result.jdbcInfoOutVoList);
+        this.comboJdbc = result.jdbcInfoOutVoList;
+      }
+    });
   }
 
   comboOrderBy = [
@@ -48,6 +75,21 @@ export class TabQryListComponent implements OnInit {
   ];
 
   comboAscDesc = this.tabInfoService.comboAscDesc;
+
+  /*************
+   * Check
+   *************/
+  onCheckWhere(){
+    console.log(this.chkWhere);
+  }
+
+  /*************
+   * Input
+   *************/
+  onChangeWhere(){
+    console.log(this.chkWhere);
+  }
+
 
   /******************************************
    * Event

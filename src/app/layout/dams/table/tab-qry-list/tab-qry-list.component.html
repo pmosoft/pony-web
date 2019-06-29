@@ -13,17 +13,40 @@
     <button type="button" class="btn btn-outline-primary mr-2 btn-sm" (click)="onDownloadBarFile()" >
         <i class="fa fa-file-excel-o"></i>&nbsp;샘파일
     </button>
+    <button type="button" class="btn btn-outline-primary mr-2 btn-sm" (click)="onSelectTabList()">
+      <i class="fa fa-tasks fa-fw"></i>&nbsp;조회
+    </button>
+  </div>
+</div>
+
+<div class="form-row">
+  <div class="form-group">
+    <select class="btn btn-outline-primary btn-sm mr-2" (change)="onChangeComboJdbc($event.target.selectedIndex)" >
+      <option *ngFor="let combo of comboJdbc" [value]="combo.jdbcNm" >{{combo.jdbcNm}}</option>
+    </select>
+    <input [(ngModel)]="tabInfoInVo.tabNm"    class="btn btn-outline-primary btn-sm mr-2" (keyup.enter)="onSelectTabList()" placeholder="테이블명">
+  </div>
+  <div class="form-group">
+    <select class="btn btn-outline-primary btn-sm mr-2" (change)="onChangeComboOrderBy($event.target)"  >
+      <option *ngFor="let cols of tabInfoOutVoList" [value]="cols.colNm" >{{cols.colHnm}}</option>
+    </select>
+    <select class="btn btn-outline-primary btn-sm mr-2" (change)="onChangeComboAscDesc($event.target)"  >
+      <option *ngFor="let combo of comboAscDesc" [value]="combo.value" >{{combo.name}}</option>
+    </select>
+  </div>
+  <div class="form-group btn btn-outline-primary btn-sm">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="" id="chkWhere" [(ngModel)]="chkWhere" (click)="onCheckWhere()">
+      <label class="form-check-label" for="chkWhere">조건</label>
+    </div>
+  </div>
+</div>
+<div *ngIf="chkWhere" class="form-row" >
+  <div class="form-group col-md-12">
+    <textarea name="srcTxt" class="form-control" rows="3"  (change)="onChangeWhere($event)" >{{txtWhere}}</textarea>
   </div>
 </div>
 <div class="clearfix mb-2 ">
-  <div class="float-left" >
-      <select class="btn btn-outline-primary btn-sm mr-2" (change)="onChangeComboOrderBy($event.target)"  >
-        <option *ngFor="let cols of tabInfoOutVoList" [value]="cols.colNm" >{{cols.colHnm}}</option>
-      </select>
-      <select class="btn btn-outline-primary btn-sm mr-2" (change)="onChangeComboAscDesc($event.target)"  >
-        <option *ngFor="let combo of comboAscDesc" [value]="combo.value" >{{combo.name}}</option>
-      </select>
-  </div>
   <div class="float-right mr-3">{{cnt | number}}건</div>
 </div>
 <div class="text-center">

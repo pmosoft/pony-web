@@ -28,4 +28,10 @@ export class TabInfo {
   orderBy      : string = "1";
   ascDesc      : string = "ASC";
 
+  chkSelect    : boolean = false;
+  txtSelect    : string = "";
+  chkWhere     : boolean = false;
+  txtWhere     : string = "";
+
+
 }

@@ -14,6 +14,10 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class TabQryListComponent implements OnInit {
 
+/***************************************************
+ * 변수부
+ ***************************************************/
+
   isParam : boolean = false;
  
   tabInfoInVo: TabInfo = new TabInfo();
@@ -24,8 +28,16 @@ export class TabQryListComponent implements OnInit {
   cnt = 0;
   jj : any;
 
-  chkWhere : boolean = false;
-  txtWhere : string = ""; 
+  jdbcIdx = 0;
+
+  comboOrderBy = [
+    {name : '선택(정렬)'  , value : 'JDBC_NM' }
+   ,{name : '테이블명'    , value : 'TAB_NM'  }
+   ,{name : '테이블한글명', value : 'TAB_HNM'  }
+   ,{name : 'Rows'       , value : 'TAB_ROWS'}
+   ,{name : '최근변경일'  , value : 'TAB_UPD_DT'}
+   ,{name : '테이블생성일', value : 'TAB_REG_DT'}
+  ];
 
   constructor(private commService: CommService
              ,private tabInfoService: TabInfoService
@@ -33,6 +45,9 @@ export class TabQryListComponent implements OnInit {
              ,private router: Router
              ,private route: ActivatedRoute) { }
 
+/***************************************************
+ * 초기화
+ ***************************************************/
   ngOnInit() {
     //this.tabInfoInVo = this.tabInfoService.onGetLocalStorageTabInfo();
     this.route.queryParams.subscribe(params => {
@@ -45,7 +60,7 @@ export class TabQryListComponent implements OnInit {
     })
 
     this.onSelectTabInfoList();
-    this.onSetComboJdbc();
+    this.setComboJdbc();
 
     if(this.tabInfoInVo.jdbcNm.length > 3){
       this.isParam = true;
@@ -53,47 +68,89 @@ export class TabQryListComponent implements OnInit {
     }
   }
 
-  onSetComboJdbc() {
-    this.jdbcInfoService.selectComboJdbcList(this.jdbcInfoInVo)
-    //this.jdbcInfoService.selectJdbcInfoList(this.jdbcInfoInVo)
+  /***************************
+   * JDBC콤보 박스 초기 세팅
+   **************************/
+  setComboJdbc() {
+      this.jdbcInfoService.selectComboJdbcList(this.jdbcInfoInVo)
+      //this.jdbcInfoService.selectJdbcInfoList(this.jdbcInfoInVo)
+      .subscribe(result => {
+        if(!result.isSuccess) alert(result.errUsrMsg)
+        else {
+          //console.log(result.jdbcInfoOutVoList);
+          this.comboJdbc = result.jdbcInfoOutVoList;
+          console.log("this.comboJdbc=============================");
+          console.log("this.comboJdbc==="+result.jdbcInfoOutVoList);
+
+          for( var key in this.comboJdbc ) {
+            console.log( key + '=>' + this.comboJdbc[key].jdbcNm.toUpperCase() );
+          }        
+          this.jdbcIdx = this.comboJdbc.findIndex(jdbc => jdbc.jdbcNm.toUpperCase() === this.tabInfoInVo.jdbcNm.toUpperCase())
+          console.log("this.tabInfoInVo.jdbcNm==="+this.tabInfoInVo.jdbcNm);
+          console.log("this.jdbcIdx==="+this.jdbcIdx);
+          this.jdbcIdx = 2;
+        }
+      });
+    }
+
+  /***************************
+   * 정렬콤보 박스 초기 세팅
+   **************************/
+  comboAscDesc = this.tabInfoService.comboAscDesc;
+
+/***************************************************
+ * 검색 조건 이벤트
+ ***************************************************/
+
+  /********************
+   * 컬럼조건이 체크될때
+   ********************/
+  onCheckCol(){
+    console.log(this.tabInfoInVo.chkWhere);
+    this.tabInfoService.selectColScript (this.tabInfoInVo)
     .subscribe(result => {
-      if(!result.isSuccess) alert(result.errUsrMsg)
+       if(!result.isSuccess) alert(result.errUsrMsg)
       else {
-        //console.log(result.jdbcInfoOutVoList);
-        this.comboJdbc = result.jdbcInfoOutVoList;
+        this.tabInfoInVo.txtSelect = result.sqlScript
       }
     });
   }
 
-  comboOrderBy = [
-      {name : '선택(정렬)' , value : 'JDBC_NM' }
-     ,{name : '테이블명'   , value : 'TAB_NM'  }
-     ,{name : '테이블한글명', value : 'TAB_HNM'  }
-     ,{name : 'Rows'     , value : 'TAB_ROWS'}
-     ,{name : '최근변경일' , value : 'TAB_UPD_DT'}
-     ,{name : '테이블생성일', value : 'TAB_REG_DT'}
-  ];
-
-  comboAscDesc = this.tabInfoService.comboAscDesc;
-
-  /*************
-   * Check
-   *************/
+  /********************
+   * Where조건이 체크될때
+   ********************/
   onCheckWhere(){
-    console.log(this.chkWhere);
+    console.log(this.tabInfoInVo.chkWhere);
+    //if(this.tabInfoInVo.chkWhere) {
+    //  this.tabInfoInVo.txtWhere = localStorage.getItem('txtWhere');
+    //}
   }
 
-  /*************
-   * Input
-   *************/
-  onChangeWhere(){
-    console.log(this.chkWhere);
+  /********************
+   * 순차정렬
+   ********************/
+  onChangeComboOrderBy(event) {
+    console.log(event.value);
+    this.tabInfoInVo.orderBy = event.value;
+    this.onSelectTabQryList();
+  }
+
+  /********************
+   * 역순정렬
+   ********************/
+  onChangeComboAscDesc(event) {
+    this.tabInfoInVo.ascDesc = event.value;
+    this.onSelectTabQryList();
   }
 
 
-  /******************************************
-   * Event
-   ******************************************/
+/***************************************************
+ * 버튼 이벤트
+ ***************************************************/
+
+  /********************
+   * 테이블정보 조회
+   ********************/
   onSelectTabInfoList(){
     this.tabInfoService.selectTabInfoList(this.tabInfoInVo)
     .subscribe(result => {
@@ -106,6 +163,9 @@ export class TabQryListComponent implements OnInit {
     });
   }
 
+  /********************
+   * 쿼리 데이터 조회
+   ********************/
   onSelectTabQryList(){
     this.tabInfoService.selectTabQryList(this.tabInfoInVo)
     .subscribe(result => {
@@ -124,17 +184,9 @@ export class TabQryListComponent implements OnInit {
     });
   }
 
-  onChangeComboOrderBy(event) {
-    console.log(event.value);
-    this.tabInfoInVo.orderBy = event.value;
-    this.onSelectTabQryList();
-  }
-  onChangeComboAscDesc(event) {
-    this.tabInfoInVo.ascDesc = event.value;
-    this.onSelectTabQryList();
-  }
-
-
+  /********************
+   * Insert문장 조회
+   ********************/
   onDownloadInsStat() {
     this.tabInfoService.downloadInsStat(this.tabInfoInVo)
     .subscribe(result => {
@@ -147,6 +199,9 @@ export class TabQryListComponent implements OnInit {
     });
   }
 
+  /********************
+   * 엑셀 다운로드
+   ********************/
   onDownloadExcel() {
 
     this.tabInfoService.downloadExcel(this.tabInfoInVo)
@@ -160,6 +215,9 @@ export class TabQryListComponent implements OnInit {
     });
   }
 
+  /********************
+   * 콤마샘파일 조회
+   ********************/
   onDownloadCommaFile() {
 
     this.tabInfoService.downloadCommaFile(this.tabInfoInVo)
@@ -173,6 +231,9 @@ export class TabQryListComponent implements OnInit {
     });
   }
 
+  /********************
+   * 바샘파일 조회
+   ********************/
   onDownloadBarFile() {
 
     this.tabInfoService.downloadBarFile(this.tabInfoInVo)

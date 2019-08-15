@@ -2,7 +2,10 @@
   <div class="float-left"> Table > 테이블쿼리  </div>
   <div class="float-right">
     <button type="button" class="btn btn-outline-primary mr-2 btn-sm" (click)="onDownloadInsStat()" >
-        <i class="fa fa-tasks fa-fw"></i>&nbsp;Insert문
+        <i class="fa fa-tasks fa-fw"></i>&nbsp;Ins문장
+    </button>
+    <button type="button" class="btn btn-outline-primary mr-2 btn-sm" (click)="selectColFromWhereScript" >
+        <i class="fa fa-tasks fa-fw"></i>&nbsp;Sel문장
     </button>
     <button type="button" class="btn btn-outline-primary mr-2 btn-sm" (click)="onDownloadExcel()">
         <i class="fa fa-file-excel-o"></i>&nbsp;엑셀
@@ -13,7 +16,7 @@
     <button type="button" class="btn btn-outline-primary mr-2 btn-sm" (click)="onDownloadBarFile()" >
         <i class="fa fa-file-excel-o"></i>&nbsp;샘파일
     </button>
-    <button type="button" class="btn btn-outline-primary mr-2 btn-sm" (click)="onSelectTabList()">
+    <button type="button" class="btn btn-outline-primary mr-2 btn-sm" (click)="onSelectTabQryList()">
       <i class="fa fa-tasks fa-fw"></i>&nbsp;조회
     </button>
   </div>
@@ -21,10 +24,10 @@
 
 <div class="form-row">
   <div class="form-group">
-    <select class="btn btn-outline-primary btn-sm mr-2" (change)="onChangeComboJdbc($event.target.selectedIndex)" >
-      <option *ngFor="let combo of comboJdbc" [value]="combo.jdbcNm" >{{combo.jdbcNm}}</option>
+    <select class="btn btn-outline-primary btn-sm mr-2" >
+      <option *ngFor="let combo of comboJdbc let i = index" [selected] = "i==jdbcIdx" [value]="combo.jdbcNm" >{{combo.jdbcNm}}</option>
     </select>
-    <input [(ngModel)]="tabInfoInVo.tabNm"    class="btn btn-outline-primary btn-sm mr-2" (keyup.enter)="onSelectTabList()" placeholder="테이블명">
+    <input [(ngModel)]="tabInfoInVo.tabNm"    class="btn btn-outline-primary btn-sm mr-2" placeholder="테이블명">
   </div>
   <div class="form-group">
     <select class="btn btn-outline-primary btn-sm mr-2" (change)="onChangeComboOrderBy($event.target)"  >
@@ -34,16 +37,28 @@
       <option *ngFor="let combo of comboAscDesc" [value]="combo.value" >{{combo.name}}</option>
     </select>
   </div>
-  <div class="form-group btn btn-outline-primary btn-sm">
+  <div class="form-group btn btn-outline-primary btn-sm mr-2">
     <div class="form-check">
-      <input class="form-check-input" type="checkbox" value="" id="chkWhere" [(ngModel)]="chkWhere" (click)="onCheckWhere()">
+      <input class="form-check-input" type="checkbox" value="" id="chkSelect" [(ngModel)]="tabInfoInVo.chkSelect" (click)="onCheckCol()">
+      <label class="form-check-label" for="chkSelect">컬럼</label>
+    </div>
+  </div>
+  <div class="form-group btn btn-outline-primary btn-sm mr-2">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="" id="chkWhere" [(ngModel)]="tabInfoInVo.chkWhere" (click)="onCheckWhere()">
       <label class="form-check-label" for="chkWhere">조건</label>
     </div>
   </div>
+
 </div>
-<div *ngIf="chkWhere" class="form-row" >
+<div *ngIf="tabInfoInVo.chkSelect" class="form-row" >
   <div class="form-group col-md-12">
-    <textarea name="srcTxt" class="form-control" rows="3"  (change)="onChangeWhere($event)" >{{txtWhere}}</textarea>
+    <textarea name="txtSelect" class="form-control" rows="3"  (change)="onChangeCol()" [(ngModel)]="tabInfoInVo.txtSelect" placeholder="필드정보를 입력하세요"></textarea>
+  </div>
+</div>
+<div *ngIf="tabInfoInVo.chkWhere" class="form-row" >
+  <div class="form-group col-md-12">
+    <textarea name="txtWhere" class="form-control" rows="3"  (change)="onChangeWhere()" [(ngModel)]="tabInfoInVo.txtWhere" placeholder="where 조건을 입력하세요"></textarea>
   </div>
 </div>
 <div class="clearfix mb-2 ">

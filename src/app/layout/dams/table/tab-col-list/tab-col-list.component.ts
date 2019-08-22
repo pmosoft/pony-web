@@ -15,7 +15,6 @@ export class TabColListComponent implements OnInit {
   tabInfoInVo: TabInfo = new TabInfo();
   tabInfoOutVoList: TabInfo[]
   jdbcInfoInVo: JdbcInfo = new JdbcInfo();
-
   //comboJdbc  : JdbcCombo[];
   comboJdbc    : JdbcInfo[];
   comboOrderBy = [
@@ -27,6 +26,8 @@ export class TabColListComponent implements OnInit {
      ,{name : '테이블생성일', value : 'TAB_REG_DT'}
   ];
 
+  cnt = 0;
+  
   comboAscDesc = this.tabInfoService.comboAscDesc;
 
   constructor(private tabInfoService: TabInfoService

@@ -4,7 +4,7 @@
     <button type="button" class="btn btn-outline-primary mr-2 btn-sm" (click)="onDownloadInsStat()" >
         <i class="fa fa-tasks fa-fw"></i>&nbsp;Ins문장
     </button>
-    <button type="button" class="btn btn-outline-primary mr-2 btn-sm" (click)="selectColFromWhereScript" >
+    <button type="button" class="btn btn-outline-primary mr-2 btn-sm" >
         <i class="fa fa-tasks fa-fw"></i>&nbsp;Sel문장
     </button>
     <button type="button" class="btn btn-outline-primary mr-2 btn-sm" (click)="onDownloadExcel()">
@@ -61,11 +61,12 @@
     <textarea name="txtWhere" class="form-control" rows="3"  (change)="onChangeWhere()" [(ngModel)]="tabInfoInVo.txtWhere" placeholder="where 조건을 입력하세요"></textarea>
   </div>
 </div>
+
 <div class="clearfix mb-2 ">
   <div class="float-right mr-3">{{cnt | number}}건</div>
 </div>
-<div class="text-center">
 
+<div class="text-center">
   <table class="table table-sm table-bordered table-hover">
     <thead>
       <tr>

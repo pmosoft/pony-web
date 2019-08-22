@@ -12,6 +12,10 @@ import { Router } from '@angular/router';
 })
 export class TabListComponent implements OnInit {
 
+/***************************************************
+ * 변수부
+ ***************************************************/
+
   tabInfoInVo: TabInfo = new TabInfo();
   tabInfoOutVoList: TabInfo[]
   jdbcInfoInVo: JdbcInfo = new JdbcInfo();
@@ -27,6 +31,9 @@ export class TabListComponent implements OnInit {
      ,{name : '최근변경일' , value : 'TAB_UPD_DT'}
      ,{name : '테이블생성일', value : 'TAB_REG_DT'}
   ];
+  
+  cnt = 0;
+  
   comboAscDesc = this.tabInfoService.comboAscDesc;
 
   isCheckAll : boolean = false;
@@ -35,15 +42,18 @@ export class TabListComponent implements OnInit {
              ,private jdbcInfoService: JdbcInfoService
              ,private router: Router) { }
 
+/***************************************************
+ * 초기화
+ ***************************************************/
   ngOnInit() {
     //this.tabInfoInVo = this.tabInfoService.onGetLocalStorageTabInfo();
     this.onSetComboJdbc();
     this.onSelectTabList();
   }
 
-  /********************************************
-   * Combo
-   ********************************************/
+  /***************************
+   * JDBC콤보 박스 초기 세팅
+   **************************/
   onSetComboJdbc() {
     this.jdbcInfoService.selectComboJdbcList(this.jdbcInfoInVo)
     //this.jdbcInfoService.selectJdbcInfoList(this.jdbcInfoInVo)
@@ -56,6 +66,13 @@ export class TabListComponent implements OnInit {
     });
   }
 
+/***************************************************
+ * 검색 조건 이벤트
+ ***************************************************/
+
+  /********************
+   * JDBC변경시
+   ********************/
   onChangeComboJdbc(i) {
     //console.log("event.value=="+event.value);
     //console.log("event.value=="+event.selectedIndex);
@@ -75,10 +92,18 @@ export class TabListComponent implements OnInit {
     }
     this.onSelectTabList();
   }
+
+  /********************
+   * 순차정렬
+   ********************/
   onChangeComboOrderBy(i) {
     this.tabInfoInVo.orderBy = this.comboOrderBy[i].value;
     this.onSelectTabList();
   }
+
+  /********************
+   * 역순정렬
+   ********************/
   onChangeComboAscDesc(i) {
     this.tabInfoInVo.ascDesc = this.comboAscDesc[i].value;
     this.onSelectTabList();
@@ -100,9 +125,13 @@ export class TabListComponent implements OnInit {
 
 
 
-  /********************************************
-   * Event
-   ********************************************/
+/***************************************************
+ * 버튼 이벤트
+ ***************************************************/
+
+  /********************
+   * 테이블정보 조회
+   ********************/
   onSelectTabList(){
     //this.tabInfoService.tabInfoInVo = this.tabInfoInVo;
     //this.tabInfoService.onSetLocalStorageTabInfo(this.tabInfoInVo);
@@ -112,12 +141,16 @@ export class TabListComponent implements OnInit {
        if(!result.isSuccess) alert(result.errUsrMsg)
       else {
         this.tabInfoOutVoList = result.tabInfoOutVoList;
+        this.cnt = this.tabInfoOutVoList.length;
         //console.log(result.tabInfoOutVoList);
         //alert("onSelectMetaTabInfoList");
       }
     });
   }
 
+  /********************
+   * DDL 생성
+   ********************/
   onDDL() {
     console.log("onDDL");
     this.tabInfoService.selectCreateScript(this.tabInfoOutVoList)
@@ -138,6 +171,9 @@ export class TabListComponent implements OnInit {
 
   }
 
+  /********************
+   * 엑셀 다운로드
+   ********************/
   onDownloadExcel() {
 
     // let data = JSON.stringify(this.codeOutVoList);

@@ -17,6 +17,9 @@
         </select>
         <input [(ngModel)]="tabInfoInVo.tabNm"    class="btn btn-outline-primary btn-sm mr-2" (keyup.enter)="onSelectTabInfoList()" placeholder="테이블명">
         <input [(ngModel)]="tabInfoInVo.tabHnm"   class="btn btn-outline-primary btn-sm mr-2" (keyup.enter)="onSelectTabInfoList()" placeholder="테이블한글명">
+        <select class="btn btn-outline-primary btn-sm mr-2"  (change)="onChangeComboWhereColTab($event.target.selectedIndex)"  >
+          <option *ngFor="let combo of comboWhereColTab" [value]="combo.value" >{{combo.name}}</option>
+        </select>
         <input [(ngModel)]="tabInfoInVo.colNm"    class="btn btn-outline-primary btn-sm mr-2" (keyup.enter)="onSelectTabInfoList()" placeholder="컬럼명">
         <input [(ngModel)]="tabInfoInVo.colHnm"   class="btn btn-outline-primary btn-sm mr-2" (keyup.enter)="onSelectTabInfoList()" placeholder="컬럼한글명">
         <input [(ngModel)]="tabInfoInVo.tabRows"  class="btn btn-outline-primary btn-sm mr-2" (keyup.enter)="onSelectTabInfoList()" placeholder="건수">

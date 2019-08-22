@@ -33,5 +33,6 @@ export class TabInfo {
   chkWhere     : boolean = false;
   txtWhere     : string = "";
 
+  whereColTab  : string = "COL";
 
 }

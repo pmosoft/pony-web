@@ -12,18 +12,28 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class TabColListComponent implements OnInit {
 
+/***************************************************
+ * 변수부
+ ***************************************************/
+
   tabInfoInVo: TabInfo = new TabInfo();
   tabInfoOutVoList: TabInfo[]
   jdbcInfoInVo: JdbcInfo = new JdbcInfo();
   //comboJdbc  : JdbcCombo[];
   comboJdbc    : JdbcInfo[];
+
+  comboWhereColTab = [
+    {name : 'COL' , value : 'COL' }
+   ,{name : 'TAB' , value : 'TAB' }
+  ];
+
   comboOrderBy = [
       {name : '선택(정렬)' , value : 'JDBC_NM' }
      ,{name : '테이블명'   , value : 'TAB_NM'  }
      ,{name : '테이블한글명', value : 'TAB_HNM'  }
      ,{name : 'Rows'     , value : 'TAB_ROWS'}
      ,{name : '최근변경일' , value : 'TAB_UPD_DT'}
-     ,{name : '테이블생성일', value : 'TAB_REG_DT'}
+     ,{name : '테이블생성일', value : 'TAB_REG_DT'} 
   ];
 
   cnt = 0;
@@ -33,6 +43,10 @@ export class TabColListComponent implements OnInit {
   constructor(private tabInfoService: TabInfoService
              ,private jdbcInfoService: JdbcInfoService
              ,private route: ActivatedRoute) { }
+
+/***************************************************
+ * 초기화
+ ***************************************************/
 
   ngOnInit() {
     //this.tabInfoInVo = this.tabInfoService.onGetLocalStorageTabInfo();
@@ -47,9 +61,9 @@ export class TabColListComponent implements OnInit {
     this.onSelectTabInfoList();
   }
 
-  /********************************************
-   * Combo
-   ********************************************/
+  /***************************
+   * JDBC콤보 박스 초기 세팅
+   **************************/
   onSetComboJdbc() {
     this.jdbcInfoService.selectComboJdbcList(this.jdbcInfoInVo)
     //this.jdbcInfoService.selectJdbcInfoList(this.jdbcInfoInVo)
@@ -62,6 +76,13 @@ export class TabColListComponent implements OnInit {
     });
   }
 
+/***************************************************
+ * 검색 조건 이벤트
+ ***************************************************/
+
+  /********************
+   * JDBC변경시
+   ********************/
   onChangeComboJdbc(i) {
     //console.log("event.value=="+event.value);
     //console.log("event.value=="+event.selectedIndex);
@@ -81,17 +102,29 @@ export class TabColListComponent implements OnInit {
     }
     this.onSelectTabInfoList();
   }
+  /********************
+   * 정렬기준컬럼 변경시
+   ********************/
+  onChangeComboWhereColTab(i) {
+    this.tabInfoInVo.whereColTab = this.comboWhereColTab[i].value;
+  }
+  /********************
+   * 정렬기준컬럼 변경시
+   ********************/
   onChangeComboOrderBy(i) {
     this.tabInfoInVo.orderBy = this.comboOrderBy[i].value;
     this.onSelectTabInfoList();
   }
+  /********************
+   * 오름-내림기준 변경시
+   ********************/
   onChangeComboAscDesc(i) {
     this.tabInfoInVo.ascDesc = this.comboAscDesc[i].value;
     this.onSelectTabInfoList();
   }
 
   /********************************************
-   * Grid Checkbox
+   * 그리드 전체 선택
    ********************************************/
   onCheckAll() {
     this.jdbcInfoService.selectComboJdbcList(this.jdbcInfoInVo)
@@ -107,9 +140,30 @@ export class TabColListComponent implements OnInit {
 
 
 
-  /********************************************
-   * Event
-   ********************************************/
+/***************************************************
+ * 버튼 이벤트
+ ***************************************************/
+
+  /********************
+   * 테이블정보 조회
+   ********************/
+  onSelectTabInfoList(){
+    this.tabInfoService.selectTabInfoList(this.tabInfoInVo)
+    .subscribe(result => {
+       if(!result.isSuccess) alert(result.errUsrMsg)
+      else {
+        this.tabInfoOutVoList = result.tabInfoOutVoList;
+        this.cnt = this.tabInfoOutVoList.length;
+        //console.log(result.tabInfoOutVoList);
+        //alert("onSelectMetaTabInfoList");
+      }
+    });
+  }
+
+
+  /********************
+   * 메타테이블정보 조회
+   ********************/
   onSelectMetaTabInfoList(){
     //this.tabInfoService.tabInfoInVo = this.tabInfoInVo;
     //this.tabInfoService.onSetLocalStorageTabInfo(this.tabInfoInVo);
@@ -131,6 +185,9 @@ export class TabColListComponent implements OnInit {
 
   onUploadMetaTabInfo(){}
 
+  /********************
+   * 비교
+   ********************/
   onCompare(){
     this.tabInfoService.selectCmpTabInfoList(this.tabInfoInVo)
     .subscribe(result => {
@@ -143,6 +200,9 @@ export class TabColListComponent implements OnInit {
     });
   }
 
+  /********************
+   * 저장
+   ********************/
   onSave(){
     this.tabInfoService.saveCmpTabInfoList(this.tabInfoInVo)
     .subscribe(result => {
@@ -156,22 +216,12 @@ export class TabColListComponent implements OnInit {
     });
   }
 
-  onSelectTabInfoList(){
-    this.tabInfoService.selectTabInfoList(this.tabInfoInVo)
-    .subscribe(result => {
-       if(!result.isSuccess) alert(result.errUsrMsg)
-      else {
-        this.tabInfoOutVoList = result.tabInfoOutVoList;
-        //console.log(result.tabInfoOutVoList);
-        //alert("onSelectMetaTabInfoList");
-      }
-    });
-  }
-
   onDelete(){}
 
 
-
+  /********************
+   * 엑셀 다운로드
+   ********************/
   onDownloadExcel() {
 
     // let data = JSON.stringify(this.codeOutVoList);

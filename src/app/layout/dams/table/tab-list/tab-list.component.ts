@@ -110,7 +110,7 @@ export class TabListComponent implements OnInit {
   }
 
   /********************************************
-   * Checkbox:grid
+   * 그리드 전체 선택
    ********************************************/
   onCheckGridAll() {
     for (var i = 0; i < this.tabInfoOutVoList.length; i++) {

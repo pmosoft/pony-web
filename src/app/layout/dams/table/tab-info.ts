@@ -34,5 +34,13 @@ export class TabInfo {
   txtWhere     : string = "";
 
   whereColTab  : string = "COL";
+  
+  chkWhereTabs : boolean = false;
+  selectedTabs : number = 0;
+  whereTabs    : string = "";
+  whereTabs1   : string = "";
+  whereTabs2   : string = "";
+  whereTabs3   : string = "";
+  whereTabs4   : string = "";
 
 }

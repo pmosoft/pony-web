@@ -4,6 +4,7 @@ import { TabInfo } from '../tab-info';
 import { JdbcInfoService } from '../../jdbc/jdbc-info.service';
 import { JdbcInfo } from '../../jdbc/jdbc-info';
 import { ActivatedRoute } from '@angular/router';
+import { Comm } from '../../../comm/comm';
 
 @Component({
   selector: 'app-tab-col-list',
@@ -15,12 +16,21 @@ export class TabColListComponent implements OnInit {
 /***************************************************
  * 변수부
  ***************************************************/
+  comm : Comm = new Comm();
 
   tabInfoInVo: TabInfo = new TabInfo();
   tabInfoOutVoList: TabInfo[]
   jdbcInfoInVo: JdbcInfo = new JdbcInfo();
   //comboJdbc  : JdbcCombo[];
   comboJdbc    : JdbcInfo[];
+
+  comboWhereTabs = [
+    {name : 'T0' , value : 'T0' }
+   ,{name : 'T1' , value : 'T1' }
+   ,{name : 'T2' , value : 'T2' }
+   ,{name : 'T3' , value : 'T3' }
+   ,{name : 'T4' , value : 'T4' }
+  ];
 
   comboWhereColTab = [
     {name : 'COL' , value : 'COL' }
@@ -33,11 +43,11 @@ export class TabColListComponent implements OnInit {
      ,{name : '테이블한글명', value : 'TAB_HNM'  }
      ,{name : 'Rows'     , value : 'TAB_ROWS'}
      ,{name : '최근변경일' , value : 'TAB_UPD_DT'}
-     ,{name : '테이블생성일', value : 'TAB_REG_DT'} 
+     ,{name : '테이블생성일', value : 'TAB_REG_DT'}
   ];
 
   cnt = 0;
-  
+
   comboAscDesc = this.tabInfoService.comboAscDesc;
 
   constructor(private tabInfoService: TabInfoService
@@ -56,6 +66,11 @@ export class TabColListComponent implements OnInit {
       if(tabNm==null ||tabNm==':tabNm') this.tabInfoInVo.tabNm = "";
       else this.tabInfoInVo.tabNm = tabNm;
     })
+
+    this.tabInfoInVo.whereTabs1 = this.comm.nullToSpace(localStorage.getItem('whereTabs1'));
+    this.tabInfoInVo.whereTabs2 = this.comm.nullToSpace(localStorage.getItem('whereTabs2'));
+    this.tabInfoInVo.whereTabs3 = this.comm.nullToSpace(localStorage.getItem('whereTabs3'));
+    this.tabInfoInVo.whereTabs4 = this.comm.nullToSpace(localStorage.getItem('whereTabs4'));
 
     this.onSetComboJdbc();
     this.onSelectTabInfoList();
@@ -83,7 +98,7 @@ export class TabColListComponent implements OnInit {
   /********************
    * JDBC변경시
    ********************/
-  onChangeComboJdbc(i) {
+  onChangeComboJdbc(i: number) {
     //console.log("event.value=="+event.value);
     //console.log("event.value=="+event.selectedIndex);
     //console.log("event.value=="+event.options[event.selectedIndex]);
@@ -102,23 +117,49 @@ export class TabColListComponent implements OnInit {
     }
     this.onSelectTabInfoList();
   }
-  /********************
-   * 정렬기준컬럼 변경시
-   ********************/
-  onChangeComboWhereColTab(i) {
+  /*****************************
+   * IN 테이블 검색
+   ****************************/
+  onChangeComboWhereTabs(i: number) {
+    //localStorage.setItem('ponyTabs1' , this.tabInfoInVo.whereTabs);
+    console.log(i);
+    console.log(this.comboWhereTabs[i].value);
+    this.tabInfoInVo.chkWhereTabs = (i==0) ? false : true;
+    this.tabInfoInVo.selectedTabs = i;
+    //this.tabInfoInVo.whereTabs = this.comboWhereTabs[i-1].value;
+  }
+  onChangeTabs(i: number) {
+    if(this.tabInfoInVo.selectedTabs==0) this.tabInfoInVo.whereColTab = "";
+    if(this.tabInfoInVo.selectedTabs==1) this.tabInfoInVo.whereColTab = this.tabInfoInVo.whereTabs1;
+    if(this.tabInfoInVo.selectedTabs==2) this.tabInfoInVo.whereColTab = this.tabInfoInVo.whereTabs2;
+    if(this.tabInfoInVo.selectedTabs==3) this.tabInfoInVo.whereColTab = this.tabInfoInVo.whereTabs3;
+    if(this.tabInfoInVo.selectedTabs==4) this.tabInfoInVo.whereColTab = this.tabInfoInVo.whereTabs4;
+
+    if(i==1) localStorage.setItem('whereTabs1',this.tabInfoInVo.whereTabs1);
+    if(i==2) localStorage.setItem('whereTabs2',this.tabInfoInVo.whereTabs2);
+    if(i==3) localStorage.setItem('whereTabs3',this.tabInfoInVo.whereTabs3);
+    if(i==4) localStorage.setItem('whereTabs4',this.tabInfoInVo.whereTabs4);
+
+    console.log("this.tabInfoInVo.whereColTab=="+this.tabInfoInVo.whereColTab);
+  }
+
+  /*****************************
+   * 컬럼 혹은 컬럼포함 테이블 검색
+   ****************************/
+  onChangeComboWhereColTab(i: number) {
     this.tabInfoInVo.whereColTab = this.comboWhereColTab[i].value;
   }
   /********************
-   * 정렬기준컬럼 변경시
+   * 정렬 컬럼 선택
    ********************/
-  onChangeComboOrderBy(i) {
+  onChangeComboOrderBy(i: number) {
     this.tabInfoInVo.orderBy = this.comboOrderBy[i].value;
     this.onSelectTabInfoList();
   }
   /********************
-   * 오름-내림기준 변경시
+   * 오름-내림 정렬
    ********************/
-  onChangeComboAscDesc(i) {
+  onChangeComboAscDesc(i: number) {
     this.tabInfoInVo.ascDesc = this.comboAscDesc[i].value;
     this.onSelectTabInfoList();
   }

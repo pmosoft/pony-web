@@ -9,11 +9,14 @@
     </button>
   </div>
 </div>
-<div class="mb-4">
+<div class="mb-3">
   <div class="clearfix">
     <div class="float-left" >
         <select class="btn btn-outline-primary btn-sm mr-2" (change)="onChangeComboJdbc($event.target.selectedIndex)"  >
           <option *ngFor="let combo of comboJdbc" [value]="combo.jdbcNm" >{{combo.jdbcNm}}</option>
+        </select>
+        <select class="btn btn-outline-primary btn-sm mr-2"  (change)="onChangeComboWhereTabs($event.target.selectedIndex)"  >
+          <option *ngFor="let combo of comboWhereTabs" [value]="combo.value" >{{combo.name}}</option>
         </select>
         <input [(ngModel)]="tabInfoInVo.tabNm"    class="btn btn-outline-primary btn-sm mr-2" (keyup.enter)="onSelectTabInfoList()" placeholder="테이블명">
         <input [(ngModel)]="tabInfoInVo.tabHnm"   class="btn btn-outline-primary btn-sm mr-2" (keyup.enter)="onSelectTabInfoList()" placeholder="테이블한글명">
@@ -34,6 +37,24 @@
     </div>
   </div>
 </div>
+
+
+<div class="form-row" *ngIf="tabInfoInVo.chkWhereTabs">
+  <div class="form-group col-md-3">
+    <textarea [(ngModel)]="tabInfoInVo.whereTabs1" name="tabs1" class="form-control" rows="3" (change)="onChangeTabs(1)"></textarea>
+  </div>
+  <div class="form-group col-md-3">
+    <textarea [(ngModel)]="tabInfoInVo.whereTabs2" name="tabs2" class="form-control" rows="3" (change)="onChangeTabs(2)"></textarea>
+  </div>
+  <div class="form-group col-md-3">
+    <textarea [(ngModel)]="tabInfoInVo.whereTabs3" name="tabs3" class="form-control" rows="3" (change)="onChangeTabs(3)"></textarea>
+  </div>
+  <div class="form-group col-md-3">
+    <textarea [(ngModel)]="tabInfoInVo.whereTabs4" name="tabs4" class="form-control" rows="3" (change)="onChangeTabs(4)"></textarea>
+  </div>
+</div>
+
+
 
 <div class="clearfix mb-2 ">
   <div class="float-right mr-3">{{cnt | number}}건</div>

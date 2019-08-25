@@ -93,6 +93,15 @@ export class TabListComponent implements OnInit {
     this.onSelectTabList();
   }
 
+
+  /********************
+   * 순차정렬
+   ********************/
+  onChangeTabs(i: string | number) {
+    console.log("i========="+i);
+  }
+
+
   /********************
    * 순차정렬
    ********************/

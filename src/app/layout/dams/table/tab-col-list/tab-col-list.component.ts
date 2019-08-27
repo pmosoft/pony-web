@@ -128,19 +128,19 @@ export class TabColListComponent implements OnInit {
     this.tabInfoInVo.selectedTabs = i;
     //this.tabInfoInVo.whereTabs = this.comboWhereTabs[i-1].value;
 
-    if(this.tabInfoInVo.selectedTabs==0) this.tabInfoInVo.whereColTab = "";
-    if(this.tabInfoInVo.selectedTabs==1) this.tabInfoInVo.whereColTab = this.tabInfoInVo.whereTabs1;
-    if(this.tabInfoInVo.selectedTabs==2) this.tabInfoInVo.whereColTab = this.tabInfoInVo.whereTabs2;
-    if(this.tabInfoInVo.selectedTabs==3) this.tabInfoInVo.whereColTab = this.tabInfoInVo.whereTabs3;
-    if(this.tabInfoInVo.selectedTabs==4) this.tabInfoInVo.whereColTab = this.tabInfoInVo.whereTabs4;
+    if(this.tabInfoInVo.selectedTabs==0) this.tabInfoInVo.whereTabs = "";
+    if(this.tabInfoInVo.selectedTabs==1) this.tabInfoInVo.whereTabs = this.tabInfoInVo.whereTabs1;
+    if(this.tabInfoInVo.selectedTabs==2) this.tabInfoInVo.whereTabs = this.tabInfoInVo.whereTabs2;
+    if(this.tabInfoInVo.selectedTabs==3) this.tabInfoInVo.whereTabs = this.tabInfoInVo.whereTabs3;
+    if(this.tabInfoInVo.selectedTabs==4) this.tabInfoInVo.whereTabs = this.tabInfoInVo.whereTabs4;
 
   }
   onChangeTabs(i: number) {
-    if(this.tabInfoInVo.selectedTabs==0) this.tabInfoInVo.whereColTab = "";
-    if(this.tabInfoInVo.selectedTabs==1) this.tabInfoInVo.whereColTab = this.tabInfoInVo.whereTabs1;
-    if(this.tabInfoInVo.selectedTabs==2) this.tabInfoInVo.whereColTab = this.tabInfoInVo.whereTabs2;
-    if(this.tabInfoInVo.selectedTabs==3) this.tabInfoInVo.whereColTab = this.tabInfoInVo.whereTabs3;
-    if(this.tabInfoInVo.selectedTabs==4) this.tabInfoInVo.whereColTab = this.tabInfoInVo.whereTabs4;
+    if(this.tabInfoInVo.selectedTabs==0) this.tabInfoInVo.whereTabs = "";
+    if(this.tabInfoInVo.selectedTabs==1) this.tabInfoInVo.whereTabs = this.tabInfoInVo.whereTabs1;
+    if(this.tabInfoInVo.selectedTabs==2) this.tabInfoInVo.whereTabs = this.tabInfoInVo.whereTabs2;
+    if(this.tabInfoInVo.selectedTabs==3) this.tabInfoInVo.whereTabs = this.tabInfoInVo.whereTabs3;
+    if(this.tabInfoInVo.selectedTabs==4) this.tabInfoInVo.whereTabs = this.tabInfoInVo.whereTabs4;
 
     if(i==1) localStorage.setItem('whereTabs1',this.tabInfoInVo.whereTabs1);
     if(i==2) localStorage.setItem('whereTabs2',this.tabInfoInVo.whereTabs2);
@@ -196,6 +196,16 @@ export class TabColListComponent implements OnInit {
    * 테이블정보 조회
    ********************/
   onSelectTabInfoList(){
+    console.log("this.tabInfoInVo.selectedTabs=="+this.tabInfoInVo.selectedTabs);
+    if(this.tabInfoInVo.selectedTabs==0) this.tabInfoInVo.whereTabs = "";
+    if(this.tabInfoInVo.selectedTabs==1) this.tabInfoInVo.whereTabs = this.tabInfoInVo.whereTabs1;
+    if(this.tabInfoInVo.selectedTabs==2) this.tabInfoInVo.whereTabs = this.tabInfoInVo.whereTabs2;
+    if(this.tabInfoInVo.selectedTabs==3) this.tabInfoInVo.whereTabs = this.tabInfoInVo.whereTabs3;
+    if(this.tabInfoInVo.selectedTabs==4) this.tabInfoInVo.whereTabs = this.tabInfoInVo.whereTabs4;
+    console.log(this.comboWhereTabs[this.tabInfoInVo.selectedTabs].value);
+    console.log("11="+this.tabInfoInVo.whereTabs);
+    console.log("22="+this.tabInfoInVo.whereTabs1);
+
     this.tabInfoService.selectTabInfoList(this.tabInfoInVo)
     .subscribe(result => {
        if(!result.isSuccess) alert(result.errUsrMsg)

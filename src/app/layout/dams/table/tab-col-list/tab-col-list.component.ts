@@ -1,10 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { TabInfoService } from '../tab-info.service';
 import { TabInfo } from '../tab-info';
+import { TabColListExcel } from './tab-col-list-excel';
 import { JdbcInfoService } from '../../jdbc/jdbc-info.service';
 import { JdbcInfo } from '../../jdbc/jdbc-info';
 import { ActivatedRoute } from '@angular/router';
 import { Comm } from '../../../comm/comm';
+import { CommService } from '../../../comm/comm.service';
+import { CodeService } from '../../code/code.service';
 
 @Component({
   selector: 'app-tab-col-list',
@@ -19,6 +22,8 @@ export class TabColListComponent implements OnInit {
   comm : Comm = new Comm();
 
   tabInfoInVo: TabInfo = new TabInfo();
+  tabColListExcels : TabColListExcel[]; 
+
   tabInfoOutVoList: TabInfo[]
   jdbcInfoInVo: JdbcInfo = new JdbcInfo();
   //comboJdbc  : JdbcCombo[];
@@ -52,6 +57,7 @@ export class TabColListComponent implements OnInit {
 
   constructor(private tabInfoService: TabInfoService
              ,private jdbcInfoService: JdbcInfoService
+             ,private commService: CommService
              ,private route: ActivatedRoute) { }
 
 /***************************************************
@@ -276,26 +282,61 @@ export class TabColListComponent implements OnInit {
 
   onDelete(){}
 
-
   /********************
    * 엑셀 다운로드
    ********************/
   onDownloadExcel() {
+    var infoArray = []; 
 
-    // let data = JSON.stringify(this.codeOutVoList);
-    // //console.log(data);
+    var tabColListExcels = []; 
 
-    // const fd = new FormData();
-    // fd.append('fileNm', "tab-col-list.xls");
-    // fd.append('data', data);
+    for( var i in this.tabInfoOutVoList ) {
+        var excel = new TabColListExcel();
+        excel.jdbcNm       = this.tabInfoOutVoList[i].jdbcNm      ; 
+        excel.tabNm        = this.tabInfoOutVoList[i].tabNm       ; 
+        excel.tabHnm       = this.tabInfoOutVoList[i].tabHnm      ; 
+        excel.colId        = this.tabInfoOutVoList[i].colId       ; 
+        excel.colNm        = this.tabInfoOutVoList[i].colNm       ; 
+        excel.colHnm       = this.tabInfoOutVoList[i].colHnm      ; 
+        excel.dataTypeDesc = this.tabInfoOutVoList[i].dataTypeDesc; 
+        excel.nullable     = this.tabInfoOutVoList[i].nullable    ; 
+        excel.pk           = this.tabInfoOutVoList[i].pk          ; 
+        excel.tabRows      = this.tabInfoOutVoList[i].tabRows     ; 
+        excel.tabUpdDt2    = this.tabInfoOutVoList[i].tabUpdDt2   ; 
+        excel.tabRegDt2    = this.tabInfoOutVoList[i].tabRegDt2   ;
+        tabColListExcels.push(excel);
+    }         
 
-    // this.codeService.downloadExcel(fd)
-    // .subscribe(result => {
-    //    if(!result.isSuccess) alert(result.errUsrMsg)
-    //   else {
-    //   }
-    // });
+    var infoArray = []; 
+    infoArray.push({jdbcNm : 'aa', tabNm : '20'}); 
+    infoArray.push({jdbcNm : 'SASS', num1 : 100, num2 : 70 });
+
+    var aa = new TabColListExcel();
+    aa.jdbcNm = 'aa'; 
+    aa.tabNm = 'aa'; 
+    infoArray.push(aa); 
+    
+    //this.tabColListExcels[0] = new TabColListExcel; 
+    //this.tabColListExcels[1] = new TabColListExcel; 
+    //this.tabColListExcels[0].jdbcNm = 'aa'; 
+    //this.tabColListExcels[0].tabNm = 'aa'; 
+    //this.tabColListExcels[1].jdbcNm = 'aa'; 
+    //this.tabColListExcels[1].tabNm = 'aa'; 
+
+    let data = JSON.stringify(tabColListExcels);
+    //console.log(data);
+
+    const fd = new FormData();
+    fd.append('fileNm', "code-list.xls");
+    fd.append('data', data);
+    
+    this.commService.downloadExcel(fd)
+    .subscribe(result => {
+       if(!result.isSuccess) alert(result.errUsrMsg)
+      else {
+      } 
+    });
   }
-
+  
 
 }

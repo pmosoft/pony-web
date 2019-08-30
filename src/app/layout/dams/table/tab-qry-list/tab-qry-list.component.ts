@@ -204,7 +204,7 @@ export class TabQryListComponent implements OnInit {
    ********************/
   onDownloadExcel() {
 
-    this.tabInfoService.downloadExcel(this.tabInfoInVo)
+    this.tabInfoService.downloadExcel2(this.tabInfoInVo)
     .subscribe(result => {
        if(!result.isSuccess) alert(result.errUsrMsg)
       else {

@@ -7,7 +7,6 @@ import { JdbcInfo } from '../../jdbc/jdbc-info';
 import { ActivatedRoute } from '@angular/router';
 import { Comm } from '../../../comm/comm';
 import { CommService } from '../../../comm/comm.service';
-import { CodeService } from '../../code/code.service';
 
 @Component({
   selector: 'app-tab-col-list',
@@ -22,7 +21,6 @@ export class TabColListComponent implements OnInit {
   comm : Comm = new Comm();
 
   tabInfoInVo: TabInfo = new TabInfo();
-  tabColListExcels : TabColListExcel[]; 
 
   tabInfoOutVoList: TabInfo[]
   jdbcInfoInVo: JdbcInfo = new JdbcInfo();
@@ -327,8 +325,9 @@ export class TabColListComponent implements OnInit {
     //console.log(data);
 
     const fd = new FormData();
-    fd.append('fileNm', "code-list.xls");
+    fd.append('fileNm', "tab-col-list.xls");
     fd.append('data', data);
+    
     
     this.commService.downloadExcel(fd)
     .subscribe(result => {

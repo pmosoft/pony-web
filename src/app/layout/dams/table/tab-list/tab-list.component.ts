@@ -1,9 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { TabInfoService } from '../tab-info.service';
 import { TabInfo } from '../tab-info';
+import { TabListExcel } from './tab-list-excel';
 import { JdbcInfoService } from '../../jdbc/jdbc-info.service';
 import { JdbcInfo } from '../../jdbc/jdbc-info';
 import { Router } from '@angular/router';
+import { Comm } from '../../../comm/comm';
+import { CommService } from '../../../comm/comm.service';
 
 @Component({
   selector: 'app-tab-list',
@@ -40,6 +43,7 @@ export class TabListComponent implements OnInit {
 
   constructor(private tabInfoService: TabInfoService
              ,private jdbcInfoService: JdbcInfoService
+             ,private commService: CommService
              ,private router: Router) { }
 
 /***************************************************
@@ -175,29 +179,63 @@ export class TabListComponent implements OnInit {
         //this.router.navigate(['/ext-stat-view/',{debug: true}]);
       }
     });
-
-
-
   }
 
+  /********************
+   * SELECT 쿼리
+   ********************/
+  onSelectColScript() {
+//    console.log("onSelectColScript");
+//    this.tabInfoService.selectColScript(this.tabInfoOutVoList)
+//    .subscribe(result => {
+//       if(!result.isSuccess) alert(result.errUsrMsg)
+//      else {
+//        //this.tabInfoOutVoList = result.tabInfoOutVoList;
+//        console.log(result.sqlScript);
+//        //this.createScript = result.createScript;
+//        //alert(this.createScript);
+//        //this.router.navigate(["/ext-stat-view/"+this.createScript]);
+//        this.router.navigate(['/ext-stat-view',{result: result.sqlScript}]);
+//        //this.router.navigate(['/ext-stat-view/',{debug: true}]);
+//      }
+//    });
+  }
+
+    
+    
+  
   /********************
    * 엑셀 다운로드
    ********************/
   onDownloadExcel() {
 
-    // let data = JSON.stringify(this.codeOutVoList);
-    // //console.log(data);
+      var tabListExcels = []; 
 
-    // const fd = new FormData();
-    // fd.append('fileNm', "tab-list.xls");
-    // fd.append('data', data);
+      for( var i in this.tabInfoOutVoList ) {
+          var excel = new TabListExcel();
+          excel.owner        = this.tabInfoOutVoList[i].owner      ; 
+          excel.tabNm        = this.tabInfoOutVoList[i].tabNm       ; 
+          excel.tabHnm       = this.tabInfoOutVoList[i].tabHnm      ; 
+          excel.tabRows      = this.tabInfoOutVoList[i].tabRows     ; 
+          excel.tabUpdDt2    = this.tabInfoOutVoList[i].tabUpdDt2   ; 
+          excel.tabRegDt2    = this.tabInfoOutVoList[i].tabRegDt2   ;
+          tabListExcels.push(excel);
+      }         
 
-    // this.codeService.downloadExcel(fd)
-    // .subscribe(result => {
-    //    if(!result.isSuccess) alert(result.errUsrMsg)
-    //   else {
-    //   }
-    // });
+      let data = JSON.stringify(tabListExcels);
+
+      const fd = new FormData();
+      fd.append('fileNm', "tab-list.xls");
+      fd.append('data', data);
+      
+      this.commService.downloadExcel(fd)
+      .subscribe(result => {
+         if(!result.isSuccess) alert(result.errUsrMsg)
+        else {
+        } 
+      });
+
+      
   }
 
 

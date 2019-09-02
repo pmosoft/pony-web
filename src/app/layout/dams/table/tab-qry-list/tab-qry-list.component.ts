@@ -198,6 +198,27 @@ export class TabQryListComponent implements OnInit {
       }
     });
   }
+  
+  /********************
+   * SELECT 쿼리
+   ********************/
+  onSelectColScript() {
+    console.log("onSelectColScript");
+    this.tabInfoService.selectColScript(this.tabInfoInVo)
+    .subscribe(result => {
+       if(!result.isSuccess) alert(result.errUsrMsg)
+      else {
+        //this.tabInfoOutVoList = result.tabInfoOutVoList;
+        console.log(result.sqlScript);
+        //this.createScript = result.createScript;
+        //alert(this.createScript);
+        //this.router.navigate(["/ext-stat-view/"+this.createScript]);
+        this.router.navigate(['/ext-stat-view',{result: result.sqlScript}]);
+        //this.router.navigate(['/ext-stat-view/',{debug: true}]);
+      }
+    });
+  }
+  
 
   /********************
    * 엑셀 다운로드

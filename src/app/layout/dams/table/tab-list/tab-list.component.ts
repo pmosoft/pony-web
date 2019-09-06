@@ -26,6 +26,20 @@ export class TabListComponent implements OnInit {
   createScript = "";
   //comboJdbc : JdbcCombo[];
   comboJdbc : JdbcInfo[];
+  
+  comboWhereTabs = [
+	    {name : 'T0' , value : 'T0' }
+	   ,{name : 'T1' , value : 'T1' }
+	   ,{name : 'T2' , value : 'T2' }
+	   ,{name : 'T3' , value : 'T3' }
+	   ,{name : 'T4' , value : 'T4' }
+	  ];
+
+  comboWhereColTab = [
+	    {name : 'COL' , value : 'COL' }
+	   ,{name : 'TAB' , value : 'TAB' }
+	  ];  
+  
   comboOrderBy = [
       {name : '선택(정렬)' , value : 'JDBC_NM' }
      ,{name : '테이블명'   , value : 'TAB_NM'  }
@@ -53,6 +67,12 @@ export class TabListComponent implements OnInit {
     //this.tabInfoInVo = this.tabInfoService.onGetLocalStorageTabInfo();
     this.onSetComboJdbc();
     this.onSelectTabList();
+    
+    this.tabInfoInVo.whereTabs1 = this.comm.nullToSpace(localStorage.getItem('whereTabs1'));
+    this.tabInfoInVo.whereTabs2 = this.comm.nullToSpace(localStorage.getItem('whereTabs2'));
+    this.tabInfoInVo.whereTabs3 = this.comm.nullToSpace(localStorage.getItem('whereTabs3'));
+    this.tabInfoInVo.whereTabs4 = this.comm.nullToSpace(localStorage.getItem('whereTabs4'));
+    
   }
 
   /***************************
@@ -97,14 +117,44 @@ export class TabListComponent implements OnInit {
     this.onSelectTabList();
   }
 
+  /*****************************
+   * IN 테이블 검색
+   ****************************/
+  onChangeComboWhereTabs(i: number) {
+    //localStorage.setItem('ponyTabs1' , this.tabInfoInVo.whereTabs);
+    console.log(i);
+    console.log(this.comboWhereTabs[i].value);
+    this.tabInfoInVo.chkWhereTabs = (i==0) ? false : true;
+    this.tabInfoInVo.selectedTabs = i;
+    //this.tabInfoInVo.whereTabs = this.comboWhereTabs[i-1].value;
+    this.tabInfoInVo.tabNm = "";
+    if(this.tabInfoInVo.selectedTabs==0) this.tabInfoInVo.whereTabs = "";
+    if(this.tabInfoInVo.selectedTabs==1) this.tabInfoInVo.whereTabs = this.tabInfoInVo.whereTabs1;
+    if(this.tabInfoInVo.selectedTabs==2) this.tabInfoInVo.whereTabs = this.tabInfoInVo.whereTabs2;
+    if(this.tabInfoInVo.selectedTabs==3) this.tabInfoInVo.whereTabs = this.tabInfoInVo.whereTabs3;
+    if(this.tabInfoInVo.selectedTabs==4) this.tabInfoInVo.whereTabs = this.tabInfoInVo.whereTabs4;
 
-  /********************
-   * 순차정렬
-   ********************/
-  onChangeTabs(i: string | number) {
-    console.log("i========="+i);
   }
+  onChangeTabs(i: number) {
+    if(this.tabInfoInVo.selectedTabs==0) this.tabInfoInVo.whereTabs = "";
+    if(this.tabInfoInVo.selectedTabs==1) this.tabInfoInVo.whereTabs = this.tabInfoInVo.whereTabs1;
+    if(this.tabInfoInVo.selectedTabs==2) this.tabInfoInVo.whereTabs = this.tabInfoInVo.whereTabs2;
+    if(this.tabInfoInVo.selectedTabs==3) this.tabInfoInVo.whereTabs = this.tabInfoInVo.whereTabs3;
+    if(this.tabInfoInVo.selectedTabs==4) this.tabInfoInVo.whereTabs = this.tabInfoInVo.whereTabs4;
 
+    if(i==1) localStorage.setItem('whereTabs1',this.tabInfoInVo.whereTabs1);
+    if(i==2) localStorage.setItem('whereTabs2',this.tabInfoInVo.whereTabs2);
+    if(i==3) localStorage.setItem('whereTabs3',this.tabInfoInVo.whereTabs3);
+    if(i==4) localStorage.setItem('whereTabs4',this.tabInfoInVo.whereTabs4);
+
+    console.log("this.tabInfoInVo.whereColTab=="+this.tabInfoInVo.whereColTab); 
+  }
+  /*****************************
+   * 컬럼 혹은 컬럼포함 테이블 검색
+   ****************************/
+  onChangeComboWhereColTab(i: number) {
+    this.tabInfoInVo.whereColTab = this.comboWhereColTab[i].value;
+  }  
 
   /********************
    * 순차정렬
@@ -149,6 +199,12 @@ export class TabListComponent implements OnInit {
     //this.tabInfoService.tabInfoInVo = this.tabInfoInVo;
     //this.tabInfoService.onSetLocalStorageTabInfo(this.tabInfoInVo);
     //alert("onSelectTabList");
+    if(this.tabInfoInVo.selectedTabs==0) this.tabInfoInVo.whereTabs = "";
+    if(this.tabInfoInVo.selectedTabs==1) this.tabInfoInVo.whereTabs = this.tabInfoInVo.whereTabs1;
+    if(this.tabInfoInVo.selectedTabs==2) this.tabInfoInVo.whereTabs = this.tabInfoInVo.whereTabs2;
+    if(this.tabInfoInVo.selectedTabs==3) this.tabInfoInVo.whereTabs = this.tabInfoInVo.whereTabs3;
+    if(this.tabInfoInVo.selectedTabs==4) this.tabInfoInVo.whereTabs = this.tabInfoInVo.whereTabs4;
+  
     this.tabInfoService.selectTabList(this.tabInfoInVo)
     .subscribe(result => {
        if(!result.isSuccess) alert(result.errUsrMsg)

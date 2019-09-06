@@ -234,6 +234,7 @@ export class TabListComponent implements OnInit {
         //this.router.navigate(["/ext-stat-view/"+this.createScript]);
         this.router.navigate(['/ext-stat-view',{result: this.createScript}]);
         //this.router.navigate(['/ext-stat-view/',{debug: true}]);
+       
       }
     });
   }

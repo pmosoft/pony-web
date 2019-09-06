@@ -43,4 +43,6 @@ export class TabInfo {
   whereTabs3   : string = "";
   whereTabs4   : string = "";
 
+  limitCnt     : number = 50000;
+
 }

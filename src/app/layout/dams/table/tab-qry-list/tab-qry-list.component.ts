@@ -167,6 +167,7 @@ export class TabQryListComponent implements OnInit {
    * 쿼리 데이터 조회
    ********************/
   onSelectTabQryList(){
+	this.tabInfoInVo.limitCnt = 100;
     this.tabInfoService.selectTabQryList(this.tabInfoInVo)
     .subscribe(result => {
        if(!result.isSuccess) alert(result.errUsrMsg)

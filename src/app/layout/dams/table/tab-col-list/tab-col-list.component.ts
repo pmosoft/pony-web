@@ -131,7 +131,7 @@ export class TabColListComponent implements OnInit {
     this.tabInfoInVo.chkWhereTabs = (i==0) ? false : true;
     this.tabInfoInVo.selectedTabs = i;
     //this.tabInfoInVo.whereTabs = this.comboWhereTabs[i-1].value;
-
+    this.tabInfoInVo.tabNm = "";
     if(this.tabInfoInVo.selectedTabs==0) this.tabInfoInVo.whereTabs = "";
     if(this.tabInfoInVo.selectedTabs==1) this.tabInfoInVo.whereTabs = this.tabInfoInVo.whereTabs1;
     if(this.tabInfoInVo.selectedTabs==2) this.tabInfoInVo.whereTabs = this.tabInfoInVo.whereTabs2;

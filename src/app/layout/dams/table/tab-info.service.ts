@@ -67,8 +67,8 @@ export class TabInfoService {
     return this.http.post<any>('http://'+this.document.location.hostname+':9201/dams/table/selectTabQryList', tabInfo, httpOptions);
   }
 
-  selectColScript(tabInfo: TabInfo): Observable<any> {
-    return this.http.post<any>('http://'+this.document.location.hostname+':9201/dams/table/selectColScript', tabInfo, httpOptions);
+  selectSelectScript(tabInfo: TabInfo): Observable<any> {
+    return this.http.post<any>('http://'+this.document.location.hostname+':9201/dams/table/selectSelectScript', tabInfo, httpOptions);
   }
 
   downloadInsStat(tabInfo: TabInfo): Observable<any> {

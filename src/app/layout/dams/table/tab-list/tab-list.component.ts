@@ -184,9 +184,9 @@ export class TabListComponent implements OnInit {
   /********************
    * SELECT 쿼리
    ********************/
-  onSelectColScript() {
-//    console.log("onSelectColScript");
-//    this.tabInfoService.selectColScript(this.tabInfoOutVoList)
+  onSelectSelectScript() {
+//    console.log("onSelectSelectScript");
+//    this.tabInfoService.selectSelectScript(this.tabInfoOutVoList)
 //    .subscribe(result => {
 //       if(!result.isSuccess) alert(result.errUsrMsg)
 //      else {

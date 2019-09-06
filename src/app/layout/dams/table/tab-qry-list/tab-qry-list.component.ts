@@ -107,7 +107,7 @@ export class TabQryListComponent implements OnInit {
    ********************/
   onCheckCol(){
     console.log(this.tabInfoInVo.chkWhere);
-    this.tabInfoService.selectColScript (this.tabInfoInVo)
+    this.tabInfoService.selectSelectScript (this.tabInfoInVo)
     .subscribe(result => {
        if(!result.isSuccess) alert(result.errUsrMsg)
       else {
@@ -202,9 +202,9 @@ export class TabQryListComponent implements OnInit {
   /********************
    * SELECT 쿼리
    ********************/
-  onSelectColScript() {
-    console.log("onSelectColScript");
-    this.tabInfoService.selectColScript(this.tabInfoInVo)
+  onSelectSelectScript() {
+    console.log("onSelectSelectScript");
+    this.tabInfoService.selectSelectScript(this.tabInfoInVo)
     .subscribe(result => {
        if(!result.isSuccess) alert(result.errUsrMsg)
       else {

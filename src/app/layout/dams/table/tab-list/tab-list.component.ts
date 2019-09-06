@@ -18,6 +18,7 @@ export class TabListComponent implements OnInit {
 /***************************************************
  * 변수부
  ***************************************************/
+  comm : Comm = new Comm();
 
   tabInfoInVo: TabInfo = new TabInfo();
   tabInfoOutVoList: TabInfo[]

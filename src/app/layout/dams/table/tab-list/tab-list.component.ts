@@ -25,6 +25,8 @@ export class TabListComponent implements OnInit {
   jdbcInfoInVo: JdbcInfo = new JdbcInfo();
 
   createScript = "";
+  tabRowsUpdateScript = "";
+  
   //comboJdbc : JdbcCombo[];
   comboJdbc : JdbcInfo[];
   
@@ -259,7 +261,26 @@ export class TabListComponent implements OnInit {
 //    });
   }
 
-    
+  /********************
+   * 테이블건수 현행화 갱신
+   ********************/
+  onUpdateTabRowsUpdateScript() {
+    console.log("onUpdateTabRowsUpdateScript");
+    this.tabInfoService.updateTabRowsUpdateScript(this.tabInfoOutVoList)
+    .subscribe(result => {
+       if(!result.isSuccess) alert(result.errUsrMsg)
+      else {
+        //this.tabInfoOutVoList = result.tabInfoOutVoList;
+        console.log(result.tabRowsUpdateScript);
+        this.tabRowsUpdateScript = result.tabRowsUpdateScript;
+        //alert(this.createScript);
+        //this.router.navigate(["/ext-stat-view/"+this.createScript]);
+        //this.router.navigate(['/ext-stat-view',{result: this.createScript}]);
+        //this.router.navigate(['/ext-stat-view/',{debug: true}]);
+       
+      }
+    });
+  }
     
   
   /********************

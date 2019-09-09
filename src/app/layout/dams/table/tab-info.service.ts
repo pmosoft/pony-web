@@ -91,6 +91,9 @@ export class TabInfoService {
     return this.http.post<any>('http://'+this.document.location.hostname+':9201/dams/table/downloadBarFile', tabInfo, httpOptions);
   }
 
+  updateTabRowsUpdateScript(tabInfoOutVoList: TabInfo[]): Observable<any> {
+    return this.http.post<any>('http://'+this.document.location.hostname+':9201/dams/table/updateTabRowsUpdateScript', tabInfoOutVoList, httpOptions);
+  }
 
   /********************************************
    * Param

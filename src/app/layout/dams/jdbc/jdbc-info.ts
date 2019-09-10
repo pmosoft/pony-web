@@ -1,6 +1,7 @@
 export class JdbcInfo {
 
   jdbcNm     : string = "";
+  db         : string = "";
   driver     : string = "";
   url        : string = "";
   usrId      : string = "";

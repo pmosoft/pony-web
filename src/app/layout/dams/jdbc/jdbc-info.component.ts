@@ -11,20 +11,21 @@ import { TabInfo } from '../table/tab-info';
 })
 export class JdbcInfoComponent implements OnInit {
 
+/***************************************************
+ * 변수부
+ ***************************************************/
+
   jdbcInfoInVo: JdbcInfo = new JdbcInfo();
   jdbcInfoOutVoList: JdbcInfo[];
   tabInfoInVo : TabInfo = new TabInfo();
 
-  selectedValue : string = "mariadb";
-
-
   //----------------
   // select
   //----------------
-  comboDriver = [
-     {value: "oracle" , name: "oracle" }
-    ,{value: "mariadb", name: "mariadb"}
-    ,{value: "sqlite" , name: "sqlite" }
+  comboDbDriver = [
+     {driver: "net.sf.log4jdbc.sql.jdbcapi.DriverSpy" , db: "oracle" }
+    ,{driver: "net.sf.log4jdbc.sql.jdbcapi.DriverSpy" , db: "mariadb"}
+    ,{driver: "net.sf.log4jdbc.sql.jdbcapi.DriverSpy" , db: "sqlite" }
 //    ,{value: "db2"    , name: "db2"    }
 //    ,{value: "sybase" , name: "sybase" }
 //    ,{value: "IQ"     , name: "iq"     }
@@ -39,30 +40,49 @@ export class JdbcInfoComponent implements OnInit {
   constructor(private jdbcInfoService: JdbcInfoService
              ,private router: Router) { }
 
+
+/***************************************************
+ * 초기화
+ ***************************************************/
   ngOnInit() {
+    this.jdbcInfoInVo.db = "oracle";
+    this.jdbcInfoInVo.driver = "net.sf.log4jdbc.sql.jdbcapi.DriverSpy";
     this.onSelect();
   }
 
-  onComboChange(comboValue) {
-    this.selectedValue = comboValue;
-    this.jdbcInfoInVo.driver = comboValue;
+/***************************************************
+ * 이벤트
+ ***************************************************/
+
+  /********************
+   * 입력 DB 콤보 변경시
+   ********************/
+  onComboChange(i:number) {
+    this.jdbcInfoInVo.db = this.comboDbDriver[i].db;
+    this.jdbcInfoInVo.driver = this.comboDbDriver[i].driver;
   }
 
+  /********************
+   * 그리드 클릭시
+   ********************/
   onClick(jdbcInfoInVo) {
     this.jdbcInfoInVo = jdbcInfoInVo;
-    this.selectedValue = jdbcInfoInVo.driver
   }
-
-
+  
+  /********************
+   * 신규
+   ********************/
   onNew() {
     this.jdbcInfoInVo = new JdbcInfo();
-    this.selectedValue = "oracle";
+    this.jdbcInfoInVo.db = "oracle";
 
   }
 
+  /********************
+   * 저장
+   ********************/
   onSave() {
     console.log("onSave");
-    this.jdbcInfoInVo.driver = this.selectedValue;
     this.jdbcInfoService.saveJdbcInfo(this.jdbcInfoInVo)
     .subscribe(result => {
        if(!result.isSuccess) alert(result.errUsrMsg)
@@ -74,29 +94,9 @@ export class JdbcInfoComponent implements OnInit {
     });
   }
 
-  onSelect() {
-    this.jdbcInfoService.selectJdbcInfoList(this.jdbcInfoInVo)
-    .subscribe(result => {
-      if(!result.isSuccess) alert(result.errUsrMsg)
-      else {
-        this.jdbcInfoOutVoList = result.jdbcInfoOutVoList;
-        console.log(result.jdbcInfoOutVoList);
-        console.log(result.jdbcInfoOutVoJson);
-      }
-    });
-  }
-
-  onDelete() {
-    this.jdbcInfoService.deleteJdbcInfo(this.jdbcInfoInVo)
-    .subscribe(result => {
-      if(!result.isSuccess) alert(result.errUsrMsg)
-      else {
-        this.onNew();
-        this.onSelect();
-      }
-    });
-  }
-
+  /********************
+   * 테스트
+   ********************/
   onTest() {
     console.log("onTest");
     this.tabInfoInVo.jdbcNm = this.jdbcInfoInVo.jdbcNm;
@@ -109,6 +109,35 @@ export class JdbcInfoComponent implements OnInit {
       else {
         alert("Success");
         //console.log(result.codeOutVoList);
+      }
+    });
+  }
+
+  /********************
+   * 조회
+   ********************/
+  onSelect() {
+    this.jdbcInfoService.selectJdbcInfoList(this.jdbcInfoInVo)
+    .subscribe(result => {
+      if(!result.isSuccess) alert(result.errUsrMsg)
+      else {
+        this.jdbcInfoOutVoList = result.jdbcInfoOutVoList;
+        console.log(result.jdbcInfoOutVoList);
+        console.log(result.jdbcInfoOutVoJson);
+      }
+    });
+  }
+
+  /********************
+   * 삭제
+   ********************/
+  onDelete() {
+    this.jdbcInfoService.deleteJdbcInfo(this.jdbcInfoInVo)
+    .subscribe(result => {
+      if(!result.isSuccess) alert(result.errUsrMsg)
+      else {
+        this.onNew();
+        this.onSelect();
       }
     });
   }

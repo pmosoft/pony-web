@@ -1,30 +1,30 @@
 <div class="clearfix mb-3">
   <div class="float-left"> ETL > 테이블 이관 </div>
   <div class="float-right">
-    <button type="button" class="btn btn-outline-primary mr-2 btn-sm" (click)="onDDL()">
+    <button type="button" class="btn btn-outline-primary mr-2 btn-sm" (click)="onSelectSrcTabList()">
         이행
     </button>
     <button type="button" class="btn btn-outline-primary mr-2 btn-sm" (click)="onDownloadExcel()">
         <i class="fa fa-file-excel-o"></i>&nbsp;엑셀
     </button>
-    <button type="button" class="btn btn-outline-primary mr-2 btn-sm" (click)="onSelectEtlTab()">
+    <button type="button" class="btn btn-outline-primary mr-2 btn-sm" (click)="onSelectSrcTabList()">
       <i class="fa fa-tasks fa-fw"></i>&nbsp;조회
     </button>
   </div>
 </div>
 
-<div class="form-row" *ngIf="tabInfoInVo.chkWhereTabs">
+<div class="form-row" *ngIf="srcTabInfoInVo.chkWhereTabs">
   <div class="form-group col-md-3">
-    <textarea [(ngModel)]="tabInfoInVo.whereTabs1" name="tabs1" class="form-control" rows="3" (change)="onChangeTabs(1)"></textarea>
+    <textarea [(ngModel)]="srcTabInfoInVo.whereTabs1" name="tabs1" class="form-control" rows="3" (change)="onChangeTabs(1)"></textarea>
   </div>
   <div class="form-group col-md-3">
-    <textarea [(ngModel)]="tabInfoInVo.whereTabs2" name="tabs2" class="form-control" rows="3" (change)="onChangeTabs(2)"></textarea>
+    <textarea [(ngModel)]="srcTabInfoInVo.whereTabs2" name="tabs2" class="form-control" rows="3" (change)="onChangeTabs(2)"></textarea>
   </div>
   <div class="form-group col-md-3">
-    <textarea [(ngModel)]="tabInfoInVo.whereTabs3" name="tabs3" class="form-control" rows="3" (change)="onChangeTabs(3)"></textarea>
+    <textarea [(ngModel)]="srcTabInfoInVo.whereTabs3" name="tabs3" class="form-control" rows="3" (change)="onChangeTabs(3)"></textarea>
   </div>
   <div class="form-group col-md-3">
-    <textarea [(ngModel)]="tabInfoInVo.whereTabs4" name="tabs4" class="form-control" rows="3" (change)="onChangeTabs(4)"></textarea>
+    <textarea [(ngModel)]="srcTabInfoInVo.whereTabs4" name="tabs4" class="form-control" rows="3" (change)="onChangeTabs(4)"></textarea>
   </div>
 </div>
 
@@ -35,23 +35,24 @@
     <div class="form-group col-md-6 mr-6">
       <div class="clearfix">
         <div class="float-left">
-            <select class="btn btn-outline-primary btn-sm mr-2" (change)="onChangeComboJdbc($event.target.selectedIndex)" >
-              <option *ngFor="let combo of comboJdbc" [value]="combo.jdbcNm" >{{combo.jdbcNm}}</option>
+            <i class="ml-4 mr-4"> >> 추출</i> 
+            <select class="btn btn-outline-primary btn-sm mr-2" (change)="onChangeComboSrcJdbc($event.target.selectedIndex)" >
+              <option *ngFor="let combo of comboSrcJdbc" [value]="combo.jdbcNm" >{{combo.jdbcNm}}</option>
             </select>
             <select class="btn btn-outline-primary btn-sm mr-2"  (change)="onChangeComboWhereTabs($event.target.selectedIndex)"  >
               <option *ngFor="let combo of comboWhereTabs" [value]="combo.value" >{{combo.name}}</option>
             </select>
-            <input [(ngModel)]="tabInfoInVo.tabNm"    class="btn btn-outline-primary btn-sm mr-2" (keyup.enter)="onSelectEtlTab()" placeholder="테이블명">
-            <input [(ngModel)]="tabInfoInVo.tabHnm"   class="btn btn-outline-primary btn-sm mr-2" (keyup.enter)="onSelectEtlTab()" placeholder="테이블한글명">
+            <input [(ngModel)]="srcTabInfoInVo.tabNm"    class="btn btn-outline-primary btn-sm mr-2" (keyup.enter)="onSelectSrcTabList()" placeholder="테이블명">
+            <input [(ngModel)]="srcTabInfoInVo.tabHnm"   class="btn btn-outline-primary btn-sm mr-2" (keyup.enter)="onSelectSrcTabList()" placeholder="테이블한글명">
             <select class="btn btn-outline-primary btn-sm mr-2"  (change)="onChangeComboWhereColTab($event.target.selectedIndex)"  >
               <option *ngFor="let combo of comboWhereColTab" [value]="combo.value" >{{combo.name}}</option>
             </select>
-            <input [(ngModel)]="tabInfoInVo.colNm"    class="btn btn-outline-primary btn-sm mr-2" (keyup.enter)="onSelectEtlTab()" placeholder="컬럼명">
-            <input [(ngModel)]="tabInfoInVo.colHnm"   class="btn btn-outline-primary btn-sm mr-2" (keyup.enter)="onSelectEtlTab()" placeholder="컬럼한글명">
+            <input [(ngModel)]="srcTabInfoInVo.colNm"    class="btn btn-outline-primary btn-sm mr-2" (keyup.enter)="onSelectSrcTabList()" placeholder="컬럼명">
+            <input [(ngModel)]="srcTabInfoInVo.colHnm"   class="btn btn-outline-primary btn-sm mr-2" (keyup.enter)="onSelectSrcTabList()" placeholder="컬럼한글명">
         </div>
       </div>
       <div class="clearfix mb-2 ">
-        <div class="float-right mr-3">{{cnt | number}} 건</div>
+        <div class="float-right mr-3">{{srcCnt | number}} 건</div>
       </div>
       <table class="table table-sm table-bordered table-hover">
         <thead>
@@ -66,14 +67,14 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let tabInfoOutVo of tabInfoOutVoList; let i=index">
-            <td><input type="checkbox" [(ngModel)]="tabInfoOutVo.chk" (change)="onCheckGrid(i)"></td>
-            <td                   >{{tabInfoOutVo.owner         }}</td>
-            <td class="text-left" ><a target="tab-col" [routerLink]="['/tab-col-list/']" [queryParams]="{tabNm: tabInfoOutVo.tabNm}" [routerLinkActive]="['router-link-active']">{{tabInfoOutVo.tabNm}}</a></td>
-            <td class="text-left" >{{tabInfoOutVo.tabHnm        }}</td>
-            <td class="text-right"><a target="tab-qry" [routerLink]="['/tab-qry-list/']" [queryParams]="{jdbcNm: tabInfoOutVo.jdbcNm,owner: tabInfoOutVo.owner,tabNm: tabInfoOutVo.tabNm}" [routerLinkActive]="['router-link-active']">{{tabInfoOutVo.tabRows|number}}</a></td>
-            <td                   >{{tabInfoOutVo.tabUpdDt2     }}</td>
-            <td                   >{{tabInfoOutVo.tabRegDt2     }}</td>
+          <tr *ngFor="let srcTabInfoOutVo of srcTabInfoOutVoList; let i=index">
+            <td><input type="checkbox" [(ngModel)]="srcTabInfoOutVo.chk" (change)="onCheckGrid(i)"></td>
+            <td                   >{{srcTabInfoOutVo.owner         }}</td>
+            <td class="text-left" ><a target="tab-col" [routerLink]="['/tab-col-list/']" [queryParams]="{tabNm: srcTabInfoOutVo.tabNm}" [routerLinkActive]="['router-link-active']">{{srcTabInfoOutVo.tabNm}}</a></td>
+            <td class="text-left" >{{srcTabInfoOutVo.tabHnm        }}</td>
+            <td class="text-right"><a target="tab-qry" [routerLink]="['/tab-qry-list/']" [queryParams]="{jdbcNm: srcTabInfoOutVo.jdbcNm,owner: srcTabInfoOutVo.owner,tabNm: srcTabInfoOutVo.tabNm}" [routerLinkActive]="['router-link-active']">{{srcTabInfoOutVo.tabRows|number}}</a></td>
+            <td                   >{{srcTabInfoOutVo.tabUpdDt2     }}</td>
+            <td                   >{{srcTabInfoOutVo.tabRegDt2     }}</td>
           </tr>
         </tbody>
       </table>
@@ -82,18 +83,18 @@
     
       <div class="clearfix">
         <div class="float-left">
-            <select class="btn btn-outline-primary btn-sm mr-2" (change)="onChangeComboJdbc($event.target.selectedIndex)" >
-              <option *ngFor="let combo of comboJdbc" [value]="combo.jdbcNm" >{{combo.jdbcNm}}</option>
+            <i class="ml-4 mr-4"> >> 로드</i> 
+            <select class="btn btn-outline-primary btn-sm mr-2" (change)="onChangeComboTarJdbc($event.target.selectedIndex)" >
+              <option *ngFor="let combo of comboTarJdbc" [value]="combo.jdbcNm" >{{combo.jdbcNm}}</option>
             </select>
         </div>
       </div>    
       <div class="clearfix mb-2 ">
-        <div class="float-right mr-3">{{cnt | number}} 건</div>
+        <div class="float-right mr-3">{{tarCnt | number}} 건</div>
       </div>
       <table class="table table-sm table-bordered table-hover">
         <thead>
           <tr>
-            <th style="width: 10px;"><input type="checkbox" [(ngModel)]="isCheckAll" (change)="onCheckGridAll()"></th>
             <th style="width:100px;" scope="col">소유자</th>
             <th style="width:100px;" scope="col">테이블명</th>
             <th style="width:100px;" scope="col">테이블한글명</th>
@@ -103,14 +104,13 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let tabInfoOutVo of tabInfoOutVoList; let i=index">
-            <td><input type="checkbox" [(ngModel)]="tabInfoOutVo.chk" (change)="onCheckGrid(i)"></td>
-            <td                   >{{tabInfoOutVo.owner         }}</td>
-            <td class="text-left" ><a target="tab-col" [routerLink]="['/tab-col-list/']" [queryParams]="{tabNm: tabInfoOutVo.tabNm}" [routerLinkActive]="['router-link-active']">{{tabInfoOutVo.tabNm}}</a></td>
+          <tr *ngFor="let tarTabInfoOutVo of tarTabInfoOutVoList; let i=index">
+            <td                   >{{tarTabInfoOutVo.owner         }}</td>
+            <td class="text-left" ><a target="tab-col" [routerLink]="['/tab-col-list/']" [queryParams]="{tabNm: tarTabInfoOutVo.tabNm}" [routerLinkActive]="['router-link-active']">{{tarTabInfoOutVo.tabNm}}</a></td>
             <td class="text-left" >{{tabInfoOutVo.tabHnm        }}</td>
-            <td class="text-right"><a target="tab-qry" [routerLink]="['/tab-qry-list/']" [queryParams]="{jdbcNm: tabInfoOutVo.jdbcNm,owner: tabInfoOutVo.owner,tabNm: tabInfoOutVo.tabNm}" [routerLinkActive]="['router-link-active']">{{tabInfoOutVo.tabRows|number}}</a></td>
-            <td                   >{{tabInfoOutVo.tabUpdDt2     }}</td>
-            <td                   >{{tabInfoOutVo.tabRegDt2     }}</td>
+            <td class="text-right"><a target="tab-qry" [routerLink]="['/tab-qry-list/']" [queryParams]="{jdbcNm: tarTabInfoOutVo.jdbcNm,owner: tarTabInfoOutVo.owner,tabNm: tarTabInfoOutVo.tabNm}" [routerLinkActive]="['router-link-active']">{{tarTabInfoOutVo.tabRows|number}}</a></td>
+            <td                   >{{tarTabInfoOutVo.tabUpdDt2     }}</td>
+            <td                   >{{tarTabInfoOutVo.tabRegDt2     }}</td>
           </tr>
         </tbody>
       </table>

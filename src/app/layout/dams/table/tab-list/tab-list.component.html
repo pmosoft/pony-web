@@ -43,6 +43,9 @@
         <select class="btn btn-outline-primary btn-sm mr-2" (change)="onChangeComboAscDesc($event.target.selectedIndex)"  >
           <option *ngFor="let combo of comboAscDesc" [value]="combo.value" >{{combo.name}}</option>
         </select>
+        <select class="btn btn-outline-primary btn-sm mr-2" (change)="onChangeComboTarJdbc($event.target.selectedIndex)" >
+          <option *ngFor="let combo of comboTarJdbc" [value]="combo.jdbcNm" >{{combo.jdbcNm}}</option>
+        </select>        
     </div>
   </div>
 </div>

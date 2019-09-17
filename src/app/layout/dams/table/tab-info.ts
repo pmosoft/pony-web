@@ -47,5 +47,6 @@ export class TabInfo {
   limitCnt     : number = 50000;
 
   tarDb        : string = "";
+  tarJdbcNm    : string = "";
 
 }

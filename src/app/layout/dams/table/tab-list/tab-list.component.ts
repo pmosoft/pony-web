@@ -23,12 +23,13 @@ export class TabListComponent implements OnInit {
   tabInfoInVo: TabInfo = new TabInfo();
   tabInfoOutVoList: TabInfo[]
   jdbcInfoInVo: JdbcInfo = new JdbcInfo();
-
+  
   createScript = "";
   tabRowsUpdateScript = "";
   
   //comboJdbc : JdbcCombo[];
   comboJdbc : JdbcInfo[];
+  comboTarJdbc : JdbcInfo[];
   
   comboWhereTabs = [
 	    {name : 'T0' , value : 'T0' }
@@ -69,6 +70,7 @@ export class TabListComponent implements OnInit {
   ngOnInit() {
     //this.tabInfoInVo = this.tabInfoService.onGetLocalStorageTabInfo();
     this.onSetComboJdbc();
+    this.onSetComboTarJdbc();
     this.onSelectTabList();
     
     this.tabInfoInVo.whereTabs1 = this.comm.nullToSpace(localStorage.getItem('whereTabs1'));
@@ -93,6 +95,18 @@ export class TabListComponent implements OnInit {
     });
   }
 
+  onSetComboTarJdbc() {
+    this.jdbcInfoService.selectComboJdbcList(this.jdbcInfoInVo)
+    //this.jdbcInfoService.selectJdbcInfoList(this.jdbcInfoInVo)
+    .subscribe(result => {
+      if(!result.isSuccess) alert(result.errUsrMsg)
+      else {
+        //console.log(result.jdbcInfoOutVoList);
+        this.comboTarJdbc = result.jdbcInfoOutVoList;
+      }
+    });
+  }  
+  
 /***************************************************
  * 검색 조건 이벤트
  ***************************************************/
@@ -118,6 +132,14 @@ export class TabListComponent implements OnInit {
       this.tabInfoInVo.owner = this.comboJdbc[i].usrId;
     }
     this.onSelectTabList();
+  }
+
+  onChangeComboTarJdbc(i) {
+    if(i==0) {
+      this.tabInfoInVo.tarJdbcNm = ""
+    } else {
+      this.tabInfoInVo.tarJdbcNm = this.comboTarJdbc[i].jdbcNm;
+    }
   }
 
   /*****************************
@@ -224,7 +246,12 @@ export class TabListComponent implements OnInit {
    * DDL 생성
    ********************/
   onDDL() {
-    console.log("onDDL");
+    console.log("onDDL == tarJdbc ==" + this.tabInfoInVo.tarJdbcNm);
+    
+    for (var i = 0; i < this.tabInfoOutVoList.length; i++) {
+      if(this.tabInfoOutVoList[i].chk) this.tabInfoOutVoList[i].tarJdbcNm = this.tabInfoInVo.tarJdbcNm;	
+    }
+    
     this.tabInfoService.selectCreateScript(this.tabInfoOutVoList)
     .subscribe(result => {
        if(!result.isSuccess) alert(result.errUsrMsg)

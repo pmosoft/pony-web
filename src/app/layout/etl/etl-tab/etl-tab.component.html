@@ -107,7 +107,7 @@
           <tr *ngFor="let tarTabInfoOutVo of tarTabInfoOutVoList; let i=index">
             <td                   >{{tarTabInfoOutVo.owner         }}</td>
             <td class="text-left" ><a target="tab-col" [routerLink]="['/tab-col-list/']" [queryParams]="{tabNm: tarTabInfoOutVo.tabNm}" [routerLinkActive]="['router-link-active']">{{tarTabInfoOutVo.tabNm}}</a></td>
-            <td class="text-left" >{{tabInfoOutVo.tabHnm        }}</td>
+            <td class="text-left" >{{tarTabInfoOutVo.tabHnm        }}</td>
             <td class="text-right"><a target="tab-qry" [routerLink]="['/tab-qry-list/']" [queryParams]="{jdbcNm: tarTabInfoOutVo.jdbcNm,owner: tarTabInfoOutVo.owner,tabNm: tarTabInfoOutVo.tabNm}" [routerLinkActive]="['router-link-active']">{{tarTabInfoOutVo.tabRows|number}}</a></td>
             <td                   >{{tarTabInfoOutVo.tabUpdDt2     }}</td>
             <td                   >{{tarTabInfoOutVo.tabRegDt2     }}</td>

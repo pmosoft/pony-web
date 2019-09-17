@@ -261,7 +261,7 @@ export class TabListComponent implements OnInit {
         this.createScript = result.createScript;
         //alert(this.createScript);
         //this.router.navigate(["/ext-stat-view/"+this.createScript]);
-        this.router.navigate(['/ext-stat-view',{result: this.createScript}]);
+        //this.router.navigate(['/ext-stat-view',{result: this.createScript}]);
         //this.router.navigate(['/ext-stat-view/',{debug: true}]);
        
       }
@@ -300,11 +300,7 @@ export class TabListComponent implements OnInit {
         //this.tabInfoOutVoList = result.tabInfoOutVoList;
         console.log(result.tabRowsUpdateScript);
         this.tabRowsUpdateScript = result.tabRowsUpdateScript;
-        //alert(this.createScript);
-        //this.router.navigate(["/ext-stat-view/"+this.createScript]);
-        //this.router.navigate(['/ext-stat-view',{result: this.createScript}]);
-        //this.router.navigate(['/ext-stat-view/',{debug: true}]);
-       
+        this.onSelectTabList()
       }
     });
   }

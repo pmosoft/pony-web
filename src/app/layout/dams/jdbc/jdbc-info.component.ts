@@ -26,6 +26,7 @@ export class JdbcInfoComponent implements OnInit {
      {driver: "net.sf.log4jdbc.sql.jdbcapi.DriverSpy" , db: "oracle" }
     ,{driver: "net.sf.log4jdbc.sql.jdbcapi.DriverSpy" , db: "mariadb"}
     ,{driver: "net.sf.log4jdbc.sql.jdbcapi.DriverSpy" , db: "sqlite" }
+    ,{driver: "net.sf.log4jdbc.sql.jdbcapi.DriverSpy" , db: "postgre" }
 //    ,{value: "db2"    , name: "db2"    }
 //    ,{value: "sybase" , name: "sybase" }
 //    ,{value: "IQ"     , name: "iq"     }

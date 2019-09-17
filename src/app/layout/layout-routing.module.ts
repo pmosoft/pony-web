@@ -17,6 +17,7 @@ const routes: Routes = [
             { path: 'code-list'    , loadChildren: './dams/code/code-list/code-list.module#CodeListModule' },
             { path: 'jdbc-info'    , loadChildren: './dams/jdbc/jdbc-info.module#JdbcInfoModule' },
             { path: 'ext-stat-view', loadChildren: './dams/table/ext-stat-view/ext-stat-view.module#ExtStatViewModule' },
+            { path: 'etl-tab'      , loadChildren: './etl/etl-tab/etl-tab.module#EtlTabModule' },
             { path: 'tran-camel'   , loadChildren: './tran/camel/tran-camel.module#TranCamelModule' },
             { path: 'delimeter'    , loadChildren: './tran/delimeter/delimeter.module#DelimeterModule' },
             { path: 'clone-angular', loadChildren: './clone/angular/clone-angular.module#CloneAngularModule' },

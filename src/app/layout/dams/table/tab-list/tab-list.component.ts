@@ -30,6 +30,8 @@ export class TabListComponent implements OnInit {
   //comboJdbc : JdbcCombo[];
   comboJdbc : JdbcInfo[];
   comboTarJdbc : JdbcInfo[];
+  comboSrcJdbcIdx = 0;
+  comboTarJdbcIdx = 0;
   
   comboWhereTabs = [
 	    {name : 'T0' , value : 'T0' }
@@ -115,6 +117,8 @@ export class TabListComponent implements OnInit {
    * JDBC변경시
    ********************/
   onChangeComboJdbc(i) {
+
+    this.comboSrcJdbcIdx = i;    
     //console.log("event.value=="+event.value);
     //console.log("event.value=="+event.selectedIndex);
     //console.log("event.value=="+event.options[event.selectedIndex]);
@@ -135,6 +139,7 @@ export class TabListComponent implements OnInit {
   }
 
   onChangeComboTarJdbc(i) {
+    this.comboTarJdbcIdx = i;    
     if(i==0) {
       this.tabInfoInVo.tarJdbcNm = ""
     } else {
@@ -247,7 +252,11 @@ export class TabListComponent implements OnInit {
    ********************/
   onDDL() {
     console.log("onDDL == tarJdbc ==" + this.tabInfoInVo.tarJdbcNm);
+
+    if(this.comboSrcJdbcIdx==0) { alert("추출할 DB를 선택해 주십시요"); return; }   
+    if(this.comboTarJdbcIdx==0) { alert("로딩할 DB를 선택해 주십시요"); return; }  
     
+
     for (var i = 0; i < this.tabInfoOutVoList.length; i++) {
       if(this.tabInfoOutVoList[i].chk) this.tabInfoOutVoList[i].tarJdbcNm = this.tabInfoInVo.tarJdbcNm;	
     }

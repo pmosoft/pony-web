@@ -205,12 +205,12 @@ export class EtlTabComponent implements OnInit {
    * 테이블정보 조회
    ********************/
   onSelectSrcTabList(){
+
+    if(!this.onValidation()) return;
     //this.tabInfoService.tabInfoInVo = this.tabInfoInVo;
     //this.tabInfoService.onSetLocalStorageTabInfo(this.tabInfoInVo);
     //alert("onSelectEtlTab");
   
-	  if(this.comboSrcJdbcIdx==0) { alert("추출할 DB를 선택해 주십시요"); return; }   
-	  if(this.comboTarJdbcIdx==0) { alert("로딩할 DB를 선택해 주십시요"); return; }  
 	  
     if(this.srcTabInfoInVo.selectedTabs==0) this.srcTabInfoInVo.whereTabs = "";
     if(this.srcTabInfoInVo.selectedTabs==1) this.srcTabInfoInVo.whereTabs = this.srcTabInfoInVo.whereTabs1;
@@ -233,6 +233,7 @@ export class EtlTabComponent implements OnInit {
   }
 
   onSelectTarTabList(){
+    
     //this.tabInfoService.tabInfoInVo = this.tabInfoInVo;
     //this.tabInfoService.onSetLocalStorageTabInfo(this.tabInfoInVo);
     //alert("onSelectEtlTab");
@@ -259,24 +260,80 @@ export class EtlTabComponent implements OnInit {
    ********************/
   onEtl() {
     console.log("onEtl");
+    if(!this.onValidation()) return;
 
     for (var i = 0; i < this.srcTabInfoOutVoList.length; i++) {
       this.srcTabInfoOutVoList[i].tarJdbcNm = this.tarTabInfoInVo.jdbcNm;
+      this.srcTabInfoOutVoList[i].isExtract = true;
+      this.srcTabInfoOutVoList[i].isLoad = true;
+    }
+    //alert("이행이 진행중입니다.....");
+    this.etlTabService.executeDbToDb(this.srcTabInfoOutVoList)
+    .subscribe(result => {
+       if(!result.isSuccess) alert(result.errUsrMsg)
+      else {
+        alert("이행이 완료되었습니다.");
+        this.onSelectTarTabList();
+      }
+    });
+  } 
+
+  /********************
+   * 추출
+   ********************/
+  onExtract() {
+    console.log("onExtract");
+    if(!this.onValidation()) return;
+
+    for (var i = 0; i < this.srcTabInfoOutVoList.length; i++) {
+      this.srcTabInfoOutVoList[i].tarJdbcNm = this.tarTabInfoInVo.jdbcNm;
+      this.srcTabInfoOutVoList[i].isExtract = true;
+      this.srcTabInfoOutVoList[i].isLoad = false;
+    }
+    this.etlTabService.executeDbToDb(this.srcTabInfoOutVoList)
+    .subscribe(result => {
+       if(!result.isSuccess) alert(result.errUsrMsg)
+      else {
+        alert("추출이 완료되었습니다.");
+      }
+    });
+  } 
+
+  /********************
+   * 로딩 수행
+   ********************/
+  onLoad() {
+    console.log("onLoad");
+    if(!this.onValidation()) return;
+
+    for (var i = 0; i < this.srcTabInfoOutVoList.length; i++) {
+      this.srcTabInfoOutVoList[i].tarJdbcNm = this.tarTabInfoInVo.jdbcNm;
+      this.srcTabInfoOutVoList[i].isExtract = false;
+      this.srcTabInfoOutVoList[i].isLoad = true;
     }
 
     this.etlTabService.executeDbToDb(this.srcTabInfoOutVoList)
     .subscribe(result => {
        if(!result.isSuccess) alert(result.errUsrMsg)
       else {
-        //this.tarTabInfoOutVoList = result.tabInfoOutVoList;
-        //this.tarCnt = this.tarTabInfoOutVoList.length;
-        //console.log(result.tabInfoOutVoList);
-        //alert("onSelectMetaTabInfoList");
+        alert("로딩이 완료되었습니다.");
+        this.onSelectTarTabList();
       }
     });
+  } 
+  
 
-  }
-    
+  /********************
+   * 정합성 체크
+   ********************/
+  onValidation() {
+    var isValid = true;
+    if(this.comboSrcJdbcIdx==0) { alert("추출할 DB를 선택해 주십시요"); isValid = false; }
+    if(this.comboTarJdbcIdx==0) { alert("로딩할 DB를 선택해 주십시요"); isValid = false; }
+    if(this.comboSrcJdbcIdx==this.comboTarJdbcIdx) { alert("추출DB와 로딩DB는 상이해야 합니다."); isValid = false; }
+
+    return isValid;
+  }  
 
 
 }

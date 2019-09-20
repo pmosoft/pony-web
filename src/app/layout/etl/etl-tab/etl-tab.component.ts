@@ -1,5 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { TabInfoService } from '../../dams/table/tab-info.service';
+import { EtlTabService } from './etl-tab.service';
+
+
+
 import { TabInfo } from '../../dams/table/tab-info';
 import { TabListExcel } from '../../dams/table/tab-list/tab-list-excel';
 import { JdbcInfoService } from '../../dams/jdbc/jdbc-info.service';
@@ -29,6 +33,10 @@ export class EtlTabComponent implements OnInit {
 
   comboSrcJdbc : JdbcInfo[];
   comboTarJdbc : JdbcInfo[];
+
+  comboSrcJdbcIdx = 0;
+  comboTarJdbcIdx = 0;
+  
   
   comboWhereTabs = [
 	    {name : 'T0' , value : 'T0' }
@@ -50,6 +58,7 @@ export class EtlTabComponent implements OnInit {
   isCheckAll : boolean = false;
 
   constructor(private tabInfoService: TabInfoService
+             ,private etlTabService: EtlTabService
              ,private jdbcInfoService: JdbcInfoService
              ,private commService: CommService
              ,private router: Router) { }
@@ -105,6 +114,8 @@ export class EtlTabComponent implements OnInit {
    * JDBC변경시
    ********************/
   onChangeComboSrcJdbc(i) {
+	this.comboSrcJdbcIdx = i;
+	
     if(i==0) {
       this.srcTabInfoInVo.jdbcNm = ""
       this.srcTabInfoInVo.owner = ""
@@ -116,6 +127,8 @@ export class EtlTabComponent implements OnInit {
   }
 
   onChangeComboTarJdbc(i) {
+	this.comboTarJdbcIdx = i;
+	  
     if(i==0) {
       this.tarTabInfoInVo.jdbcNm = ""
       this.tarTabInfoInVo.owner = ""
@@ -134,6 +147,7 @@ export class EtlTabComponent implements OnInit {
     console.log(i);
     console.log(this.comboWhereTabs[i].value);
     this.srcTabInfoInVo.chkWhereTabs = (i==0) ? false : true;
+    this.tarTabInfoInVo.chkWhereTabs = (i==0) ? false : true;
     this.srcTabInfoInVo.selectedTabs = i;
     //this.srcTabInfoInVo.whereTabs = this.comboWhereTabs[i-1].value;
     this.srcTabInfoInVo.tabNm = "";
@@ -163,6 +177,7 @@ export class EtlTabComponent implements OnInit {
    ****************************/
   onChangeComboWhereColTab(i: number) {
     this.srcTabInfoInVo.whereColTab = this.comboWhereColTab[i].value;
+    this.tarTabInfoInVo.whereColTab = this.comboWhereColTab[i].value;
   }  
 
 
@@ -193,6 +208,10 @@ export class EtlTabComponent implements OnInit {
     //this.tabInfoService.tabInfoInVo = this.tabInfoInVo;
     //this.tabInfoService.onSetLocalStorageTabInfo(this.tabInfoInVo);
     //alert("onSelectEtlTab");
+  
+	  if(this.comboSrcJdbcIdx==0) { alert("추출할 DB를 선택해 주십시요"); return; }   
+	  if(this.comboTarJdbcIdx==0) { alert("로딩할 DB를 선택해 주십시요"); return; }  
+	  
     if(this.srcTabInfoInVo.selectedTabs==0) this.srcTabInfoInVo.whereTabs = "";
     if(this.srcTabInfoInVo.selectedTabs==1) this.srcTabInfoInVo.whereTabs = this.srcTabInfoInVo.whereTabs1;
     if(this.srcTabInfoInVo.selectedTabs==2) this.srcTabInfoInVo.whereTabs = this.srcTabInfoInVo.whereTabs2;
@@ -236,60 +255,28 @@ export class EtlTabComponent implements OnInit {
   }
 
   /********************
-   * 테이블건수 현행화 갱신
+   * 추출 및 로딩 수행
    ********************/
-  onUpdateTabRowsUpdateScript() {
-    console.log("onUpdateTabRowsUpdateScript");
-    this.tabInfoService.updateTabRowsUpdateScript(this.srcTabInfoOutVoList)
+  onEtl() {
+    console.log("onEtl");
+
+    for (var i = 0; i < this.srcTabInfoOutVoList.length; i++) {
+      this.srcTabInfoOutVoList[i].tarJdbcNm = this.tarTabInfoInVo.jdbcNm;
+    }
+
+    this.etlTabService.executeDbToDb(this.srcTabInfoOutVoList)
     .subscribe(result => {
        if(!result.isSuccess) alert(result.errUsrMsg)
       else {
-        //this.tabInfoOutVoList = result.tabInfoOutVoList;
-        console.log(result.tabRowsUpdateScript);
-        //this.tabRowsUpdateScript = result.tabRowsUpdateScript;
-        //alert(this.createScript);
-        //this.router.navigate(["/ext-stat-view/"+this.createScript]);
-        //this.router.navigate(['/ext-stat-view',{result: this.createScript}]);
-        //this.router.navigate(['/ext-stat-view/',{debug: true}]);
-       
+        //this.tarTabInfoOutVoList = result.tabInfoOutVoList;
+        //this.tarCnt = this.tarTabInfoOutVoList.length;
+        //console.log(result.tabInfoOutVoList);
+        //alert("onSelectMetaTabInfoList");
       }
     });
+
   }
     
-  
-  /********************
-   * 엑셀 다운로드
-   ********************/
-  onDownloadExcel() {
-
-      var tabListExcels = []; 
-
-      for( var i in this.srcTabInfoOutVoList ) {
-          var excel = new TabListExcel();
-          excel.owner        = this.srcTabInfoOutVoList[i].owner      ; 
-          excel.tabNm        = this.srcTabInfoOutVoList[i].tabNm       ; 
-          excel.tabHnm       = this.srcTabInfoOutVoList[i].tabHnm      ; 
-          excel.tabRows      = this.srcTabInfoOutVoList[i].tabRows     ; 
-          excel.tabUpdDt2    = this.srcTabInfoOutVoList[i].tabUpdDt2   ; 
-          excel.tabRegDt2    = this.srcTabInfoOutVoList[i].tabRegDt2   ;
-          tabListExcels.push(excel);
-      }         
-
-      let data = JSON.stringify(tabListExcels);
-
-      const fd = new FormData();
-      fd.append('fileNm', "etl-tab.xls");
-      fd.append('data', data);
-      
-      this.commService.downloadExcel(fd)
-      .subscribe(result => {
-         if(!result.isSuccess) alert(result.errUsrMsg)
-        else {
-        } 
-      });
-
-      
-  }
 
 
 }

@@ -1,3 +1,4 @@
+
 <div class="clearfix mb-3">
   <div class="float-left"> Table > 테이블조회  </div>
   <div class="float-right">
@@ -6,7 +7,7 @@
     </button>
     <button type="button" class="btn btn-outline-primary mr-2 btn-sm" (click)="onSelectSelectScript()" >
         <i class="fa fa-tasks fa-fw"></i>&nbsp;Sel문장
-    </button>    
+    </button>
     <button type="button" class="btn btn-outline-primary mr-2 btn-sm" (click)="onUpdateTabRowsUpdateScript()">
             건수갱신
     </button>
@@ -45,7 +46,7 @@
         </select>
         <select class="btn btn-outline-primary btn-sm mr-2" (change)="onChangeComboTarJdbc($event.target.selectedIndex)" >
           <option *ngFor="let combo of comboTarJdbc" [value]="combo.jdbcNm" >{{combo.jdbcNm}}</option>
-        </select>        
+        </select>
     </div>
   </div>
 </div>
@@ -64,6 +65,11 @@
     <textarea [(ngModel)]="tabInfoInVo.whereTabs4" name="tabs4" class="form-control" rows="3" (change)="onChangeTabs(4)"></textarea>
   </div>
 </div>
+
+<div *ngIf="isLoading" style="width: 100%; height: 1000px; text-align:center; z-index: 100000">
+  <img  src="assets/images/loading.gif" style="width: 100px; height: 100px;"/>
+</div>
+
 
 
 <div class="clearfix mb-2 ">

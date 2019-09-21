@@ -23,29 +23,29 @@ export class TabListComponent implements OnInit {
   tabInfoInVo: TabInfo = new TabInfo();
   tabInfoOutVoList: TabInfo[]
   jdbcInfoInVo: JdbcInfo = new JdbcInfo();
-  
+
   createScript = "";
   tabRowsUpdateScript = "";
-  
+
   //comboJdbc : JdbcCombo[];
   comboJdbc : JdbcInfo[];
   comboTarJdbc : JdbcInfo[];
   comboSrcJdbcIdx = 0;
   comboTarJdbcIdx = 0;
-  
+
   comboWhereTabs = [
-	    {name : 'T0' , value : 'T0' }
-	   ,{name : 'T1' , value : 'T1' }
-	   ,{name : 'T2' , value : 'T2' }
-	   ,{name : 'T3' , value : 'T3' }
-	   ,{name : 'T4' , value : 'T4' }
-	  ];
+        {name : 'T0' , value : 'T0' }
+       ,{name : 'T1' , value : 'T1' }
+       ,{name : 'T2' , value : 'T2' }
+       ,{name : 'T3' , value : 'T3' }
+       ,{name : 'T4' , value : 'T4' }
+      ];
 
   comboWhereColTab = [
-	    {name : 'COL' , value : 'COL' }
-	   ,{name : 'TAB' , value : 'TAB' }
-	  ];  
-  
+        {name : 'COL' , value : 'COL' }
+       ,{name : 'TAB' , value : 'TAB' }
+      ];
+
   comboOrderBy = [
       {name : '선택(정렬)' , value : 'JDBC_NM' }
      ,{name : '테이블명'   , value : 'TAB_NM'  }
@@ -54,12 +54,14 @@ export class TabListComponent implements OnInit {
      ,{name : '최근변경일' , value : 'TAB_UPD_DT'}
      ,{name : '테이블생성일', value : 'TAB_REG_DT'}
   ];
-  
+
   cnt = 0;
-  
+
   comboAscDesc = this.tabInfoService.comboAscDesc;
 
   isCheckAll : boolean = false;
+
+  isLoading : boolean = false;
 
   constructor(private tabInfoService: TabInfoService
              ,private jdbcInfoService: JdbcInfoService
@@ -70,16 +72,25 @@ export class TabListComponent implements OnInit {
  * 초기화
  ***************************************************/
   ngOnInit() {
+
+    //this.spinner.show();
+    //this.spinner.hide();
+
+    //setTimeout(() => {
+      /** spinner ends after 5 seconds */
+    //  this.spinner.hide();
+    //}, 5000);
+
     //this.tabInfoInVo = this.tabInfoService.onGetLocalStorageTabInfo();
     this.onSetComboJdbc();
     this.onSetComboTarJdbc();
     this.onSelectTabList();
-    
+
     this.tabInfoInVo.whereTabs1 = this.comm.nullToSpace(localStorage.getItem('whereTabs1'));
     this.tabInfoInVo.whereTabs2 = this.comm.nullToSpace(localStorage.getItem('whereTabs2'));
     this.tabInfoInVo.whereTabs3 = this.comm.nullToSpace(localStorage.getItem('whereTabs3'));
     this.tabInfoInVo.whereTabs4 = this.comm.nullToSpace(localStorage.getItem('whereTabs4'));
-    
+
   }
 
   /***************************
@@ -107,8 +118,8 @@ export class TabListComponent implements OnInit {
         this.comboTarJdbc = result.jdbcInfoOutVoList;
       }
     });
-  }  
-  
+  }
+
 /***************************************************
  * 검색 조건 이벤트
  ***************************************************/
@@ -118,7 +129,7 @@ export class TabListComponent implements OnInit {
    ********************/
   onChangeComboJdbc(i) {
 
-    this.comboSrcJdbcIdx = i;    
+    this.comboSrcJdbcIdx = i;
     //console.log("event.value=="+event.value);
     //console.log("event.value=="+event.selectedIndex);
     //console.log("event.value=="+event.options[event.selectedIndex]);
@@ -139,7 +150,7 @@ export class TabListComponent implements OnInit {
   }
 
   onChangeComboTarJdbc(i) {
-    this.comboTarJdbcIdx = i;    
+    this.comboTarJdbcIdx = i;
     if(i==0) {
       this.tabInfoInVo.tarJdbcNm = ""
     } else {
@@ -177,14 +188,14 @@ export class TabListComponent implements OnInit {
     if(i==3) localStorage.setItem('whereTabs3',this.tabInfoInVo.whereTabs3);
     if(i==4) localStorage.setItem('whereTabs4',this.tabInfoInVo.whereTabs4);
 
-    console.log("this.tabInfoInVo.whereColTab=="+this.tabInfoInVo.whereColTab); 
+    console.log("this.tabInfoInVo.whereColTab=="+this.tabInfoInVo.whereColTab);
   }
   /*****************************
    * 컬럼 혹은 컬럼포함 테이블 검색
    ****************************/
   onChangeComboWhereColTab(i: number) {
     this.tabInfoInVo.whereColTab = this.comboWhereColTab[i].value;
-  }  
+  }
 
   /********************
    * 순차정렬
@@ -226,6 +237,8 @@ export class TabListComponent implements OnInit {
    * 테이블정보 조회
    ********************/
   onSelectTabList(){
+    this.isLoading = true;
+    //this.spinnerService.show();
     //this.tabInfoService.tabInfoInVo = this.tabInfoInVo;
     //this.tabInfoService.onSetLocalStorageTabInfo(this.tabInfoInVo);
     //alert("onSelectTabList");
@@ -234,7 +247,7 @@ export class TabListComponent implements OnInit {
     if(this.tabInfoInVo.selectedTabs==2) this.tabInfoInVo.whereTabs = this.tabInfoInVo.whereTabs2;
     if(this.tabInfoInVo.selectedTabs==3) this.tabInfoInVo.whereTabs = this.tabInfoInVo.whereTabs3;
     if(this.tabInfoInVo.selectedTabs==4) this.tabInfoInVo.whereTabs = this.tabInfoInVo.whereTabs4;
-  
+
     this.tabInfoService.selectTabList(this.tabInfoInVo)
     .subscribe(result => {
        if(!result.isSuccess) alert(result.errUsrMsg)
@@ -243,6 +256,7 @@ export class TabListComponent implements OnInit {
         this.cnt = this.tabInfoOutVoList.length;
         //console.log(result.tabInfoOutVoList);
         //alert("onSelectMetaTabInfoList");
+        this.isLoading = false;
       }
     });
   }
@@ -253,14 +267,14 @@ export class TabListComponent implements OnInit {
   onDDL() {
     console.log("onDDL == tarJdbc ==" + this.tabInfoInVo.tarJdbcNm);
 
-    if(this.comboSrcJdbcIdx==0) { alert("추출할 DB를 선택해 주십시요"); return; }   
-    if(this.comboTarJdbcIdx==0) { alert("로딩할 DB를 선택해 주십시요"); return; }  
-    
+    if(this.comboSrcJdbcIdx==0) { alert("추출할 DB를 선택해 주십시요"); return; }
+    if(this.comboTarJdbcIdx==0) { alert("로딩할 DB를 선택해 주십시요"); return; }
+
 
     for (var i = 0; i < this.tabInfoOutVoList.length; i++) {
-      if(this.tabInfoOutVoList[i].chk) this.tabInfoOutVoList[i].tarJdbcNm = this.tabInfoInVo.tarJdbcNm;	
+      if(this.tabInfoOutVoList[i].chk) this.tabInfoOutVoList[i].tarJdbcNm = this.tabInfoInVo.tarJdbcNm;
     }
-    
+
     this.tabInfoService.selectCreateScript(this.tabInfoOutVoList)
     .subscribe(result => {
        if(!result.isSuccess) alert(result.errUsrMsg)
@@ -272,7 +286,7 @@ export class TabListComponent implements OnInit {
         //this.router.navigate(["/ext-stat-view/"+this.createScript]);
         //this.router.navigate(['/ext-stat-view',{result: this.createScript}]);
         //this.router.navigate(['/ext-stat-view/',{debug: true}]);
-       
+
       }
     });
   }
@@ -313,40 +327,40 @@ export class TabListComponent implements OnInit {
       }
     });
   }
-    
-  
+
+
   /********************
    * 엑셀 다운로드
    ********************/
   onDownloadExcel() {
 
-      var tabListExcels = []; 
+      var tabListExcels = [];
 
       for( var i in this.tabInfoOutVoList ) {
           var excel = new TabListExcel();
-          excel.owner        = this.tabInfoOutVoList[i].owner      ; 
-          excel.tabNm        = this.tabInfoOutVoList[i].tabNm       ; 
-          excel.tabHnm       = this.tabInfoOutVoList[i].tabHnm      ; 
-          excel.tabRows      = this.tabInfoOutVoList[i].tabRows     ; 
-          excel.tabUpdDt2    = this.tabInfoOutVoList[i].tabUpdDt2   ; 
+          excel.owner        = this.tabInfoOutVoList[i].owner      ;
+          excel.tabNm        = this.tabInfoOutVoList[i].tabNm       ;
+          excel.tabHnm       = this.tabInfoOutVoList[i].tabHnm      ;
+          excel.tabRows      = this.tabInfoOutVoList[i].tabRows     ;
+          excel.tabUpdDt2    = this.tabInfoOutVoList[i].tabUpdDt2   ;
           excel.tabRegDt2    = this.tabInfoOutVoList[i].tabRegDt2   ;
           tabListExcels.push(excel);
-      }         
+      }
 
       let data = JSON.stringify(tabListExcels);
 
       const fd = new FormData();
       fd.append('fileNm', "tab-list.xls");
       fd.append('data', data);
-      
+
       this.commService.downloadExcel(fd)
       .subscribe(result => {
          if(!result.isSuccess) alert(result.errUsrMsg)
         else {
-        } 
+        }
       });
 
-      
+
   }
 
 

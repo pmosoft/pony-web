@@ -67,7 +67,7 @@ export class TabListComponent implements OnInit {
              ,private jdbcInfoService: JdbcInfoService
              ,private commService: CommService
              ,private router: Router) { }
-
+  
 /***************************************************
  * 초기화
  ***************************************************/

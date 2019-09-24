@@ -3,6 +3,9 @@
   <div class="float-left"> Table > 테이블조회  </div>
   <div class="float-right">
     <button type="button" class="btn btn-outline-primary mr-2 btn-sm" (click)="onDDL()">
+      IDX
+    </button>
+    <button type="button" class="btn btn-outline-primary mr-2 btn-sm" (click)="onDDL()">
         DDL
     </button>
     <button type="button" class="btn btn-outline-primary mr-2 btn-sm" (click)="onSelectSelectScript()" >
@@ -10,6 +13,9 @@
     </button>
     <button type="button" class="btn btn-outline-primary mr-2 btn-sm" (click)="onUpdateTabRowsUpdateScript()">
             건수갱신
+    </button>
+    <button type="button" class="btn btn-outline-primary mr-2 btn-sm" (click)="onUpdateTabRowsUpdateScript()">
+      주석갱신
     </button>
     <button type="button" class="btn btn-outline-primary mr-2 btn-sm" (click)="onDownloadExcel()">
         <i class="fa fa-file-excel-o"></i>&nbsp;엑셀
@@ -47,6 +53,7 @@
         <select class="btn btn-outline-primary btn-sm mr-2" (change)="onChangeComboTarJdbc($event.target.selectedIndex)" >
           <option *ngFor="let combo of comboTarJdbc" [value]="combo.jdbcNm" >{{combo.jdbcNm}}</option>
         </select>
+        <input [(ngModel)]="tabInfoInVo.tabNm"    class="btn btn-outline-primary btn-sm mr-2" (keyup.enter)="onSelectTabList()" placeholder="입력">
     </div>
   </div>
 </div>

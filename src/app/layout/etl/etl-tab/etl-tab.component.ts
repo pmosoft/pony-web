@@ -57,7 +57,7 @@ export class EtlTabComponent implements OnInit {
   
   isCheckAll : boolean = false;
 
-  isLoading : boolean = false;
+  isLoading  : boolean = false;
 
   constructor(private tabInfoService: TabInfoService
              ,private etlTabService: EtlTabService
@@ -271,8 +271,8 @@ export class EtlTabComponent implements OnInit {
 
     for (var i = 0; i < this.srcTabInfoOutVoList.length; i++) {
       this.srcTabInfoOutVoList[i].tarJdbcNm = this.tarTabInfoInVo.jdbcNm;
-      this.srcTabInfoOutVoList[i].isExtract = true;
-      this.srcTabInfoOutVoList[i].isLoad = true;
+      this.srcTabInfoOutVoList[i].chkExtract = true;
+      this.srcTabInfoOutVoList[i].chkLoad = true;
     }
     //alert("이행이 진행중입니다.....");
     this.isLoading = true;
@@ -297,15 +297,15 @@ export class EtlTabComponent implements OnInit {
 
     for (var i = 0; i < this.srcTabInfoOutVoList.length; i++) {
       this.srcTabInfoOutVoList[i].tarJdbcNm = this.tarTabInfoInVo.jdbcNm;
-      this.srcTabInfoOutVoList[i].isExtract = true;
-      this.srcTabInfoOutVoList[i].isLoad = false;
+      this.srcTabInfoOutVoList[i].chkExtract = true;
+      this.srcTabInfoOutVoList[i].chkLoad = false;
     }
     this.isLoading = true;
     this.etlTabService.executeDbToDb(this.srcTabInfoOutVoList)
     .subscribe(result => {
       if(!result.isSuccess) alert(result.errUsrMsg)
       else {
-        alert("추출이 완료되었습니다.");
+        //alert("추출이 완료되었습니다.");
       }
       this.isLoading = false;
     });
@@ -320,8 +320,8 @@ export class EtlTabComponent implements OnInit {
 
     for (var i = 0; i < this.srcTabInfoOutVoList.length; i++) {
       this.srcTabInfoOutVoList[i].tarJdbcNm = this.tarTabInfoInVo.jdbcNm;
-      this.srcTabInfoOutVoList[i].isExtract = false;
-      this.srcTabInfoOutVoList[i].isLoad = true;
+      this.srcTabInfoOutVoList[i].chkExtract = false;
+      this.srcTabInfoOutVoList[i].chkLoad = true;
     }
     this.isLoading = true;
     this.etlTabService.executeDbToDb(this.srcTabInfoOutVoList)

@@ -53,6 +53,8 @@ export class TabColListComponent implements OnInit {
 
   comboAscDesc = this.tabInfoService.comboAscDesc;
 
+  isLoading : boolean = false;
+
   constructor(private tabInfoService: TabInfoService
              ,private jdbcInfoService: JdbcInfoService
              ,private commService: CommService
@@ -210,15 +212,17 @@ export class TabColListComponent implements OnInit {
     console.log("11="+this.tabInfoInVo.whereTabs);
     console.log("22="+this.tabInfoInVo.whereTabs1);
 
+    this.isLoading = true;    
     this.tabInfoService.selectTabInfoList(this.tabInfoInVo)
     .subscribe(result => {
-       if(!result.isSuccess) alert(result.errUsrMsg)
+      if(!result.isSuccess) alert(result.errUsrMsg)
       else {
         this.tabInfoOutVoList = result.tabInfoOutVoList;
         this.cnt = this.tabInfoOutVoList.length;
         //console.log(result.tabInfoOutVoList);
         //alert("onSelectMetaTabInfoList");
       }
+      this.isLoading = false;
     });
   }
 
@@ -234,14 +238,17 @@ export class TabColListComponent implements OnInit {
       alert("JDBC를 선택해 주십시요.");
       return;
     }
+
+    this.isLoading = true;    
     this.tabInfoService.selectMetaTabInfoList(this.tabInfoInVo)
     .subscribe(result => {
-       if(!result.isSuccess) alert(result.errUsrMsg)
+      if(!result.isSuccess) alert(result.errUsrMsg)
       else {
         this.tabInfoOutVoList = result.tabInfoOutVoList;
         console.log(result.tabInfoOutVoList);
         //alert("onSelectMetaTabInfoList");
       }
+      this.isLoading = false;
     });
   }
 
@@ -251,14 +258,16 @@ export class TabColListComponent implements OnInit {
    * 비교
    ********************/
   onCompare(){
+    this.isLoading = true;    
     this.tabInfoService.selectCmpTabInfoList(this.tabInfoInVo)
     .subscribe(result => {
-       if(!result.isSuccess) alert(result.errUsrMsg)
+      if(!result.isSuccess) alert(result.errUsrMsg)
       else {
         this.tabInfoOutVoList = result.tabInfoOutVoList;
         //console.log(result.tabInfoOutVoList);
         //alert("onSelectMetaTabInfoList");
       }
+      this.isLoading = false;
     });
   }
 
@@ -266,15 +275,17 @@ export class TabColListComponent implements OnInit {
    * 저장
    ********************/
   onSave(){
+    this.isLoading = true;    
     this.tabInfoService.saveCmpTabInfoList(this.tabInfoInVo)
     .subscribe(result => {
-       if(!result.isSuccess) alert(result.errUsrMsg)
+      if(!result.isSuccess) alert(result.errUsrMsg)
       else {
         this.tabInfoOutVoList = result.tabInfoOutVoList;
         //console.log(result.tabInfoOutVoList);
         this.onCompare();
         //alert("onSelectMetaTabInfoList");
       }
+      this.isLoading = false;
     });
   }
 
@@ -328,12 +339,13 @@ export class TabColListComponent implements OnInit {
     fd.append('fileNm', "tab-col-list.xls");
     fd.append('data', data);
     
-    
+    this.isLoading = true;    
     this.commService.downloadExcel(fd)
     .subscribe(result => {
-       if(!result.isSuccess) alert(result.errUsrMsg)
+      if(!result.isSuccess) alert(result.errUsrMsg)
       else {
       } 
+      this.isLoading = false;      
     });
   }
   

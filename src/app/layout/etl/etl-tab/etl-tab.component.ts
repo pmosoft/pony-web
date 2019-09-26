@@ -57,6 +57,8 @@ export class EtlTabComponent implements OnInit {
   
   isCheckAll : boolean = false;
 
+  isLoading : boolean = false;
+
   constructor(private tabInfoService: TabInfoService
              ,private etlTabService: EtlTabService
              ,private jdbcInfoService: JdbcInfoService
@@ -218,15 +220,17 @@ export class EtlTabComponent implements OnInit {
     if(this.srcTabInfoInVo.selectedTabs==3) this.srcTabInfoInVo.whereTabs = this.srcTabInfoInVo.whereTabs3;
     if(this.srcTabInfoInVo.selectedTabs==4) this.srcTabInfoInVo.whereTabs = this.srcTabInfoInVo.whereTabs4;
   
+    this.isLoading = true;
     this.tabInfoService.selectTabList(this.srcTabInfoInVo)
     .subscribe(result => {
-       if(!result.isSuccess) alert(result.errUsrMsg)
+      if(!result.isSuccess) alert(result.errUsrMsg)
       else {
         this.srcTabInfoOutVoList = result.tabInfoOutVoList;
         this.srcCnt = this.srcTabInfoOutVoList.length;
         //console.log(result.tabInfoOutVoList);
         //alert("onSelectMetaTabInfoList");
       }
+      this.isLoading = false;
     });
     
     this.onSelectTarTabList();
@@ -242,16 +246,18 @@ export class EtlTabComponent implements OnInit {
     if(this.srcTabInfoInVo.selectedTabs==2) this.tarTabInfoInVo.whereTabs = this.srcTabInfoInVo.whereTabs2;
     if(this.srcTabInfoInVo.selectedTabs==3) this.tarTabInfoInVo.whereTabs = this.srcTabInfoInVo.whereTabs3;
     if(this.srcTabInfoInVo.selectedTabs==4) this.tarTabInfoInVo.whereTabs = this.srcTabInfoInVo.whereTabs4;
-  
+
+    this.isLoading = true;
     this.tabInfoService.selectTabList(this.tarTabInfoInVo)
     .subscribe(result => {
-       if(!result.isSuccess) alert(result.errUsrMsg)
+      if(!result.isSuccess) alert(result.errUsrMsg)
       else {
         this.tarTabInfoOutVoList = result.tabInfoOutVoList;
         this.tarCnt = this.tarTabInfoOutVoList.length;
         //console.log(result.tabInfoOutVoList);
         //alert("onSelectMetaTabInfoList");
       }
+      this.isLoading = false;
     });
   }
 
@@ -262,19 +268,23 @@ export class EtlTabComponent implements OnInit {
     console.log("onEtl");
     if(!this.onValidation()) return;
 
+
     for (var i = 0; i < this.srcTabInfoOutVoList.length; i++) {
       this.srcTabInfoOutVoList[i].tarJdbcNm = this.tarTabInfoInVo.jdbcNm;
       this.srcTabInfoOutVoList[i].isExtract = true;
       this.srcTabInfoOutVoList[i].isLoad = true;
     }
     //alert("이행이 진행중입니다.....");
+    this.isLoading = true;
     this.etlTabService.executeDbToDb(this.srcTabInfoOutVoList)
     .subscribe(result => {
-       if(!result.isSuccess) alert(result.errUsrMsg)
+      if(!result.isSuccess) alert(result.errUsrMsg)
       else {
-        alert("이행이 완료되었습니다.");
+        //alert("이행이 완료되었습니다.");
         this.onSelectTarTabList();
       }
+      this.isLoading = false;
+
     });
   } 
 
@@ -290,12 +300,14 @@ export class EtlTabComponent implements OnInit {
       this.srcTabInfoOutVoList[i].isExtract = true;
       this.srcTabInfoOutVoList[i].isLoad = false;
     }
+    this.isLoading = true;
     this.etlTabService.executeDbToDb(this.srcTabInfoOutVoList)
     .subscribe(result => {
-       if(!result.isSuccess) alert(result.errUsrMsg)
+      if(!result.isSuccess) alert(result.errUsrMsg)
       else {
         alert("추출이 완료되었습니다.");
       }
+      this.isLoading = false;
     });
   } 
 
@@ -311,14 +323,15 @@ export class EtlTabComponent implements OnInit {
       this.srcTabInfoOutVoList[i].isExtract = false;
       this.srcTabInfoOutVoList[i].isLoad = true;
     }
-
+    this.isLoading = true;
     this.etlTabService.executeDbToDb(this.srcTabInfoOutVoList)
     .subscribe(result => {
-       if(!result.isSuccess) alert(result.errUsrMsg)
+      if(!result.isSuccess) alert(result.errUsrMsg)
       else {
-        alert("로딩이 완료되었습니다.");
+        //alert("로딩이 완료되었습니다.");
         this.onSelectTarTabList();
       }
+      this.isLoading = false;
     });
   } 
   

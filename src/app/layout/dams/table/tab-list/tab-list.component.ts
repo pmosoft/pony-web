@@ -84,7 +84,7 @@ export class TabListComponent implements OnInit {
     //this.tabInfoInVo = this.tabInfoService.onGetLocalStorageTabInfo();
     this.onSetComboJdbc();
     this.onSetComboTarJdbc();
-    this.onSelectTabList();
+    //this.onSelectTabList();
 
     this.tabInfoInVo.whereTabs1 = this.comm.nullToSpace(localStorage.getItem('whereTabs1'));
     this.tabInfoInVo.whereTabs2 = this.comm.nullToSpace(localStorage.getItem('whereTabs2'));
@@ -237,7 +237,6 @@ export class TabListComponent implements OnInit {
    * 테이블정보 조회
    ********************/
   onSelectTabList(){
-    this.isLoading = true;
     //this.spinnerService.show();
     //this.tabInfoService.tabInfoInVo = this.tabInfoInVo;
     //this.tabInfoService.onSetLocalStorageTabInfo(this.tabInfoInVo);
@@ -248,6 +247,7 @@ export class TabListComponent implements OnInit {
     if(this.tabInfoInVo.selectedTabs==3) this.tabInfoInVo.whereTabs = this.tabInfoInVo.whereTabs3;
     if(this.tabInfoInVo.selectedTabs==4) this.tabInfoInVo.whereTabs = this.tabInfoInVo.whereTabs4;
 
+    this.isLoading = true;
     this.tabInfoService.selectTabList(this.tabInfoInVo)
     .subscribe(result => {
        if(!result.isSuccess) alert(result.errUsrMsg)
@@ -256,28 +256,31 @@ export class TabListComponent implements OnInit {
         this.cnt = this.tabInfoOutVoList.length;
         //console.log(result.tabInfoOutVoList);
         //alert("onSelectMetaTabInfoList");
-        this.isLoading = false;
       }
+      this.isLoading = false;
+
     });
+
   }
 
   /********************
    * DDL 생성
    ********************/
   onDDL() {
+
     console.log("onDDL == tarJdbc ==" + this.tabInfoInVo.tarJdbcNm);
 
     if(this.comboSrcJdbcIdx==0) { alert("추출할 DB를 선택해 주십시요"); return; }
     if(this.comboTarJdbcIdx==0) { alert("로딩할 DB를 선택해 주십시요"); return; }
 
-
     for (var i = 0; i < this.tabInfoOutVoList.length; i++) {
       if(this.tabInfoOutVoList[i].chk) this.tabInfoOutVoList[i].tarJdbcNm = this.tabInfoInVo.tarJdbcNm;
     }
 
+    this.isLoading = true;
     this.tabInfoService.selectCreateScript(this.tabInfoOutVoList)
     .subscribe(result => {
-       if(!result.isSuccess) alert(result.errUsrMsg)
+      if(!result.isSuccess) alert(result.errUsrMsg)
       else {
         //this.tabInfoOutVoList = result.tabInfoOutVoList;
         console.log(result.createScript);
@@ -286,8 +289,8 @@ export class TabListComponent implements OnInit {
         //this.router.navigate(["/ext-stat-view/"+this.createScript]);
         //this.router.navigate(['/ext-stat-view',{result: this.createScript}]);
         //this.router.navigate(['/ext-stat-view/',{debug: true}]);
-
       }
+      this.isLoading = false;
     });
   }
 
@@ -315,7 +318,8 @@ export class TabListComponent implements OnInit {
    * 테이블건수 현행화 갱신
    ********************/
   onUpdateTabRowsUpdateScript() {
-    console.log("onUpdateTabRowsUpdateScript");
+
+    this.isLoading = true;
     this.tabInfoService.updateTabRowsUpdateScript(this.tabInfoOutVoList)
     .subscribe(result => {
        if(!result.isSuccess) alert(result.errUsrMsg)
@@ -325,6 +329,7 @@ export class TabListComponent implements OnInit {
         this.tabRowsUpdateScript = result.tabRowsUpdateScript;
         this.onSelectTabList()
       }
+      this.isLoading = false;
     });
   }
 
@@ -353,11 +358,14 @@ export class TabListComponent implements OnInit {
       fd.append('fileNm', "tab-list.xls");
       fd.append('data', data);
 
+      this.isLoading = true;
       this.commService.downloadExcel(fd)
       .subscribe(result => {
-         if(!result.isSuccess) alert(result.errUsrMsg)
+        if(!result.isSuccess) alert(result.errUsrMsg)
         else {
         }
+        this.isLoading = false;
+
       });
 
 

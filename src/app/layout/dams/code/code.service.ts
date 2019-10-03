@@ -28,7 +28,10 @@ export class CodeService {
     return this.http.post<any>('http://'+this.document.location.hostname+':9201/dams/code/selectCodeList', code, httpOptions);
   }
  
-
+  insertCodeExcel(): Observable<any> {
+    return this.http.post<any>('http://'+this.document.location.hostname+':9201/dams/code/insertCodeExcel', "", httpOptions);
+  }
+ 
   downloadExcel (fd: FormData): Observable<any> {
     return this.http.post<any>('http://'+this.document.location.hostname+':9201/comm/excel/downloadExcel', fd);
   }

@@ -48,6 +48,16 @@ export class CodeListComponent implements OnInit {
     });
   }
 
+  onInsertCodeExcel() {
+
+    this.codeService.insertCodeExcel()
+    .subscribe(result => {
+      if(!result.isSuccess) { alert(result.errUsrMsg) }
+      else { this. onSelectCodeList(); } 
+    });
+
+  } 
+
   onDownloadExcel() {
 
     let data = JSON.stringify(this.codeOutVoList);

@@ -7,6 +7,9 @@
         <input [(ngModel)]="codeInVo.searchValue" class="btn btn-outline-primary btn-sm mr-2" (keyup)="onSelectCodeList()" >
     </div>
     <div class="float-right">
+      <button type="button" class="btn btn-outline-primary mr-2 btn-sm" (click)="onInsertCodeExcel()">
+        <i class="fa fa-file-excel-o"></i>&nbsp;업로드
+      </button>
       <button type="button" class="btn btn-outline-primary mr-2 btn-sm" (click)="onDownloadExcel()">
           <i class="fa fa-file-excel-o"></i>&nbsp;엑셀
       </button>
@@ -29,18 +32,20 @@
         <th style="width:140px;" scope="col">코드명</th>
         <th style="width:200px;" scope="col">코드설명</th>
         <th style="width:100px;" scope="col">코드유형</th>
+        <th style="width:50px;"  scope="col">코드순서</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let codeOutVo of codeOutVoList; let i=index">
         <td>{{i+1}}</td>
         <td>{{codeOutVo.cdGrpNm}}</td>
-        <td>{{codeOutVo.cdId}}</td>
-        <td>{{codeOutVo.cdIdNm}}</td>
+        <td class="text-left" >{{codeOutVo.cdId}}</td>
+        <td class="text-left" >{{codeOutVo.cdIdNm}}</td>
         <td>{{codeOutVo.cd}}</td>
-        <td>{{codeOutVo.cdNm}}</td>
-        <td>{{codeOutVo.cdDesc}}</td>
+        <td class="text-left" >{{codeOutVo.cdNm}}</td>
+        <td class="text-left" >{{codeOutVo.cdDesc}}</td>
         <td>{{codeOutVo.cdTyCd}}</td>
+        <td>{{codeOutVo.cdSeq}}</td>
       </tr>
     </tbody>
   </table>

@@ -27,7 +27,12 @@ export class CodeService {
   selectCodeList(code: Code): Observable<any> {
     return this.http.post<any>('http://'+this.document.location.hostname+':9201/dams/code/selectCodeList', code, httpOptions);
   }
- 
+
+  selectInsStat(code: Code): Observable<any> {
+    return this.http.post<any>('http://'+this.document.location.hostname+':9201/dams/code/selectInsStat', code, httpOptions);
+  }
+  
+
   insertCodeExcel(): Observable<any> {
     return this.http.post<any>('http://'+this.document.location.hostname+':9201/dams/code/insertCodeExcel', "", httpOptions);
   }

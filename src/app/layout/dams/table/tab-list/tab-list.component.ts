@@ -298,20 +298,28 @@ export class TabListComponent implements OnInit {
    * SELECT 쿼리
    ********************/
   onSelectSelectScript() {
-//    console.log("onSelectSelectScript");
-//    this.tabInfoService.selectSelectScript(this.tabInfoOutVoList)
-//    .subscribe(result => {
-//       if(!result.isSuccess) alert(result.errUsrMsg)
-//      else {
-//        //this.tabInfoOutVoList = result.tabInfoOutVoList;
-//        console.log(result.sqlScript);
-//        //this.createScript = result.createScript;
-//        //alert(this.createScript);
-//        //this.router.navigate(["/ext-stat-view/"+this.createScript]);
-//        this.router.navigate(['/ext-stat-view',{result: result.sqlScript}]);
-//        //this.router.navigate(['/ext-stat-view/',{debug: true}]);
-//      }
-//    });
+    console.log("onSelectSelectScript");
+
+    if(this.comboSrcJdbcIdx==0) { alert("추출할 DB를 선택해 주십시요"); return; }
+
+    for (var i = 0; i < this.tabInfoOutVoList.length; i++) {
+      if(this.tabInfoOutVoList[i].chk) this.tabInfoInVo.tabNm = this.tabInfoOutVoList[i].tabNm;
+    }
+
+
+    this.tabInfoService.selectSelectScript(this.tabInfoInVo)
+    .subscribe(result => {
+       if(!result.isSuccess) alert(result.errUsrMsg)
+      else {
+        //this.tabInfoOutVoList = result.tabInfoOutVoList;
+        console.log(result.sqlScript);
+        //this.createScript = result.createScript;
+        //alert(this.createScript);
+        //this.router.navigate(["/ext-stat-view/"+this.createScript]);
+        //this.router.navigate(['/ext-stat-view',{result: result.sqlScript}]);
+        //this.router.navigate(['/ext-stat-view/',{debug: true}]);
+      }
+    });
   }
 
   /********************

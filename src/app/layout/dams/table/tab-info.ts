@@ -48,7 +48,9 @@ export class TabInfo {
 
   tarDb        : string = "";
   tarJdbcNm    : string = "";
-  chkExtract    : boolean = true;
-  chkLoad       : boolean = true;
+  chkExtract   : boolean = true;
+  chkLoad      : boolean = true;
+
+  chkSelStat   : boolean = true;
 
 }

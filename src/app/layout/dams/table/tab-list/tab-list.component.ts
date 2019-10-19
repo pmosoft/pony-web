@@ -67,7 +67,7 @@ export class TabListComponent implements OnInit {
              ,private jdbcInfoService: JdbcInfoService
              ,private commService: CommService
              ,private router: Router) { }
-  
+
 /***************************************************
  * 초기화
  ***************************************************/
@@ -289,6 +289,30 @@ export class TabListComponent implements OnInit {
         //this.router.navigate(["/ext-stat-view/"+this.createScript]);
         //this.router.navigate(['/ext-stat-view',{result: this.createScript}]);
         //this.router.navigate(['/ext-stat-view/',{debug: true}]);
+      }
+      this.isLoading = false;
+    });
+  }
+
+  /********************
+   * Hive Spark DDL 생성
+   ********************/
+  onHiveDDL() {
+
+    if(this.comboSrcJdbcIdx==0) { alert("추출할 DB를 선택해 주십시요"); return; }
+    if(this.comboTarJdbcIdx==0) { alert("로딩할 DB를 선택해 주십시요"); return; }
+
+    for (var i = 0; i < this.tabInfoOutVoList.length; i++) {
+      if(this.tabInfoOutVoList[i].chk) this.tabInfoOutVoList[i].tarJdbcNm = this.tabInfoInVo.tarJdbcNm;
+    }
+
+    this.isLoading = true;
+    this.tabInfoService.selectHiveCreateScript(this.tabInfoOutVoList)
+    .subscribe(result => {
+      if(!result.isSuccess) alert(result.errUsrMsg)
+      else {
+        console.log(result.createScript);
+        this.createScript = result.createScript;
       }
       this.isLoading = false;
     });

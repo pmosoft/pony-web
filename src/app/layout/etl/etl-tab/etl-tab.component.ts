@@ -210,7 +210,7 @@ export class EtlTabComponent implements OnInit {
 
     //if(!this.onValidation()) return;
     if(this.comboSrcJdbcIdx==0) { alert("추출할 DB를 선택해 주십시요"); return; }
-    if(this.comboTarJdbcIdx==0) { alert("추출할 DB를 선택해 주십시요"); return; }
+    if(this.comboTarJdbcIdx==0) { alert("로딩할 DB를 선택해 주십시요"); return; }
 
 
     //this.tabInfoService.tabInfoInVo = this.tabInfoInVo;
@@ -320,7 +320,8 @@ export class EtlTabComponent implements OnInit {
    ********************/
   onLoad() {
     console.log("onLoad");
-    if(!this.onValidation()) return;
+    if(this.comboSrcJdbcIdx==0) { alert("추출할 DB를 선택해 주십시요"); return; }
+    if(this.comboTarJdbcIdx==0) { alert("로딩할 DB를 선택해 주십시요"); return; }
 
     for (var i = 0; i < this.srcTabInfoOutVoList.length; i++) {
       this.srcTabInfoOutVoList[i].tarJdbcNm = this.tarTabInfoInVo.jdbcNm;

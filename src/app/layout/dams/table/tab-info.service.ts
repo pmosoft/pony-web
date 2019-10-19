@@ -63,6 +63,11 @@ export class TabInfoService {
     return this.http.post<any>('http://'+this.document.location.hostname+':9201/dams/table/selectCreateScript', tabInfoOutVoList, httpOptions);
   }
 
+  selectHiveCreateScript(tabInfoOutVoList: TabInfo[]): Observable<any> {
+    return this.http.post<any>('http://'+this.document.location.hostname+':9201/dams/table/selectHiveCreateScript', tabInfoOutVoList, httpOptions);
+  }
+
+
   selectTabQryList(tabInfo: TabInfo): Observable<any> {
     return this.http.post<any>('http://'+this.document.location.hostname+':9201/dams/table/selectTabQryList', tabInfo, httpOptions);
   }

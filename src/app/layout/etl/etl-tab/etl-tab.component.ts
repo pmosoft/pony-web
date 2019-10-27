@@ -50,7 +50,12 @@ export class EtlTabComponent implements OnInit {
 	    {name : 'COL' , value : 'COL' }
 	   ,{name : 'TAB' , value : 'TAB' }
 	  ];  
-  
+
+  comboQryExtract = [
+	    {name : 'ext' , value : 'ext' }
+	   ,{name : 'qry' , value : 'qry' }
+	  ];  
+    
   
   srcCnt = 0;
   tarCnt = 0;
@@ -115,7 +120,7 @@ export class EtlTabComponent implements OnInit {
   /********************
    * JDBC변경시
    ********************/
-  onChangeComboSrcJdbc(i) {
+  onChangeComboSrcJdbc(i: number) {
 	this.comboSrcJdbcIdx = i;
 	
     if(i==0) {
@@ -128,7 +133,7 @@ export class EtlTabComponent implements OnInit {
     this.onSelectSrcTabList();
   }
 
-  onChangeComboTarJdbc(i) {
+  onChangeComboTarJdbc(i: number) {
 	this.comboTarJdbcIdx = i;
 	  
     if(i==0) {
@@ -197,7 +202,17 @@ export class EtlTabComponent implements OnInit {
     console.log("chk1="+this.srcTabInfoOutVoList[i].chk);
   }
 
-
+  /********************
+   * 추출조건(테이블 혹은 쿼리)
+   ********************/
+  onChangeComboQryExtract(i: number) {
+    if(i==0) {
+      this.srcTabInfoInVo.chkQryExtract = false
+    } else {
+      this.srcTabInfoInVo.chkQryExtract = true
+    }
+  }
+  
 
 /***************************************************
  * 버튼 이벤트
@@ -277,6 +292,8 @@ export class EtlTabComponent implements OnInit {
       this.srcTabInfoOutVoList[i].tarJdbcNm = this.tarTabInfoInVo.jdbcNm;
       this.srcTabInfoOutVoList[i].chkExtract = true;
       this.srcTabInfoOutVoList[i].chkLoad = true;
+      this.srcTabInfoOutVoList[i].chkQryExtract = this.tarTabInfoInVo.chkQryExtract;
+      this.srcTabInfoOutVoList[i].qryExtract = this.tarTabInfoInVo.qryExtract;
     }
     //alert("이행이 진행중입니다.....");
     this.isLoading = true;
@@ -303,6 +320,8 @@ export class EtlTabComponent implements OnInit {
       this.srcTabInfoOutVoList[i].tarJdbcNm = this.tarTabInfoInVo.jdbcNm;
       this.srcTabInfoOutVoList[i].chkExtract = true;
       this.srcTabInfoOutVoList[i].chkLoad = false;
+      this.srcTabInfoOutVoList[i].chkQryExtract = this.tarTabInfoInVo.chkQryExtract;
+      this.srcTabInfoOutVoList[i].qryExtract = this.tarTabInfoInVo.qryExtract;
     }
     this.isLoading = true;
     this.etlTabService.executeDbToDb(this.srcTabInfoOutVoList)
@@ -331,6 +350,8 @@ export class EtlTabComponent implements OnInit {
     this.isLoading = true;
     this.etlTabService.executeDbToDb(this.srcTabInfoOutVoList)
     .subscribe(result => {
+      alert("result.isSuccess=="+result.isSuccess);
+
       if(!result.isSuccess) alert(result.errUsrMsg)
       else {
         //alert("로딩이 완료되었습니다.");

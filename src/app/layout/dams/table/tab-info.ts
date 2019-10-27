@@ -53,4 +53,7 @@ export class TabInfo {
 
   chkSelStat   : boolean = true;
 
+  chkQryExtract : boolean = false;
+  qryExtract    : string = "";
+
 }

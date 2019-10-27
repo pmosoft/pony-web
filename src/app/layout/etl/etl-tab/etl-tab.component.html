@@ -31,6 +31,13 @@
   </div>
 </div>
 
+<div class="form-row" *ngIf="srcTabInfoInVo.chkQryExtract">
+  <div class="form-group col-md-12">
+    <textarea [(ngModel)]="srcTabInfoInVo.qryExtract" name="qryExtract" class="form-control" rows="6"></textarea>
+  </div>
+</div>
+
+
 <div *ngIf="isLoading" style="width:100%; height:4000px; text-align:center; z-index:100000">
   <div id="loading" style="height: 300px;"></div>
   <img  src="assets/images/loading.gif" style="width: 100px; height: 100px;"/>
@@ -41,7 +48,7 @@
     <div class="form-group col-md-6 mr-6">
       <div class="clearfix">
         <div class="float-left">
-            <i class="ml-4 mr-4"> >> 추출</i> 
+            <i class="ml-4 mr-4"> >> 추출</i>
             <select class="btn btn-outline-primary btn-sm mr-2" (change)="onChangeComboSrcJdbc($event.target.selectedIndex)" >
               <option *ngFor="let combo of comboSrcJdbc" [value]="combo.jdbcNm" >{{combo.jdbcNm}}</option>
             </select>
@@ -55,6 +62,9 @@
             </select>
             <input [(ngModel)]="srcTabInfoInVo.colNm"    class="btn btn-outline-primary btn-sm mr-2" (keyup.enter)="onSelectSrcTabList()" placeholder="컬럼명">
             <input [(ngModel)]="srcTabInfoInVo.colHnm"   class="btn btn-outline-primary btn-sm mr-2" (keyup.enter)="onSelectSrcTabList()" placeholder="컬럼한글명">
+            <select class="btn btn-outline-primary btn-sm mr-2" (change)="onChangeComboQryExtract($event.target.selectedIndex)"  >
+              <option *ngFor="let combo of comboQryExtract" [value]="combo.value" >{{combo.name}}</option>
+            </select>
         </div>
       </div>
       <div class="clearfix mb-2 ">
@@ -86,15 +96,15 @@
       </table>
     </div>
     <div class="form-group col-md-6">
-    
+
       <div class="clearfix">
         <div class="float-left">
-            <i class="ml-4 mr-4"> >> 로드</i> 
+            <i class="ml-4 mr-4"> >> 로드</i>
             <select class="btn btn-outline-primary btn-sm mr-2" (change)="onChangeComboTarJdbc($event.target.selectedIndex)" >
               <option *ngFor="let combo of comboTarJdbc" [value]="combo.jdbcNm" >{{combo.jdbcNm}}</option>
             </select>
         </div>
-      </div>    
+      </div>
       <div class="clearfix mb-2 ">
         <div class="float-right mr-3">{{tarCnt | number}} 건</div>
       </div>

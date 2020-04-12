@@ -25,5 +25,4 @@ export class TranService {
     return this.http.post<any>('http://'+this.document.location.hostname+':9201/tran/delimeterToRows', tran, httpOptions);
   }
 
-
 }

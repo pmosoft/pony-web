@@ -51,9 +51,9 @@
 		      <label for="jdbcNm">JDBC Name</label>
 		      <input type="text" class="form-control mb-3" id="jdbcNm" [(ngModel)]="jdbcInfoInVo.jdbcNm" [ngModelOptions]="{standalone: true}" >
 		      <label for="driver">DB</label>
-		      <select  class="form-control mb-3" (change)="onComboChange($event.target.selectedIndex)" >
-                <option *ngFor="let combo of comboDbDriver" [value]="combo.driver" >{{combo.db}}</option>
-              </select>
+		      <select class="form-control mb-3" (change)="onComboChange($event.target.selectedIndex)" >
+                <option *ngFor="let combo of comboDbDriver let i = index;" [selected] = "i==dbDriverIdx" [value]="combo.driver" >{{combo.db}}</option>
+          </select>
 		      <label for="url">Driver</label>
 		      <input type="text" class="form-control mb-3" id="driver" [(ngModel)]="jdbcInfoInVo.driver" [ngModelOptions]="{standalone: true}" >
 		      <label for="url">URL</label>

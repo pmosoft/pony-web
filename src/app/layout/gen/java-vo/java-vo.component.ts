@@ -11,6 +11,9 @@ import { Router } from '@angular/router';
 
 export class JavaVoComponent implements OnInit {
 
+  genInVo: Gen = new Gen();
+  genOutVo: Gen = new Gen();
+
   srcTxt  = "class testClass\n"
           + "string s01\n"
           + "string s02\n"
@@ -20,8 +23,6 @@ export class JavaVoComponent implements OnInit {
   tarTxt : string = ""
 
 
-  genInVo: Gen = new Gen();
-  genOutVo: Gen = new Gen();
 
   constructor(private genService: GenService
              ,private router: Router) { }

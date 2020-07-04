@@ -22,9 +22,12 @@ export class JdbcInfoComponent implements OnInit {
   //----------------
   // select
   //----------------
+  dbDriverIdx = 1;
+
   comboDbDriver = [
      {driver: "net.sf.log4jdbc.sql.jdbcapi.DriverSpy" , db: "oracle" }
     ,{driver: "net.sf.log4jdbc.sql.jdbcapi.DriverSpy" , db: "mariadb"}
+    ,{driver: "net.sf.log4jdbc.sql.jdbcapi.DriverSpy" , db: "mysql"}
     ,{driver: "net.sf.log4jdbc.sql.jdbcapi.DriverSpy" , db: "sqlite" }
     ,{driver: "net.sf.log4jdbc.sql.jdbcapi.DriverSpy" , db: "postgre" }
 //    ,{value: "db2"    , name: "db2"    }
@@ -66,10 +69,12 @@ export class JdbcInfoComponent implements OnInit {
   /********************
    * 그리드 클릭시
    ********************/
-  onClick(jdbcInfoInVo) {
+  onClick(jdbcInfoInVo : JdbcInfo) {
+    console.log("jdbcInfoInVo="+jdbcInfoInVo.db);
     this.jdbcInfoInVo = jdbcInfoInVo;
+    this.dbDriverIdx = this.comboDbDriver.findIndex(combo => combo.db === this.jdbcInfoInVo.db)
   }
-  
+
   /********************
    * 신규
    ********************/

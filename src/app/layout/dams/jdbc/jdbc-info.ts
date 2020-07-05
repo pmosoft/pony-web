@@ -4,6 +4,7 @@ export class JdbcInfo {
   db         : string = "";
   driver     : string = "";
   url        : string = "";
+  database   : string = "";
   usrId      : string = "";
   usrPw      : string = "";
   regDtm     : string;

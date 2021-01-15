@@ -4,33 +4,33 @@ import { Tran } from '../tran';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-delimeter',
-  templateUrl: './delimeter.component.html',
-  styleUrls: ['./delimeter.component.scss']
+  selector: 'app-delimiter',
+  templateUrl: './delimiter.component.html',
+  styleUrls: ['./delimiter.component.scss']
 })
-export class DelimeterComponent implements OnInit {
+export class DelimiterComponent implements OnInit {
 
   tranInVo: Tran = new Tran();
   tranOutVo: Tran = new Tran();
 
   tokenCnt = 0;
-  delimeterCnt = 0;
+  delimiterCnt = 0;
   constructor(private tranService: TranService
              ,private router: Router) { }
 
   ngOnInit() {
   }
 
-  onDelimeterToRows() {
+  onDelimiterToRows() {
     console.log(this.tranInVo.strToken);
-    console.log(this.tranInVo.delimeter);
-    this.tranService.delimeterToRows(this.tranInVo)
+    console.log(this.tranInVo.delimiter);
+    this.tranService.delimiterToRows(this.tranInVo)
     .subscribe(result => {
        if(!result.isSuccess) alert(result.errUsrMsg)
       else {
         this.tranOutVo = result.tranOutVo;
         this.tokenCnt = this.tranOutVo.tokenCnt;
-        this.delimeterCnt = this.tranOutVo.delimeterCnt;
+        this.delimiterCnt = this.tranOutVo.delimiterCnt;
 
         console.log(result.tranOutVo);
       }

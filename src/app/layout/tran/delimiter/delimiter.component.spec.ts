@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DelimeterComponent } from './delimeter.component';
+import { DelimiterComponent } from './delimiter.component';
 
-describe('DelimeterComponent', () => {
-  let component: DelimeterComponent;
-  let fixture: ComponentFixture<DelimeterComponent>;
+describe('DelimiterComponent', () => {
+  let component: DelimiterComponent;
+  let fixture: ComponentFixture<DelimiterComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DelimeterComponent ]
+      declarations: [ DelimiterComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DelimeterComponent);
+    fixture = TestBed.createComponent(DelimiterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

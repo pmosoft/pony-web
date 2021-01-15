@@ -1,10 +1,10 @@
 export class Tran {
 
-  delimeter   : string = "|";
+  delimiter   : string = "|";
   strToken    : string = "aa|bb";
   strRows     : string;
   tokenCnt    : number = 0;
-  delimeterCnt: number = 0;
+  delimiterCnt: number = 0;
 
 
 

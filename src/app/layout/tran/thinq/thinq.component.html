@@ -1,0 +1,30 @@
+
+<div class="mb-6">
+  <div class="clearfix">
+    <div class="float-left">
+      Tran > Thinq
+    </div>
+
+    <div class="float-right">
+      <select class="btn btn-outline-primary btn-sm mr-2"  (change)="onChangeParserCombo($event.target.selectedIndex)"  >
+        <option *ngFor="let combo of parserCombo" [value]="combo.value" >{{combo.name}}</option>
+      </select>
+      <button type="button" class="btn btn-outline-primary btn-sm" (click)="onExecute()" >
+        <i class="fa fa-tasks fa-fw"></i>&nbsp;실행
+      </button>
+    </div>
+  </div>
+</div>
+<div class="mb-3"></div>
+
+<div class="">
+  <div class="form-row mb-4 ">
+    <div class="form-group col-md-6">
+      <textarea class="form-control" rows="40" (change)="onChangeSrcTxt($event)" >{{tranInVo.strRows}}</textarea>
+    </div>
+    <div class="form-group col-md-6">
+      <textarea class="form-control" rows="40"  >{{tranOutVo.strRows}}</textarea>
+    </div>
+  </div>
+</div>
+

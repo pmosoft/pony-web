@@ -1,18 +1,17 @@
 <div class="mb-4">
   <div class="clearfix">
     <div class="float-left">
-      Tran > Delimeter
+      Tran > Delimiter
     </div>
     <div class="float-right">
-            구분자&nbsp;
-      <input class="btn btn-outline-primary btn-sm mr-3" [(ngModel)]="tranInVo.delimeter" [ngModelOptions]="{standalone: true}" >
-      <button type="button" class="btn btn-outline-primary btn-sm"  (click)="onDelimeterToRows()" >
+            구분자(탭인경우 tab를 입력)&nbsp;
+      <input class="btn btn-outline-primary btn-sm mr-3" [(ngModel)]="tranInVo.delimiter" [ngModelOptions]="{standalone: true}" >
+      <button type="button" class="btn btn-outline-primary btn-sm"  (click)="onDelimiterToRows()" >
         <i class="fa fa-tasks fa-fw"></i>&nbsp;세로변환
       </button>
     </div>
   </div>
 </div>
-
 
     <fieldset class="form-group">
         <label>Horizontal</label>
@@ -21,6 +20,6 @@
 
 
     <fieldset class="form-group">
-        <label class="mr-2">Vertical </label><label>(토큰 : {{tokenCnt}}개, 구분자 : {{delimeterCnt}}개)</label>
+        <label class="mr-2">Vertical </label><label>(토큰 : {{tokenCnt}}개, 구분자 : {{delimiterCnt}}개)</label>
         <textarea class="form-control" rows="16"  [(ngModel)]="tranOutVo.strRows" [ngModelOptions]="{standalone: true}"  ></textarea>
     </fieldset>

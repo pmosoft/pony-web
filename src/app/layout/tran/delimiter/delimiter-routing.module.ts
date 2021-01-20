@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { DelimeterComponent } from './delimeter.component';
+import { DelimiterComponent } from './delimiter.component';
 
 const routes: Routes = [
   {
       path: '',
-      component: DelimeterComponent,
+      component: DelimiterComponent,
   }
 ];
 
@@ -13,6 +13,6 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
- 
-export class DelimeterRoutingModule { }
-  
+
+export class DelimiterRoutingModule { }
+

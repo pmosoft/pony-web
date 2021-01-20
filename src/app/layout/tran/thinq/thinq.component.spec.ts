@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DelimeterComponent } from './delimeter.component';
+import { ThinqComponent } from './thinq.component';
 
-describe('DelimeterComponent', () => {
-  let component: DelimeterComponent;
-  let fixture: ComponentFixture<DelimeterComponent>;
+describe('ThinqComponent', () => {
+  let component: ThinqComponent;
+  let fixture: ComponentFixture<ThinqComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DelimeterComponent ]
+      declarations: [ ThinqComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DelimeterComponent);
+    fixture = TestBed.createComponent(ThinqComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -21,8 +21,12 @@ export class TranService {
              ,@Inject(DOCUMENT) private document: any) { }
 
 
-  delimeterToRows(tran: Tran): Observable<any> {
-    return this.http.post<any>('http://'+this.document.location.hostname+':9201/tran/delimeterToRows', tran, httpOptions);
+  delimiterToRows(tran: Tran): Observable<any> {
+    return this.http.post<any>('http://'+this.document.location.hostname+':9201/tran/delimiterToRows', tran, httpOptions);
+  }
+
+  thinq(tran: Tran): Observable<any> {
+    return this.http.post<any>('http://'+this.document.location.hostname+':9201/tran/thinq', tran, httpOptions);
   }
 
 }
